@@ -6,7 +6,7 @@ type NavLink = {
 export const links: NavLink[] = [
     { href: '/', label: 'home' },
     { href: '/mood ', label: 'mood' },
-    { href: '/bankingaccount ', label: 'bankingaccount' },
+    { href: '/bankingaccount ', label: 'Banking Account' },
     { href: '/profile ', label: 'profile' },
     { href: '/service ', label: 'service' },
 ];
