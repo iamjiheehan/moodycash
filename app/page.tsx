@@ -1,4 +1,4 @@
-import SectionForm from '@/components/form/SectionForm';
+import HomeSectionForm from '@/components/form/HomeSection';
 import { Button } from '@/components/ui/button';
 
 function HomePage() {
@@ -11,7 +11,7 @@ function HomePage() {
                 <section>
                     <div>그래프 이미지</div>
                 </section>
-                <SectionForm
+                <HomeSectionForm
                     subtitle="Deposit money into your desired account based on your
                         mood."
                     additionalSubtitle={[
@@ -21,19 +21,19 @@ function HomePage() {
                 />
             </section>
             <section className="grid grid-flow-row sm:grid-flow-col grid-rows-2 md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 sm:py-8">
-                <SectionForm subtitle="How are you feeling today?" />
+                <HomeSectionForm subtitle="How are you feeling today?" />
                 <section>
                     <div>이미지</div>
                 </section>
             </section>{' '}
             <section className="grid grid-flow-row sm:grid-flow-col grid-rows-2 md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 sm:py-8">
-                <SectionForm subtitle="Transfer to your Happy Account !" />
+                <HomeSectionForm subtitle="Transfer to your Happy Account !" />
                 <section>
                     <div>이미지</div>
                 </section>
             </section>{' '}
             <section className="flex flex-col justify-center gap-4 items-center">
-                <SectionForm
+                <HomeSectionForm
                     subtitle="Record your mood with a simple note"
                     button="Start Using the Service"
                 />
@@ -68,4 +68,5 @@ const WelcomeSection = () => {
         </section>
     );
 };
+
 export default HomePage;

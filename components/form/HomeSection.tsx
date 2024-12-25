@@ -11,7 +11,7 @@ type SectionFormProps = {
     button?: string;
 };
 
-const SectionForm = ({
+const HomeSectionForm = ({
     image,
     title = '',
     subtitle,
@@ -54,4 +54,4 @@ const SectionForm = ({
     );
 };
 
-export default SectionForm;
+export default HomeSectionForm;
