@@ -1,16 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
-import { DateRange } from 'react-day-picker';
+import React from 'react';
 import { Calendar } from '../ui/calendar';
 
-export default function SelectCalendar() {
+type SelectCalendarProps = {
+    onChange: (date: Date | undefined) => void;
+};
+
+export default function SelectCalendar({ onChange }: SelectCalendarProps) {
     const [date, setDate] = React.useState<Date | undefined>(new Date());
+
+    const handleDateChange = (selectedDate: Date | undefined) => {
+        setDate(selectedDate);
+        onChange(selectedDate);
+    };
+
     return (
         <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={handleDateChange}
             className="rounded-md border shadow"
         />
     );
