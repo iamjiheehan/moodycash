@@ -3,14 +3,15 @@
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitButton } from '@/components/form/Buttons';
 import SelectCalendar from '@/components/properties/SelectCalendar';
 import { Input } from '@/components/ui/input';
+import { InputOTPControlled } from '@/components/form/OptInput';
 
 export default function ServicePage() {
     const feelingList = ['Good', 'Bad', 'Angry', 'Hungry'];
-    useEffect(() => {}, []);
+    const [otpValue, setOtpValue] = useState('');
 
     return (
         <form>
@@ -41,7 +42,11 @@ export default function ServicePage() {
             <section className="flex gap-4 items-center justify-between">
                 <h1>How much would you like to transfer?</h1>
                 <section className="grid grid-cols-2 gap-4 items-center">
-                    <Input type="number" placeholder="Amount" />
+                    <InputOTPControlled
+                        maxLength={4}
+                        value={otpValue}
+                        onChange={setOtpValue}
+                    />
                     <p>won</p>
                 </section>
             </section>
