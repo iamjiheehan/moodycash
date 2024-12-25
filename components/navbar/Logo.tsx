@@ -7,16 +7,18 @@ import Image from 'next/image';
 export default function Logo() {
     return (
         <Button size="icon" asChild>
-            <Link href="/">
-                <LuTent className="w-6 h-6" />
-            </Link>
-            <Image
-                src="/logo.png"
-                alt="logo"
-                width={40}
-                height={40}
-                // className="rounded-full
-            />
+            <div>
+                <Link href="/">
+                    <LuTent className="w-6 h-6" />
+                </Link>
+                {/* <Image
+                    src="/logo.png"
+                    alt="logo"
+                    width={40}
+                    height={40}
+                    // className="rounded-full
+                /> */}
+            </div>
         </Button>
     );
 }
