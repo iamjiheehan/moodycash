@@ -73,7 +73,7 @@ export default function ServicePage() {
             </section>
             <section className="flex justify-center py-8">
                 <AlertForm
-                    trigger="submit"
+                    actionType="submit"
                     title="Are you sure?"
                     description={`Transferring ${formattedOtpValue} won to happy account`}
                 />

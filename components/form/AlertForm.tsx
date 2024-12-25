@@ -1,3 +1,5 @@
+'use client';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,20 +11,43 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '../ui/button';
+import { DeleteButton, EditButton, SubmitButton } from './Buttons';
 
+type actionType = 'submit' | 'edit' | 'delete';
 type AlertFormProps = {
-    trigger: string;
     title: string;
     description: string;
-    callback?: () => void;
+    actionType: actionType;
+    callback?: (actionType: actionType) => void;
 };
 
-function AlertForm({ trigger, title, description, callback }: AlertFormProps) {
+function AlertForm({
+    title,
+    description,
+    actionType,
+    callback,
+}: AlertFormProps) {
+    const handleConfirm = () => {
+        if (callback) {
+            callback(actionType);
+        }
+    };
+
+    const renderTriggerButton = () => {
+        switch (actionType) {
+            case 'submit':
+                return <SubmitButton />;
+            case 'delete':
+                return <DeleteButton />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button>{trigger}</Button>
+                <div>{renderTriggerButton()}</div>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -30,7 +55,7 @@ function AlertForm({ trigger, title, description, callback }: AlertFormProps) {
                 </AlertDialogHeader>
                 <AlertDialogDescription>{description}</AlertDialogDescription>
                 <AlertDialogFooter>
-                    <AlertDialogAction onClick={callback}>
+                    <AlertDialogAction onClick={handleConfirm}>
                         Confirm
                     </AlertDialogAction>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>

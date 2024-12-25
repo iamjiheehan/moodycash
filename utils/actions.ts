@@ -103,3 +103,22 @@ export const updateProfileAction = async (
         return renderError(error);
     }
 };
+
+export const deleteMoodInfoAction = async (prevState: { moodId: number }) => {
+    const { moodId } = prevState;
+    const user = await getAuthUser();
+
+    try {
+        await db.mood.delete({
+            where: {
+                id: moodId,
+                profileId: user.id,
+            },
+        });
+
+        revalidatePath('/mood');
+        return { message: 'MoodInfo is deleted successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
