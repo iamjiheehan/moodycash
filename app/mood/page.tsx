@@ -3,12 +3,27 @@
 import AlertForm from '@/components/form/AlertForm';
 import { EditButton } from '@/components/form/Buttons';
 import EmptyList from '@/components/home/EmptyList';
+import { MoodChart } from '@/components/mood/MoodChart';
 import MoodSettingCard from '@/components/setting/BankingInfoCard';
 import { deleteMoodInfoAction } from '@/utils/actions';
 import Link from 'next/link';
 import React from 'react';
 
 export default function MoodPage() {
+    return (
+        <section>
+            <h1>This is How you are feeling!</h1>
+            <section>
+                <h2>금액으로 보는 기분 변화 그래프</h2>
+                <MoodChart />
+            </section>
+
+            <MoodList />
+        </section>
+    );
+}
+
+function MoodList() {
     const moodlist = [
         {
             id: 1,
