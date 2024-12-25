@@ -8,6 +8,8 @@ import { SubmitButton } from '@/components/form/Buttons';
 import SelectCalendar from '@/components/properties/SelectCalendar';
 import { Input } from '@/components/ui/input';
 import { InputOTPControlled } from '@/components/form/OptInput';
+import { formatCurrency } from '@/utils/format';
+import AlertForm from '@/components/form/AlertForm';
 
 export default function ServicePage() {
     const feelingList = ['Good', 'Bad', 'Angry', 'Hungry'];
@@ -16,6 +18,10 @@ export default function ServicePage() {
         new Date()
     );
     const [selectedFeeling, setSelectedFeeling] = useState(feelingList[0]);
+
+    const formattedOtpValue = formatCurrency(
+        Number(otpValue.replace(/,/g, ''))
+    );
 
     return (
         <form>
@@ -62,11 +68,15 @@ export default function ServicePage() {
                 {selectedDate
                     ? selectedDate.toLocaleDateString()
                     : 'No date selected'}
-                , and you would like to transfer {otpValue} won worth of{' '}
-                {selectedFeeling.toLowerCase()} into your account.
+                , and you would like to transfer {formattedOtpValue} won worth
+                of {selectedFeeling.toLowerCase()} into your account.
             </section>
             <section className="flex justify-center py-8">
-                <SubmitButton />
+                <AlertForm
+                    trigger="submit"
+                    title="Are you sure?"
+                    description={`Transferring ${formattedOtpValue} won to happy account`}
+                />
             </section>
         </form>
     );

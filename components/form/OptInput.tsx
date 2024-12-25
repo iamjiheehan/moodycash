@@ -24,9 +24,6 @@ export function InputOTPControlled({
         onChange(newValue);
     };
 
-    const formattedValue = value
-        ? formatCurrency(Number(value.replace(/,/g, '')))
-        : '';
 
     return (
         <div className="space-y-2">
@@ -37,13 +34,6 @@ export function InputOTPControlled({
                     ))}
                 </InputOTPGroup>
             </InputOTP>
-            <div className="text-center text-sm">
-                {value === '' ? (
-                    <>Enter the amount.</>
-                ) : (
-                    <>You entered: {formattedValue}</>
-                )}
-            </div>
         </div>
     );
 }
