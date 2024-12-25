@@ -48,7 +48,7 @@ export default function ServicePage() {
                 <h1>What’s behind how you’re feeling?</h1>
                 <TextAreaInput
                     name="description"
-                    labelText="Description (10 - 100 Words)"
+                    labelText="Description (10 - 50 Words)"
                     placeholder="Describe your feelings"
                 />
             </section>

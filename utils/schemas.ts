@@ -10,11 +10,11 @@ export const serviceSchema = z.object({
     date: z.string(),
     description: z.string().refine(
         (description) => {
-            const wordCount = description.split(' ').length;
-            return wordCount >= 10 && wordCount <= 1000;
+            const charCount = description.length;
+            return charCount <= 50;
         },
         {
-            message: 'description must be between 10 and 1000 words.',
+            message: 'description must be 50 characters or less.',
         }
     ),
     price: z.coerce

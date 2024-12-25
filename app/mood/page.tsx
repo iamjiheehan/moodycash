@@ -3,6 +3,7 @@
 import AlertForm from '@/components/form/AlertForm';
 import { EditButton } from '@/components/form/Buttons';
 import EmptyList from '@/components/home/EmptyList';
+import MoodCalendar from '@/components/mood/MoodCalendar';
 import { MoodChart } from '@/components/mood/MoodChart';
 import MoodSettingCard from '@/components/setting/BankingInfoCard';
 import { deleteMoodInfoAction } from '@/utils/actions';
@@ -17,7 +18,12 @@ export default function MoodPage() {
                 <h2>금액으로 보는 기분 변화 그래프</h2>
                 <MoodChart />
             </section>
-
+            <section>
+                <h2>달력으로 보는 기록</h2>
+                <section>
+                    <MoodCalendar />
+                </section>
+            </section>
             <MoodList />
         </section>
     );
