@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import React, { useState } from 'react';
 import { SubmitButton } from '@/components/form/Buttons';
-import SelectCalendar from '@/components/properties/SelectCalendar';
+import SelectCalendar from '@/components/service/SelectCalendar';
 import { Input } from '@/components/ui/input';
 import { InputOTPControlled } from '@/components/form/OptInput';
 import { formatCurrency } from '@/utils/format';

@@ -3,17 +3,15 @@ import { Calendar } from '../ui/calendar';
 import { chartData } from './MoodMockData';
 
 export default function MoodCalendar() {
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-        new Date()
-    );
+    const [selectedDate, setSelectedDate] = useState<Date[] | undefined>([]); // 초기값을 빈 배열로 설정
     const [selectedData, setSelectedData] = useState<any | undefined>(
         undefined
     );
 
-    const handleDateChange = (date: Date | undefined) => {
-        setSelectedDate(date);
-        if (date) {
-            const selectedDateString = date.toISOString().split('T')[0];
+    const handleDateChange = (dates: Date[] | undefined) => {
+        setSelectedDate(dates);
+        if (dates && dates.length > 0) {
+            const selectedDateString = dates[0].toISOString().split('T')[0]; // 첫 번째 선택된 날짜만 사용
             const data = chartData.find(
                 (item) => item.date === selectedDateString
             );
@@ -24,13 +22,13 @@ export default function MoodCalendar() {
     };
 
     const initialSelectedDates = chartData.map((item) => new Date(item.date));
-
+    console.log('initialSelectedDates :', initialSelectedDates);
     return (
         <section className="flex flex-col items-center">
             <Calendar
-                mode="single"
+                mode="multiple"
                 selected={selectedDate}
-                onSelect={handleDateChange}
+                onSelect={handleDateChange} // dates는 Date[] | undefined
                 className="rounded-md border shadow"
             />
             <div>선택된 날짜를 클릭해보세요</div>
