@@ -20,7 +20,7 @@ function MoodSettingCard({
     return (
         <Card className="relative">
             <CardHeader>
-                <h1>{moodInfo.name}</h1>
+                <h1> Account for {moodInfo.name} mood</h1>
                 <h2>{moodInfo.description}</h2>
             </CardHeader>
             <CardContent>
@@ -28,9 +28,7 @@ function MoodSettingCard({
                 {bankingInfo.account}
             </CardContent>
             {/* delete button later */}
-            <div className="absolute top-0 right-3 h-full py-2">
-                {children}
-            </div>
+            <div className="absolute top-0 right-3 h-full py-2">{children}</div>
         </Card>
     );
 }

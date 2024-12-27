@@ -26,7 +26,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { chartData } from './MoodMockData';
-import { Item } from '@radix-ui/react-dropdown-menu';
 
 const moodlist = Array.from(new Set(chartData.map((item) => item.mood)));
 const chartConfig = moodlist.reduce((config, mood, index) => {
