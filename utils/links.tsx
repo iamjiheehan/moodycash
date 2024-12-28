@@ -12,6 +12,6 @@ export const navMenuLinks: NavLink[] = [
     // { href: '/', label: 'home' },
     { href: '/service ', label: 'service' },
     { href: '/mood ', label: 'mood' },
-    { href: '/bankingaccount ', label: 'Banking Account' },
+    { href: '/settings ', label: 'settings' },
     // { href: '/profile ', label: 'profile' },
 ];
