@@ -22,7 +22,9 @@ export default function MoodCalendar() {
         const selectedDateString = day.toISOString().split('T')[0];
         console.log('selectedDateString:', selectedDateString);
         chartData.forEach((item) => {
-            item.date === selectedDateString && setSelectedData(item);
+            if (item.date === selectedDateString) {
+                setSelectedData(item);
+            }
         });
     };
     return (
