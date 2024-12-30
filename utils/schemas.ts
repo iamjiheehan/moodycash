@@ -8,24 +8,12 @@ export const profileSchema = z.object({
 
 export const serviceSchema = z.object({
     date: z.string(),
-    description: z.string().refine(
-        (description) => {
-            const charCount = description.length;
-            return charCount <= 50;
-        },
-        {
-            message: 'description must be 50 characters or less.',
-        }
-    ),
-    mood: z.string().refine(
-        (description) => {
-            const wordCount = description.split(' ').length;
-            return wordCount >= 10 && wordCount <= 10;
-        },
-        {
-            message: 'mood must be between 10 and 10 words.',
-        }
-    ),
+    description: z
+        .string()
+        .max(50, { message: 'Mood must be 50 characters or less.' }),
+    mood: z
+        .string()
+        .max(20, { message: 'Mood must be 20 characters or less.' }),
     price: z.coerce
         .number()
         .int()
@@ -38,12 +26,16 @@ export const serviceSchema = z.object({
 });
 
 export const bankingSchema = z.object({
-    accountHolder: z.string(),
-    bank: z.string(),
     date: z.string(),
-    account: z.string(),
-    description: z.string(),
-    price: z.coerce.number().int(),
+    mood: z
+        .string()
+        .max(20, { message: 'Mood must be 20 characters or less.' }),
+    bankName: z.string(),
+    bankAccountHolder: z.string(),
+    bankAccountNumber: z.string(),
+    description: z
+        .string()
+        .max(20, { message: 'Description must be 20 characters or less.' }),
 });
 
 export function validateWithZodSchema<T>(

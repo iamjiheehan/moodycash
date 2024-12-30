@@ -14,7 +14,6 @@ import {
 const getAuthUser = async () => {
     const user = await currentUser();
     if (!user) throw new Error('You must be logged in to access this route');
-
     if (!user.privateMetadata.hasProfile) redirect('/profile/create');
     return user;
 };
@@ -196,9 +195,9 @@ export const fetchBankings = async () => {
             select: {
                 bankings: {
                     select: {
-                        bank: true,
-                        accountHolder: true,
-                        account: true,
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
                     },
                 },
             },
@@ -225,9 +224,9 @@ export const fetchMoodWithBankings = async () => {
                 },
                 bankings: {
                     select: {
-                        bank: true,
-                        accountHolder: true,
-                        account: true,
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
                     },
                 },
             },
@@ -252,7 +251,7 @@ export const deleteServiceAction = async (prevState: { serviceId: string }) => {
             },
         });
 
-        revalidatePath('/mood');
+        revalidatePath('/service');
         return { message: 'Service schema is deleted successfully' };
     } catch (error) {
         return renderError(error);
@@ -263,21 +262,25 @@ export const createBankingAction = async (
     prevState: any,
     formData: FormData
 ): Promise<{ message: string }> => {
+    console.log('Form data of createBankingAction:', formData);
     const user = await getAuthUser();
     try {
         const rawData = Object.fromEntries(formData);
         const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+        console.log('rawData:', rawData);
+        console.log('validatedFields:', validatedFields);
 
         await db.banking.create({
             data: {
                 ...validatedFields,
+                date: new Date(),
                 profileId: user.id,
             },
         });
+        return { message: 'Banking record created successfully' };
     } catch (error) {
         return renderError(error);
     }
-    redirect('/');
 };
 
 export const deleteBankingAction = async (prevState: { bankingId: string }) => {

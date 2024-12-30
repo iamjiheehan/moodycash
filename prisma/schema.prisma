@@ -35,15 +35,15 @@ model Service {
 }
 
 model Banking {
-  id            String   @id @default(uuid())
-  date          DateTime
-  accountHolder String
-  bank          String
-  account       String
-  description   String
-  price         Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  profileId     String
-  profile       Profile  @relation("ProfileBankings", fields: [profileId], references: [id], onDelete: Cascade)
+  id                String   @id @default(uuid())
+  date              DateTime
+  mood              String
+  bankName          String
+  bankAccountHolder String
+  bankAccountNumber String
+  description       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  profileId         String
+  profile           Profile  @relation("ProfileBankings", fields: [profileId], references: [id], onDelete: Cascade)
 }
