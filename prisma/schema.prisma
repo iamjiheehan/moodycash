@@ -18,8 +18,8 @@ model Profile {
   profileImage String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  services     Service[] @relation("ProfileServices")
-  bankings     Banking[] @relation("ProfileBankings")
+  Service      Service[]
+  Banking      Banking[]
 }
 
 model Service {
@@ -31,12 +31,11 @@ model Service {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   profileId   String
-  profile     Profile  @relation("ProfileServices", fields: [profileId], references: [id], onDelete: Cascade)
+  profile     Profile  @relation(fields: [profileId], references: [clerkId], onDelete: Cascade)
 }
 
 model Banking {
   id                String   @id @default(uuid())
-  date              DateTime
   mood              String
   bankName          String
   bankAccountHolder String
@@ -45,5 +44,5 @@ model Banking {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   profileId         String
-  profile           Profile  @relation("ProfileBankings", fields: [profileId], references: [id], onDelete: Cascade)
+  profile           Profile  @relation(fields: [profileId], references: [clerkId], onDelete: Cascade)
 }

@@ -26,16 +26,21 @@ export const serviceSchema = z.object({
 });
 
 export const bankingSchema = z.object({
-    date: z.string(),
     mood: z
         .string()
-        .max(20, { message: 'Mood must be 20 characters or less.' }),
-    bankName: z.string(),
-    bankAccountHolder: z.string(),
-    bankAccountNumber: z.string(),
+        .max(20, { message: 'Mood must be 20 characters or less.' })
+        .nonempty({ message: 'Mood is required.' }),
+    bankName: z.string().nonempty({ message: 'Bank Name is required.' }),
+    bankAccountHolder: z
+        .string()
+        .nonempty({ message: 'Account Holder is required.' }),
+    bankAccountNumber: z
+        .string()
+        .nonempty({ message: 'Bank Account Number is required.' }),
     description: z
         .string()
-        .max(20, { message: 'Description must be 20 characters or less.' }),
+        .max(20, { message: 'Description must be 20 characters or less.' })
+        .nonempty({ message: 'Description is required.' }),
 });
 
 export function validateWithZodSchema<T>(
