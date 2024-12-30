@@ -4,7 +4,7 @@ import db from './db';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { profileSchema } from './schemas';
+import { profileSchema, serviceSchema, validateWithZodSchema } from './schemas';
 
 const getAuthUser = async () => {
     const user = await currentUser();
@@ -104,12 +104,33 @@ export const updateProfileAction = async (
     }
 };
 
-export const deleteMoodInfoAction = async (prevState: { moodId: number }) => {
+export const createServiceAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+        const validatedFields = validateWithZodSchema(serviceSchema, rawData);
+
+        await db.service.create({
+            data: {
+                ...validatedFields,
+                serviceId: user.id,
+            },
+        });
+    } catch (error) {
+        return renderError(error);
+    }
+    redirect('/');
+};
+
+export const deleteServiceAction = async (prevState: { moodId: number }) => {
     const { moodId } = prevState;
     const user = await getAuthUser();
 
     try {
-        await db.mood.delete({
+        await db.service.delete({
             where: {
                 id: moodId,
                 profileId: user.id,

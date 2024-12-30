@@ -17,6 +17,15 @@ export const serviceSchema = z.object({
             message: 'description must be 50 characters or less.',
         }
     ),
+    mood: z.string().refine(
+        (description) => {
+            const wordCount = description.split(' ').length;
+            return wordCount >= 10 && wordCount <= 10;
+        },
+        {
+            message: 'mood must be between 10 and 10 words.',
+        }
+    ),
     price: z.coerce
         .number()
         .int()
@@ -27,3 +36,22 @@ export const serviceSchema = z.object({
             message: 'price must be 1000 or less.',
         }),
 });
+
+export const bankingSchema = z.object({
+    date: z.string(),
+    description: z.string(),
+    price: z.coerce.number().int(),
+});
+
+export function validateWithZodSchema<T>(
+    schema: z.ZodSchema<T>,
+    data: unknown
+): T {
+    const result = schema.safeParse(data);
+    if (!result.success) {
+        const errors = result.error.errors.map((error) => error.message);
+        throw new Error(errors.join(','));
+    }
+
+    return result.data;
+}
