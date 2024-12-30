@@ -1,4 +1,4 @@
-import { MoodSettingCard, MoodCreateCard } from '@/components/settings/page';
+import { MoodSettingCard, MoodCreateCard } from '@/components/settings/Card';
 import React from 'react';
 
 export default function SettingsPage() {

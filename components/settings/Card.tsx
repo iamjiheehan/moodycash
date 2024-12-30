@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
+import { redirect } from 'next/dist/server/api-utils';
+import Link from 'next/link';
 type BankingInfoCardProps = {
     mood: {
         name: string;
@@ -40,10 +42,12 @@ export function MoodSettingCard({
 }
 export function MoodCreateCard() {
     return (
-        <Card className="relative hover:cursor-pointer">
-            <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
-                <FaPlus className="text-2xl" />
-            </CardContent>
-        </Card>
+        <Link href="/settings/create">
+            <Card className="relative h-full">
+                <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
+                    <FaPlus className="text-2xl text-primary" />
+                </CardContent>
+            </Card>
+        </Link>
     );
 }
