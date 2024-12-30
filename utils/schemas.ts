@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const profileSchema = z.object({
     firstName: z.string(),
@@ -38,7 +38,9 @@ export const serviceSchema = z.object({
 });
 
 export const bankingSchema = z.object({
-    date: z.string(),
+    accountHolder: z.string(),
+    bank: z.string(),
+    account: z.string(),
     description: z.string(),
     price: z.coerce.number().int(),
 });

@@ -4,7 +4,12 @@ import db from './db';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { profileSchema, serviceSchema, validateWithZodSchema } from './schemas';
+import {
+    profileSchema,
+    serviceSchema,
+    bankingSchema,
+    validateWithZodSchema,
+} from './schemas';
 
 const getAuthUser = async () => {
     const user = await currentUser();
@@ -116,7 +121,7 @@ export const createServiceAction = async (
         await db.service.create({
             data: {
                 ...validatedFields,
-                serviceId: user.id,
+                profileId: user.id,
             },
         });
     } catch (error) {
@@ -125,14 +130,14 @@ export const createServiceAction = async (
     redirect('/');
 };
 
-export const deleteServiceAction = async (prevState: { moodId: number }) => {
-    const { moodId } = prevState;
+export const deleteServiceAction = async (prevState: { serviceId: string }) => {
+    const { serviceId } = prevState;
     const user = await getAuthUser();
 
     try {
         await db.service.delete({
             where: {
-                id: moodId,
+                id: serviceId,
                 profileId: user.id,
             },
         });
