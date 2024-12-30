@@ -80,7 +80,7 @@ export const fetchProfile = async () => {
     return profile;
 };
 
-export const fetchMood = async () => {
+export const fetchMoods = async () => {
     const user = await currentUser();
     if (!user) return null;
 
@@ -180,7 +180,7 @@ export const updateServiceAction = async (
             data: validatedFields,
         });
         revalidatePath('/service');
-        return { message: 'service information is updated successfully' };
+        return { message: 'service schema is updated successfully' };
     } catch (error) {
         return renderError(error);
     }
@@ -253,7 +253,7 @@ export const deleteServiceAction = async (prevState: { serviceId: string }) => {
         });
 
         revalidatePath('/mood');
-        return { message: 'MoodInfo is deleted successfully' };
+        return { message: 'Service schema is deleted successfully' };
     } catch (error) {
         return renderError(error);
     }
@@ -293,7 +293,7 @@ export const deleteBankingAction = async (prevState: { bankingId: string }) => {
         });
 
         revalidatePath('/settings');
-        return { message: 'BankingInfo is deleted successfully' };
+        return { message: 'Banking schema is deleted successfully' };
     } catch (error) {
         return renderError(error);
     }

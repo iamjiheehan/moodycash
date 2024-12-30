@@ -3,21 +3,35 @@
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SubmitButton } from '@/components/form/Buttons';
 import SelectCalendar from '@/components/service/SelectCalendar';
 import { Input } from '@/components/ui/input';
 import { InputOTPControlled } from '@/components/form/OptInput';
 import { formatCurrency } from '@/utils/format';
 import AlertForm from '@/components/form/AlertForm';
+import { fetchMoods } from '@/utils/actions';
 
-export default function ServicePage() {
+function ServicePage() {
     const feelingList = ['Good', 'Bad', 'Angry', 'Hungry'];
     const [otpValue, setOtpValue] = useState('');
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(
         new Date()
     );
     const [selectedFeeling, setSelectedFeeling] = useState(feelingList[0]);
+    const [moods, setMoods] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const fetchedMoods = await fetchMoods();
+            if (fetchedMoods) {
+                setMoods(fetchedMoods);
+            }
+        };
+
+        fetchData();
+        console.log('moods:', moods);
+    }, []);
 
     const formattedOtpValue = formatCurrency(
         Number(otpValue.replace(/,/g, ''))
@@ -81,3 +95,5 @@ export default function ServicePage() {
         </form>
     );
 }
+
+export default ServicePage;
