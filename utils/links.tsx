@@ -5,7 +5,6 @@ type NavLink = {
 
 export const profileLinks: NavLink[] = [
     { href: '/profile ', label: 'profile' },
-    { href: '/history ', label: 'history' },
 ];
 
 export const navMenuLinks: NavLink[] = [

@@ -1,36 +1,49 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-
+import { DeleteButton, EditButton } from '../form/Buttons';
+import { FaPlus } from 'react-icons/fa';
 type BankingInfoCardProps = {
-    moodInfo: {
+    mood: {
         name: string;
         description: string;
     };
-    bankingInfo: {
+    banking: {
         name: string;
         account: string;
     };
     children?: React.ReactNode;
 };
 
-function MoodSettingCard({
-    bankingInfo,
-    moodInfo,
+export function MoodSettingCard({
+    banking,
+    mood,
     children,
 }: BankingInfoCardProps) {
     return (
         <Card className="relative">
             <CardHeader>
-                <h1> Account for {moodInfo.name} mood</h1>
-                <h2>{moodInfo.description}</h2>
+                <h1> Account for {mood.name} mood</h1>
+                <h2>{mood.description}</h2>
             </CardHeader>
             <CardContent>
-                {bankingInfo.name}
-                {bankingInfo.account}
+                {banking.name}
+                {banking.account}
             </CardContent>
-            {/* delete button later */}
-            <div className="absolute top-0 right-3 h-full py-2">{children}</div>
+            <div className="absolute top-0 right-3 h-full py-2">
+                <div className="flex flex-col justify-between h-full">
+                    <EditButton />
+                    <DeleteButton />
+                </div>
+            </div>
+            <div>{children}</div>
         </Card>
     );
 }
-
-export default MoodSettingCard;
+export function MoodCreateCard() {
+    return (
+        <Card className="relative hover:cursor-pointer">
+            <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
+                <FaPlus className="text-2xl" />
+            </CardContent>
+        </Card>
+    );
+}
