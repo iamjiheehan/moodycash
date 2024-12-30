@@ -40,6 +40,7 @@ export const serviceSchema = z.object({
 export const bankingSchema = z.object({
     accountHolder: z.string(),
     bank: z.string(),
+    date: z.string(),
     account: z.string(),
     description: z.string(),
     price: z.coerce.number().int(),

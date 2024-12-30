@@ -80,6 +80,33 @@ export const fetchProfile = async () => {
     return profile;
 };
 
+export const fetchMood = async () => {
+    const user = await currentUser();
+    if (!user) return null;
+
+    try {
+        const moods = await db.service.findMany({
+            where: {
+                profileId: user.id,
+            },
+            select: {
+                id: true,
+                date: true,
+                description: true,
+                mood: true,
+                price: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        });
+
+        return moods;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+
 export const updateProfileAction = async (
     prevState: any,
     formData: FormData
@@ -130,6 +157,89 @@ export const createServiceAction = async (
     redirect('/');
 };
 
+export const updateServiceAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+
+        const validatedFields = profileSchema.safeParse(rawData);
+        if (!validatedFields.success) {
+            const errors = validatedFields.error.errors.map(
+                (error) => error.message
+            );
+            throw new Error(errors.join(','));
+        }
+
+        await db.profile.update({
+            where: {
+                clerkId: user.id,
+            },
+            data: validatedFields,
+        });
+        revalidatePath('/service');
+        return { message: 'service information is updated successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const fetchBankings = async () => {
+    const user = await currentUser();
+    if (!user) return null;
+
+    try {
+        const bankings = await db.profile.findUnique({
+            where: { id: 'profileId' },
+            select: {
+                bankings: {
+                    select: {
+                        bank: true,
+                        accountHolder: true,
+                        account: true,
+                    },
+                },
+            },
+        });
+
+        return bankings;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+export const fetchMoodWithBankings = async () => {
+    const user = await currentUser();
+    if (!user) return null;
+
+    try {
+        const moodWithBankings = await db.profile.findUnique({
+            where: { id: 'profileId' },
+            select: {
+                services: {
+                    select: {
+                        mood: true,
+                    },
+                },
+                bankings: {
+                    select: {
+                        bank: true,
+                        accountHolder: true,
+                        account: true,
+                    },
+                },
+            },
+        });
+
+        return moodWithBankings;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+
 export const deleteServiceAction = async (prevState: { serviceId: string }) => {
     const { serviceId } = prevState;
     const user = await getAuthUser();
@@ -144,6 +254,46 @@ export const deleteServiceAction = async (prevState: { serviceId: string }) => {
 
         revalidatePath('/mood');
         return { message: 'MoodInfo is deleted successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const createBankingAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+        const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+
+        await db.banking.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        });
+    } catch (error) {
+        return renderError(error);
+    }
+    redirect('/');
+};
+
+export const deleteBankingAction = async (prevState: { bankingId: string }) => {
+    const { bankingId } = prevState;
+    const user = await getAuthUser();
+
+    try {
+        await db.banking.delete({
+            where: {
+                id: bankingId,
+                profileId: user.id,
+            },
+        });
+
+        revalidatePath('/settings');
+        return { message: 'BankingInfo is deleted successfully' };
     } catch (error) {
         return renderError(error);
     }
