@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
-import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
+
 type BankingInfoCardProps = {
     mood: {
         name: string;
@@ -21,7 +21,7 @@ export function MoodSettingCard({
     children,
 }: BankingInfoCardProps) {
     return (
-        <Card className="relative">
+        <Card className="relative h-[10rem]">
             <CardHeader>
                 <h1> Account for {mood.name} mood</h1>
                 <h2>{mood.description}</h2>
@@ -40,10 +40,11 @@ export function MoodSettingCard({
         </Card>
     );
 }
+
 export function MoodCreateCard() {
     return (
         <Link href="/settings/create">
-            <Card className="relative h-full">
+            <Card className="relative h-[10rem]">
                 <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
                     <FaPlus className="text-2xl text-primary" />
                 </CardContent>
