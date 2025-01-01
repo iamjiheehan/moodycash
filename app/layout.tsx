@@ -5,6 +5,7 @@ import Navbar from '@/components/navbar/Navbar';
 import Providers from './provides';
 import { ClerkProvider } from '@clerk/nextjs';
 import { koKR } from '@clerk/localizations';
+import Footer from './footer/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,8 @@ export default function RootLayout({
                 <body className={inter.className}>
                     <Providers>
                         <Navbar />
-                        <main className="container py-10">{children}</main>
+                        <main className="pt-10">{children}</main>
+                        <Footer />
                     </Providers>
                 </body>
             </html>
