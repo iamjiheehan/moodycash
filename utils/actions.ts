@@ -82,25 +82,24 @@ export const fetchProfile = async () => {
 
 export const fetchMoods = async () => {
     const user = await currentUser();
-    if (!user) return null;
+    if (!user) {
+        console.log('fetchMoods: No user found');
+        return null;
+    }
 
     try {
-        const moods = await db.service.findMany({
-            where: {
-                profileId: user.id,
-            },
+        const moods = await db.profile.findMany({
+            where: { clerkId: user.id },
             select: {
-                id: true,
-                date: true,
-                description: true,
-                mood: true,
-                price: true,
-                createdAt: true,
-                updatedAt: true,
+                Banking: {
+                    select: {
+                        mood: true,
+                    },
+                },
             },
         });
-
-        return moods;
+        console.log('fetchMoods:', moods[0].Banking);
+        return moods[0].Banking;
     } catch (error) {
         console.error('Error fetching moods:', error);
         return null;
@@ -187,9 +186,7 @@ export const updateServiceAction = async (
 };
 
 export const fetchBankings = async () => {
-    console.log('fetchBankings called');
     const user = await getAuthUser();
-    console.log('User fetched:', user);
 
     if (!user) {
         console.log('No user found');

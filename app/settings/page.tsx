@@ -3,7 +3,7 @@ import { MoodSettingCard, MoodCreateCard } from '@/components/settings/Card';
 import { fetchBankings } from '@/utils/actions';
 
 export default async function SettingsPage() {
-    const data = await fetchBankings(); // 서버 컴포넌트에서 데이터 가져오기
+    const data = await fetchBankings(); 
 
     return (
         <div className="grid md:grid-cols-2 gap-8 mt-4">
