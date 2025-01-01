@@ -4,7 +4,12 @@ import db from './db';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { profileSchema } from './schemas';
+import {
+    profileSchema,
+    serviceSchema,
+    bankingSchema,
+    validateWithZodSchema,
+} from './schemas';
 
 const getAuthUser = async () => {
     const user = await currentUser();
@@ -75,6 +80,32 @@ export const fetchProfile = async () => {
     return profile;
 };
 
+export const fetchMoods = async () => {
+    const user = await currentUser();
+    if (!user) {
+        console.log('fetchMoods: No user found');
+        return null;
+    }
+
+    try {
+        const moods = await db.profile.findMany({
+            where: { clerkId: user.id },
+            select: {
+                Banking: {
+                    select: {
+                        mood: true,
+                    },
+                },
+            },
+        });
+        console.log('fetchMoods:', moods[0].Banking);
+        return moods[0].Banking;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+
 export const updateProfileAction = async (
     prevState: any,
     formData: FormData
@@ -104,20 +135,173 @@ export const updateProfileAction = async (
     }
 };
 
-export const deleteMoodInfoAction = async (prevState: { moodId: number }) => {
-    const { moodId } = prevState;
+export const createServiceAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+        const validatedFields = validateWithZodSchema(serviceSchema, rawData);
+
+        await db.service.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        });
+    } catch (error) {
+        return renderError(error);
+    }
+    redirect('/');
+};
+
+export const updateServiceAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+
+        const validatedFields = profileSchema.safeParse(rawData);
+        if (!validatedFields.success) {
+            const errors = validatedFields.error.errors.map(
+                (error) => error.message
+            );
+            throw new Error(errors.join(','));
+        }
+
+        await db.profile.update({
+            where: {
+                clerkId: user.id,
+            },
+            data: validatedFields,
+        });
+        revalidatePath('/service');
+        return { message: 'service schema is updated successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const fetchBankings = async () => {
+    const user = await getAuthUser();
+
+    if (!user) {
+        console.log('No user found');
+        return null;
+    }
+
+    try {
+        const bankings = await db.profile.findUnique({
+            where: { clerkId: user.id },
+            select: {
+                Banking: {
+                    select: {
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
+                        description: true,
+                        mood: true,
+                    },
+                },
+            },
+        });
+
+        console.log('Bankings fetched:', bankings);
+        return bankings?.Banking ?? null;
+    } catch (error) {
+        console.error('Error fetching bankings:', error);
+        return null;
+    }
+};
+
+export const fetchMoodWithBankings = async () => {
+    const user = await currentUser();
+    if (!user) return null;
+
+    try {
+        const moodWithBankings = await db.profile.findUnique({
+            where: { id: 'profileId' },
+            select: {
+                Service: {
+                    select: {
+                        mood: true,
+                    },
+                },
+                Banking: {
+                    select: {
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
+                    },
+                },
+            },
+        });
+
+        return moodWithBankings;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+
+export const deleteServiceAction = async (prevState: { serviceId: string }) => {
+    const { serviceId } = prevState;
     const user = await getAuthUser();
 
     try {
-        await db.mood.delete({
+        await db.service.delete({
             where: {
-                id: moodId,
+                id: serviceId,
                 profileId: user.id,
             },
         });
 
-        revalidatePath('/mood');
-        return { message: 'MoodInfo is deleted successfully' };
+        revalidatePath('/service');
+        return { message: 'Service schema is deleted successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const createBankingAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    try {
+        const rawData = Object.fromEntries(formData);
+        console.log('rawData:', rawData);
+        const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+
+        await db.banking.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        });
+    } catch (error) {
+        return renderError(error);
+    }
+    redirect('/settings');
+};
+
+export const deleteBankingAction = async (prevState: { bankingId: string }) => {
+    const { bankingId } = prevState;
+    const user = await getAuthUser();
+
+    try {
+        await db.banking.delete({
+            where: {
+                id: bankingId,
+                profileId: user.id,
+            },
+        });
+
+        revalidatePath('/settings');
+        return { message: 'Banking schema is deleted successfully' };
     } catch (error) {
         return renderError(error);
     }

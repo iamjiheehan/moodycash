@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const profileSchema = z.object({
     firstName: z.string(),
@@ -8,15 +8,12 @@ export const profileSchema = z.object({
 
 export const serviceSchema = z.object({
     date: z.string(),
-    description: z.string().refine(
-        (description) => {
-            const charCount = description.length;
-            return charCount <= 50;
-        },
-        {
-            message: 'description must be 50 characters or less.',
-        }
-    ),
+    description: z
+        .string()
+        .max(50, { message: 'Mood must be 50 characters or less.' }),
+    mood: z
+        .string()
+        .max(20, { message: 'Mood must be 20 characters or less.' }),
     price: z.coerce
         .number()
         .int()
@@ -27,3 +24,34 @@ export const serviceSchema = z.object({
             message: 'price must be 1000 or less.',
         }),
 });
+
+export const bankingSchema = z.object({
+    mood: z
+        .string()
+        .max(20, { message: 'Mood must be 20 characters or less.' })
+        .nonempty({ message: 'Mood is required.' }),
+    bankName: z.string().nonempty({ message: 'Bank Name is required.' }),
+    bankAccountHolder: z
+        .string()
+        .nonempty({ message: 'Account Holder is required.' }),
+    bankAccountNumber: z
+        .string()
+        .nonempty({ message: 'Bank Account Number is required.' }),
+    description: z
+        .string()
+        .max(20, { message: 'Description must be 20 characters or less.' })
+        .nonempty({ message: 'Description is required.' }),
+});
+
+export function validateWithZodSchema<T>(
+    schema: z.ZodSchema<T>,
+    data: unknown
+): T {
+    const result = schema.safeParse(data);
+    if (!result.success) {
+        const errors = result.error.errors.map((error) => error.message);
+        throw new Error(errors.join(','));
+    }
+
+    return result.data;
+}
