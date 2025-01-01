@@ -26,7 +26,7 @@ export default function RootLayout({
                 <body className={inter.className}>
                     <Providers>
                         <Navbar />
-                        <main className="pt-10">{children}</main>
+                        <main className="py-10">{children}</main>
                         <Footer />
                     </Providers>
                 </body>

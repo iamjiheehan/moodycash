@@ -36,28 +36,41 @@ function ServicePage() {
     );
 
     return (
-        <form>
-            <h1>When did you start feeling this way?</h1>
-            <SelectCalendar onChange={setSelectedDate} />
-            <h1>How are you feeling?</h1>
-            <section className="flex">
-                <RadioGroup
-                    defaultValue={feelingList[0]}
-                    onValueChange={setSelectedFeeling}
-                >
-                    {feelingList.map((feeling, index) => (
-                        <div
-                            key={index}
-                            className="flex items-center space-x-2"
-                        >
-                            <RadioGroupItem id={`r${index}`} value={feeling} />
-                            <Label htmlFor={`r${index}`}>{feeling}</Label>
-                        </div>
-                    ))}
-                </RadioGroup>
+        <form className="container flex flex-col gap-24 py-10">
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    When did you start feeling this way?
+                </h1>
+                <SelectCalendar onChange={setSelectedDate} />
             </section>
-            <section>
-                <h1>What’s behind how you’re feeling?</h1>
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    How are you feeling?
+                </h1>
+                <section className="flex">
+                    <RadioGroup
+                        defaultValue={feelingList[0]}
+                        onValueChange={setSelectedFeeling}
+                    >
+                        {feelingList.map((feeling, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center space-x-2"
+                            >
+                                <RadioGroupItem
+                                    id={`r${index}`}
+                                    value={feeling}
+                                />
+                                <Label htmlFor={`r${index}`}>{feeling}</Label>
+                            </div>
+                        ))}
+                    </RadioGroup>
+                </section>
+            </section>
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    What’s behind how you’re feeling?
+                </h1>
                 <TextAreaInput
                     name="description"
                     labelText="Description (10 - 50 Words)"
@@ -65,8 +78,10 @@ function ServicePage() {
                 />
             </section>
             <section className="flex gap-4 items-center justify-between">
-                <h1>How much would you like to transfer?</h1>
-                <section className="grid grid-cols-2 gap-4 items-center">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    How much would you like to transfer?
+                </h1>
+                <section className="flex gap-4 items-center">
                     <InputOTPControlled
                         maxLength={4}
                         value={otpValue}
@@ -75,15 +90,15 @@ function ServicePage() {
                     <p>won</p>
                 </section>
             </section>
-            <section>
-                You are feeling {selectedFeeling} on{' '}
-                {selectedDate
-                    ? selectedDate.toLocaleDateString()
-                    : 'No date selected'}
-                , and you would like to transfer {formattedOtpValue} won worth
-                of {selectedFeeling.toLowerCase()} into your account.
-            </section>
-            <section className="flex justify-center py-8">
+            <section className="flex justify-between">
+                <h1 className="text-lg font-bold text-black-600">
+                    You are feeling {selectedFeeling} on{' '}
+                    {selectedDate
+                        ? selectedDate.toLocaleDateString()
+                        : 'No date selected'}
+                    , and you would like to transfer {formattedOtpValue} won
+                    worth of {selectedFeeling.toLowerCase()} into your account.
+                </h1>
                 <AlertForm
                     actionType="submit"
                     title="Are you sure?"
