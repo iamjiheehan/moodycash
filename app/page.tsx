@@ -1,13 +1,24 @@
 import HomeSectionForm from '@/components/form/HomeSection';
 import InfoCard from '@/components/home/InfoCard';
+import WelcomeSection from '@/components/home/WelcomeSection';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 function HomePage() {
     return (
         <section>
-            <WelcomeSection />
+            <WelcomeSection
+                title={['Track Your Mood,', 'Fund Your Emotions']}
+                description={[
+                    'Track your emotional journey by depositing into different accounts',
+                    'that reflect your mood. Whether you&apos;re feeling upbeat or down,',
+                    'you can visualize how your emotions influence your financial flow.',
+                ]}
+                url="welcome"
+                alt="Intro Image"
+            />
             <div className="bg-customLightGray">
                 <section className="container flex flex-col items-center gap-12 py-20 sm:py-16">
                     <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-black-600">
@@ -63,63 +74,18 @@ function HomePage() {
                     </h1>
                 </section>
             </Link>
-            <section className="container">
-                <section className="flex items-center justify-between">
-                    <section className="flex flex-col items-start gap-6">
-                        <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
-                            How are you feeling today?
-                        </h1>
-                        <h2>
-                            매일매일 감정을 기록하고 기록하며,
-                            <br />
-                            나만의 감정 여행을 떠나보세요.
-                            <br /> 감정의 변화에 맞는 송금을 통해 새로운 금융
-                            경험을 즐길 수 있습니다.
-                        </h2>
-                    </section>
-                    <Link href="/service">
-                        <Image
-                            src="/assets/Image/moodycash-black.webp"
-                            alt="Welcome image"
-                            height={400}
-                            width={450}
-                        ></Image>
-                    </Link>
-                </section>
-            </section>
+            <WelcomeSection
+                title={['How are you feeling today?']}
+                description={[
+                    'Track your emotional journey by depositing into different accounts',
+                    'that reflect your mood. Whether you&apos;re feeling upbeat or down,',
+                    'you can visualize how your emotions influence your financial flow.',
+                ]}
+                url="moodycash-black"
+                alt="Welcome Image"
+            />
         </section>
     );
 }
-
-const WelcomeSection = () => {
-    return (
-        <section className="container">
-            <section className="flex items-center justify-between">
-                <section className="flex flex-col items-start gap-6">
-                    <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
-                        Track Your Mood,
-                        <br /> Fund Your Emotions
-                    </h1>
-                    <h2>
-                        Track your emotional journey by depositing into
-                        different accounts
-                        <br /> that reflect your mood. Whether you&apos;re
-                        feeling upbeat or down, <br />
-                        you can visualize how your emotions influence your
-                        financial flow.
-                    </h2>
-                </section>
-                <section>
-                    <Image
-                        src="/assets/Image/welcome.webp"
-                        alt="Welcome image"
-                        height={400}
-                        width={450}
-                    ></Image>
-                </section>
-            </section>
-        </section>
-    );
-};
 
 export default HomePage;
