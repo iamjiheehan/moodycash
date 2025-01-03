@@ -6,7 +6,7 @@ import React from 'react';
 
 export default async function CreatePage() {
     return (
-        <section>
+        <section className="container">
             <h1 className="text-2xl font-semibold mb-8 capitalize">
                 Setting banking schema
             </h1>
