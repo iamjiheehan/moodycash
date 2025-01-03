@@ -28,7 +28,7 @@ export default function MoodCalendar() {
         });
     };
     return (
-        <section className="flex flex-col items-center">
+        <section className="flex flex-row justify-between">
             <Calendar
                 mode="multiple"
                 onDayClick={handleDayClick}

@@ -20,7 +20,7 @@ export default function SelectCalendar({ onChange }: SelectCalendarProps) {
             mode="single"
             selected={date}
             onSelect={handleDateChange}
-            className="rounded-md border shadow"
+            className="rounded-md border shadow w-fit"
         />
     );
 }

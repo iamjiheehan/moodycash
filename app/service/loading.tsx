@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function ServiceLoadingPage() {
     return (
-        <form>
+        <form className="container">
             <h1>
                 <Skeleton className="h-6 w-1/2" />
             </h1>

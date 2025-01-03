@@ -3,10 +3,10 @@ import { MoodSettingCard, MoodCreateCard } from '@/components/settings/Card';
 import { fetchBankings } from '@/utils/actions';
 
 export default async function SettingsPage() {
-    const data = await fetchBankings(); 
+    const data = await fetchBankings();
 
     return (
-        <div className="grid md:grid-cols-2 gap-8 mt-4">
+        <div className="container grid md:grid-cols-2 gap-8 mt-4">
             {data && data.length > 0 ? (
                 data.map((item, index) => (
                     <MoodSettingCard

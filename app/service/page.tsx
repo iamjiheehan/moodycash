@@ -39,12 +39,6 @@ function ServicePage() {
         <form className="container flex flex-col gap-24 py-10">
             <section className="flex flex-col gap-8">
                 <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                    When did you start feeling this way?
-                </h1>
-                <SelectCalendar onChange={setSelectedDate} />
-            </section>
-            <section className="flex flex-col gap-8">
-                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
                     How are you feeling?
                 </h1>
                 <section className="flex">
@@ -67,6 +61,13 @@ function ServicePage() {
                     </RadioGroup>
                 </section>
             </section>
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    When did you start feeling this way?
+                </h1>
+                <SelectCalendar onChange={setSelectedDate} />
+            </section>
+
             <section className="flex flex-col gap-8">
                 <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
                     What’s behind how you’re feeling?
