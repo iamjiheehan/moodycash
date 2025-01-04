@@ -10,6 +10,7 @@ import {
     fetchBankings,
     fetchMoods,
     fetchMoodWithBankings,
+    fetchProfile,
 } from '@/utils/actions';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -27,9 +28,10 @@ const DynamicServiceWrapper = dynamic(
 );
 
 async function ServicePage() {
-    const feelingList = ['Good', 'Bad', 'Angry', 'Hungry'];
     const fetchedDetails = await fetchBankings();
-    console.log('Fetched Moods on Server:', fetchedDetails);
+    const { clerkId } = await fetchProfile();
+
+    console.log('fetchedDetails:', fetchedDetails);
     return (
         <form className="container flex flex-col gap-24 py-10">
             {/* {fetchedDetails?.Banking.map((mood, index) => (
@@ -81,12 +83,7 @@ async function ServicePage() {
                         {/* <SelectCalendar onChange={setSelectedDate} /> */}
                     </section>{' '}
                     *
-                    {/* <DynamicServiceWrapper
-                        serviceId={property.id}
-                        price={property.price}
-                        date={property.bookings}
-                    /> */}
-                    여기에뜰것
+                    <DynamicServiceWrapper />
                 </div>
             </section>
             <section className="flex justify-between">
