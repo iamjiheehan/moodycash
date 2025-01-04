@@ -13,9 +13,9 @@ const SelectRadio: React.FC<RadioGroupComponentProps> = ({ moods }) => {
     return (
         <RadioGroup.Root
             defaultValue={moods[0]?.mood}
-            onValueChange={(value) =>
-                useServiceDetails.setState({ mood: value })
-            }
+            // onValueChange={(value) =>
+            //     // useServiceDetails.setState({ mood: value })
+            // }
             className="flex flex-col space-y-2"
         >
             {moods.map((mood, index) => (

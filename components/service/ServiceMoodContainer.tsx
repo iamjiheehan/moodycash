@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MoodCreateCard } from '@/components/settings/Card';
 import { ServiceMoodCard } from './ServiceMoodCard';
+import { useServiceDetails } from '@/utils/store';
 
 type BankingInfo = {
     mood: string;

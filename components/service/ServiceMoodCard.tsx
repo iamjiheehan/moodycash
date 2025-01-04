@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
+import { useEffect } from 'react';
+import { useServiceDetails } from '@/utils/store';
 
 type BankingInfoCardProps = {
     mood: string;
@@ -18,11 +20,21 @@ export function ServiceMoodCard({
     selected = false,
     onChange,
 }: BankingInfoCardProps) {
+    useEffect(() => {
+        if (selected) {
+            useServiceDetails.setState({
+                mood: mood,
+                bankName: bankName,
+                bankAccountNumber: bankAccountNumber,
+            });
+        }
+    }, [selected]);
     return (
         <Card
             className={`relative h-[10rem] ${
-                selected ? 'border-blue-500' : ''
+                selected ? 'outline outline-offset-2 outline-blue-500 ' : ''
             }`}
+            onClick={onChange} // Add onClick event to the card
         >
             <CardHeader>
                 <h1>{mood}</h1>
@@ -38,13 +50,6 @@ export function ServiceMoodCard({
                     <DeleteButton />
                 </div>
             </div>
-            <input
-                type="radio"
-                name="moodSetting"
-                checked={selected}
-                onChange={onChange}
-                className="absolute top-2 right-2"
-            />
         </Card>
     );
 }

@@ -130,7 +130,7 @@ export const fetchBankings = async () => {
             },
         });
 
-        console.log('Bankings fetched:', bankings);
+        // console.log('Bankings fetched:', bankings);
         return bankings;
     } catch (error) {
         console.error('Error fetching bankings:', error);
