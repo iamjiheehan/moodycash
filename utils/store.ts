@@ -7,6 +7,7 @@ type ServiceState = {
     date: Date | undefined;
     bankName: string;
     bankAccountNumber: string;
+    description: string;
 };
 
 export const useServiceDetails = create<ServiceState>(() => {
@@ -17,5 +18,6 @@ export const useServiceDetails = create<ServiceState>(() => {
         bankName: '',
         bankAccountNumber: '',
         mood: '',
+        description: '',
     };
 });

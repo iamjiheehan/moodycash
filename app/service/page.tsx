@@ -14,8 +14,6 @@ import {
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import SelectRadio from '@/components/service/ServiceRadio';
-
 const DynamicServiceWrapper = dynamic(
     () => import('@/components/service/ServiceSummaryWrapper'),
     {
@@ -39,21 +37,10 @@ const DynamicMoodWrapper = dynamic(
 );
 
 async function ServicePage() {
-    const fetchedDetails = await fetchBankings();
     const { clerkId } = await fetchProfile();
 
-    // console.log('fetchedDetails:', fetchedDetails);
     return (
-        <form className="container flex flex-col gap-24 py-10">
-            {/* {fetchedDetails?.Banking.map((mood, index) => (
-                <div key={index}>
-                    <p>Mood: {mood.mood}</p>
-                    <p>Bank Name: {mood.bankName}</p>
-                    <p>Bank Account Holder: {mood.bankAccountHolder}</p>
-                    <p>Bank Account Number: {mood.bankAccountNumber}</p>
-                    <p>Description: {mood.description}</p>
-                </div>
-            ))} */}
+        <section className="container flex flex-col gap-24 py-10">
             <section className="lg:grid lg:grid-cols-12 gap-x-12 mt-12">
                 <div className="lg:col-span-8">
                     <section className="flex flex-col gap-8">
@@ -109,7 +96,7 @@ async function ServicePage() {
                     description={`Transferring ${formattedOtpValue} won to happy account`}
                 /> */}
             </section>
-        </form>
+        </section>
     );
 }
 
