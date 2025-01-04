@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { useEffect } from 'react';
 import { useServiceDetails } from '@/utils/store';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 
 type BankingInfoCardProps = {
     mood: string;

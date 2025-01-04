@@ -16,7 +16,7 @@ export default function SelectCalendar() {
             mode="single"
             selected={date}
             onSelect={setDate}
-            className="rounded-md border shadow w-fit"
+            className="rounded-md border shadow w-fit mt-4"
         />
     );
 }

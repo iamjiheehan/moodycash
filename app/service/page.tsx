@@ -1,21 +1,15 @@
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import React, { useState, useEffect } from 'react';
-import SelectCalendar from '@/components/service/ServiceCalendar';
 import { formatCurrency } from '@/utils/format';
 import AlertForm from '@/components/form/AlertForm';
-import {
-    fetchBankings,
-    fetchMoods,
-    fetchMoodWithBankings,
-    fetchProfile,
-} from '@/utils/actions';
+import { fetchProfile } from '@/utils/actions';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import ServiceDescription from '@/components/service/ServiceDescription';
+import ConfirmService from '@/components/service/ConfirmService';
+import ServiceContainer from '@/components/service/ServiceContainer';
 
-const DynamicServiceWrapper = dynamic(
-    () => import('@/components/service/ServiceSummaryWrapper'),
+const DynamicCalendarWrapper = dynamic(
+    () => import('@/components/service/ServiceCalendarWrapper'),
     {
         ssr: false,
         loading: () => <Skeleton className="h-[200px] w-full" />,
@@ -40,61 +34,24 @@ async function ServicePage() {
     const { clerkId } = await fetchProfile();
 
     return (
-        <section className="container flex flex-col gap-24 py-10">
-            <section className="lg:grid lg:grid-cols-12 gap-x-12 mt-12">
-                <div className="lg:col-span-8">
-                    <section className="flex flex-col gap-8">
-                        <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                            How are you feeling?
-                        </h1>
-                        <DynamicMoodWrapper />
-                        {/* <SelectRadio moods={fetchedDetails?.Banking || []} /> */}
-                    </section>
-                    <section className="flex flex-col gap-8">
-                        <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                            What’s behind how you’re feeling?
-                        </h1>
-                        <TextAreaInput
-                            name="description"
-                            labelText="Description (10 - 50 Words)"
-                            placeholder="Describe your feelings"
-                        />
-                    </section>
-                    <section className="flex gap-4 items-center justify-between">
-                        <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                            How much would you like to transfer?
-                        </h1>
-                        <section className="flex gap-4 items-center">
-                            <DynamicPriceWrapper />
-                            <p>won</p>
-                        </section>
-                    </section>
-                </div>
-                <div className="lg:col-span-4 flex flex-col items-center">
-                    <section className="flex flex-col gap-8">
-                        <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                            When did you start feeling this way?
-                        </h1>
-                        {/* <SelectCalendar onChange={setSelectedDate} /> */}
-                    </section>{' '}
-                    *
-                    <DynamicServiceWrapper />
-                </div>
+        <section className="container lg:flex lg:grid-cols-2 lg:gap-8">
+            <section className="basis-1/4  mt-2">
+                <ul className="flex flex-col gap-4">
+                    <li>Choose mood</li>
+                    <li>Choose date</li>
+                    <li>Write description</li>
+                    <li>write how much</li>
+                </ul>
             </section>
-            <section className="flex justify-between">
-                {/* <h1 className="text-lg font-bold text-black-600">
-                    You are feeling {selectedFeeling} on{' '}
-                    {selectedDate
-                        ? selectedDate.toLocaleDateString()
-                        : 'No date selected'}
-                    , and you would like to transfer {formattedOtpValue} won
-                    worth of {selectedFeeling.toLowerCase()} into your account.
-                </h1> */}
-                {/* <AlertForm
-                    actionType="submit"
-                    title="Are you sure?"
-                    description={`Transferring ${formattedOtpValue} won to happy account`}
-                /> */}
+            <section className="basis-3/4">
+                <div className="flex flex-col gap-8">
+                    <DynamicMoodWrapper />
+                    <DynamicCalendarWrapper />
+                    <DynamicPriceWrapper />
+                    <ServiceDescription />
+                </div>
+                <ServiceContainer />
+                <ConfirmService />
             </section>
         </section>
     );
