@@ -13,9 +13,7 @@ import {
 } from '@/utils/actions';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useServiceDetails } from '@/utils/store';
-import ServiceRadio from '@/components/service/ServiceRadio';
-import RadioGroupComponent from '@/components/service/ServiceRadio';
+
 import SelectRadio from '@/components/service/ServiceRadio';
 
 const DynamicServiceWrapper = dynamic(
@@ -32,12 +30,19 @@ const DynamicPriceWrapper = dynamic(
         loading: () => <Skeleton className="h-[200px] w-full" />,
     }
 );
+const DynamicMoodWrapper = dynamic(
+    () => import('@/components/service/ServiceMoodWrapper'),
+    {
+        ssr: false,
+        loading: () => <Skeleton className="h-[200px] w-full" />,
+    }
+);
 
 async function ServicePage() {
     const fetchedDetails = await fetchBankings();
     const { clerkId } = await fetchProfile();
 
-    console.log('fetchedDetails:', fetchedDetails);
+    // console.log('fetchedDetails:', fetchedDetails);
     return (
         <form className="container flex flex-col gap-24 py-10">
             {/* {fetchedDetails?.Banking.map((mood, index) => (
@@ -55,7 +60,8 @@ async function ServicePage() {
                         <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
                             How are you feeling?
                         </h1>
-                        <SelectRadio moods={fetchedDetails?.Banking || []} />
+                        <DynamicMoodWrapper />
+                        {/* <SelectRadio moods={fetchedDetails?.Banking || []} /> */}
                     </section>
                     <section className="flex flex-col gap-8">
                         <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
