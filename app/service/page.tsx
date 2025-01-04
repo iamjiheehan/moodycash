@@ -3,7 +3,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import React, { useState, useEffect } from 'react';
 import SelectCalendar from '@/components/service/ServiceCalendar';
-import { InputOTPControlled } from '@/components/form/OptInput';
 import { formatCurrency } from '@/utils/format';
 import AlertForm from '@/components/form/AlertForm';
 import {
@@ -21,6 +20,13 @@ import SelectRadio from '@/components/service/ServiceRadio';
 
 const DynamicServiceWrapper = dynamic(
     () => import('@/components/service/ServiceSummaryWrapper'),
+    {
+        ssr: false,
+        loading: () => <Skeleton className="h-[200px] w-full" />,
+    }
+);
+const DynamicPriceWrapper = dynamic(
+    () => import('@/components/service/ServicePrice'),
     {
         ssr: false,
         loading: () => <Skeleton className="h-[200px] w-full" />,
@@ -66,11 +72,7 @@ async function ServicePage() {
                             How much would you like to transfer?
                         </h1>
                         <section className="flex gap-4 items-center">
-                            {/* <InputOTPControlled
-                                maxLength={4}
-                                value={otpValue}
-                                onChange={setOtpValue}
-                            /> */}
+                            <DynamicPriceWrapper />
                             <p>won</p>
                         </section>
                     </section>
