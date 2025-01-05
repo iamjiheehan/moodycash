@@ -1,6 +1,7 @@
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -8,7 +9,7 @@ generator client {
 }
 
 model Profile {
-  id           String    @id @default(uuid()) @map("_id") @db.ObjectId
+  id           String    @id @default(uuid())
   clerkId      String    @unique
   firstName    String
   lastName     String
@@ -22,7 +23,7 @@ model Profile {
 }
 
 model Service {
-  id          String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   date        DateTime
   description String
   mood        String
@@ -34,7 +35,7 @@ model Service {
 }
 
 model Banking {
-  id                String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id                String   @id @default(uuid())
   mood              String
   bankName          String
   bankAccountHolder String
