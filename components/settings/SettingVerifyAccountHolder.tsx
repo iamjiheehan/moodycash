@@ -59,10 +59,7 @@ export default function SettingVerifyAccountHolder() {
     const [holder, setHolder] = useState('한지희');
     const [profile, setProfile] = useState({ firstName: '', lastName: '' });
     const { toast } = useToast();
-    useEffect(() => {
-        console.log('bankCodeData', bankCodeData);
-        console.log('bankLabelData', bankLabelData);
-    }, [bankCodeData]);
+
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
@@ -117,8 +114,13 @@ export default function SettingVerifyAccountHolder() {
                                     </Label>
                                     <SettingBank
                                         value={bankCodeData}
-                                        onChange={(value: string) => {
+                                        label={bankLabelData}
+                                        onChange={(
+                                            value: string,
+                                            label: string
+                                        ) => {
                                             setBankCodeData(value);
+                                            setBankLabelData(label);
                                         }}
                                     />
                                 </div>

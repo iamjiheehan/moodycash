@@ -1,4 +1,4 @@
-const banks: { value: string; label: string }[] = [
+const BanksData: { value: string; label: string }[] = [
     {
         value: '004',
         label: '국민은행',
@@ -65,4 +65,4 @@ const banks: { value: string; label: string }[] = [
     },
 ];
 
-export default banks;
+export default BanksData;

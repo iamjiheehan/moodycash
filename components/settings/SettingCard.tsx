@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
+import BanksData from '@/data/BanksData';
 
 type BankingInfoCardProps = {
     mood: string;
@@ -20,13 +21,15 @@ export function MoodSettingCard({
     onChange,
     isRadio = false,
 }: BankingInfoCardProps) {
+    const bankLabel =
+        BanksData.find((data) => data.value === bankName)?.label || bankName;
     return (
         <Card className={`relative ${selected ? 'border-blue-500' : ''}`}>
             <CardHeader>
                 <h1> Account for {mood} mood</h1>
             </CardHeader>
             <CardContent>
-                {bankName}
+                {bankLabel}
                 {bankAccountNumber}
             </CardContent>
             <div className="absolute top-0 right-3 h-full py-2">
