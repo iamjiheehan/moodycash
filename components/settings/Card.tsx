@@ -7,7 +7,6 @@ type BankingInfoCardProps = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
-    description: string;
     selected?: boolean;
     onChange?: () => void;
     isRadio?: boolean;
@@ -17,7 +16,6 @@ export function MoodSettingCard({
     mood,
     bankName,
     bankAccountNumber,
-    description,
     selected = false,
     onChange,
     isRadio = false,
@@ -26,7 +24,6 @@ export function MoodSettingCard({
         <Card className={`relative h-[10rem] ${selected ? 'border-blue-500' : ''}`}>
             <CardHeader>
                 <h1> Account for {mood} mood</h1>
-                <h2>{description}</h2>
             </CardHeader>
             <CardContent>
                 {bankName}

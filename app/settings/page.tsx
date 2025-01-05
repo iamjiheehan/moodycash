@@ -15,7 +15,6 @@ export default async function SettingsPage() {
                         mood={banking.mood}
                         bankName={banking.bankName}
                         bankAccountNumber={banking.bankAccountNumber}
-                        description={banking.description}
                         onChange={() =>
                             useServiceDetails.setState({ mood: banking.mood })
                         }

@@ -29,11 +29,6 @@ export default async function CreatePage() {
                             label="Account Holder"
                         />
                         <FormInput type="text" name="mood" label="Mood" />
-                        <FormInput
-                            type="text"
-                            name="description"
-                            label="Description"
-                        />
                     </div>
                     <SubmitButton
                         text="Create Mood & Banking"

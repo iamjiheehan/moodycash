@@ -7,7 +7,7 @@ async function ProfilePage() {
     const profile = await fetchProfile();
 
     return (
-        <section>
+        <section className="container">
             <h1 className="text-2xl font-semibold mb-8 capitalize">
                 user profile
             </h1>

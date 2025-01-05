@@ -34,7 +34,6 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
                         mood={banking.mood}
                         bankName={banking.bankName}
                         bankAccountNumber={banking.bankAccountNumber}
-                        description={banking.description}
                         selected={selectedMood === banking.mood}
                         onChange={() => handleRadioChange(banking.mood)}
                     />

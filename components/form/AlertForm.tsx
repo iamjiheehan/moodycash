@@ -5,7 +5,6 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -16,14 +15,12 @@ import { DeleteButton, EditButton, SubmitButton } from './Buttons';
 type actionType = 'submit' | 'edit' | 'delete';
 type AlertFormProps = {
     title: string;
-    description: string;
     actionType: actionType;
     callback?: (actionType: actionType) => void;
 };
 
 function AlertForm({
     title,
-    description,
     actionType,
     callback,
 }: AlertFormProps) {
@@ -53,7 +50,6 @@ function AlertForm({
                 <AlertDialogHeader>
                     <AlertDialogTitle>{title}</AlertDialogTitle>
                 </AlertDialogHeader>
-                <AlertDialogDescription>{description}</AlertDialogDescription>
                 <AlertDialogFooter>
                     <AlertDialogAction onClick={handleConfirm}>
                         Confirm

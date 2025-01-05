@@ -8,7 +8,6 @@ type BankingInfoCardProps = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
-    description: string;
     selected?: boolean;
     onChange?: () => void;
 };
@@ -17,7 +16,6 @@ export function ServiceMoodCard({
     mood,
     bankName,
     bankAccountNumber,
-    description,
     selected = false,
     onChange,
 }: BankingInfoCardProps) {
@@ -39,7 +37,6 @@ export function ServiceMoodCard({
         >
             <CardHeader>
                 <h1>{mood}</h1>
-                <h2>{description}</h2>
             </CardHeader>
             <CardContent>
                 {bankName}

@@ -37,10 +37,6 @@ export const bankingSchema = z.object({
     bankAccountNumber: z
         .string()
         .nonempty({ message: 'Bank Account Number is required.' }),
-    description: z
-        .string()
-        .max(20, { message: 'Description must be 20 characters or less.' })
-        .nonempty({ message: 'Description is required.' }),
 });
 
 export function validateWithZodSchema<T>(
