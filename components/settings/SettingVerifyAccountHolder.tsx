@@ -1,5 +1,4 @@
 'use client';
-import { SubmitButton } from '@/components/form/Buttons';
 import FormInput from '@/components/form/FormInput';
 import React, { useState, useEffect } from 'react';
 import { Label } from '../ui/label';
@@ -8,9 +7,8 @@ import { useToast } from '@/hooks/use-toast';
 import { createBankingAction, fetchProfile } from '@/utils/actions';
 import AlertForm from '../form/AlertForm';
 import FormContainer from '../form/FormContainer';
-import { SettingBank } from './SettingBank';
-import { redirect } from 'next/dist/server/api-utils';
 import { revalidatePath } from 'next/cache';
+import { SettingBank } from './SettingBank';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
@@ -56,17 +54,20 @@ async function verification(
 
 export default function SettingVerifyAccountHolder() {
     const [bankCodeData, setBankCodeData] = useState('');
+    const [bankLabelData, setBankLabelData] = useState('');
     const [bankAccountNumberData, setBankAccountNumberData] = useState('');
     const [holder, setHolder] = useState('한지희');
     const [profile, setProfile] = useState({ firstName: '', lastName: '' });
     const { toast } = useToast();
-
+    useEffect(() => {
+        console.log('bankCodeData', bankCodeData);
+        console.log('bankLabelData', bankLabelData);
+    }, [bankCodeData]);
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
                 const profileData = await fetchProfile();
                 setProfile(profileData);
-                console.log(profileData.firstName, profileData.lastName);
             } catch (error) {
                 console.error('Error fetching profile:', error);
             }
@@ -79,7 +80,7 @@ export default function SettingVerifyAccountHolder() {
         e.preventDefault();
 
         const bankAccountNumber = bankAccountNumberData;
-        const bankCode = bankCodeData;
+        const bankCode = bankLabelData;
 
         const token = await fetchToken();
         if (token) {
@@ -116,7 +117,9 @@ export default function SettingVerifyAccountHolder() {
                                     </Label>
                                     <SettingBank
                                         value={bankCodeData}
-                                        onChange={setBankCodeData}
+                                        onChange={(value: string) => {
+                                            setBankCodeData(value);
+                                        }}
                                     />
                                 </div>
                             </div>

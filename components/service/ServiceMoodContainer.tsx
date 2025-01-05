@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MoodCreateCard } from '@/components/settings/Card';
+import { MoodCreateCard } from '@/components/settings/SettingCard';
 import { ServiceMoodCard } from './ServiceMoodCard';
 import { useServiceDetails } from '@/utils/store';
 

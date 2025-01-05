@@ -1,4 +1,4 @@
-import { MoodSettingCard, MoodCreateCard } from '@/components/settings/Card';
+import { MoodSettingCard, MoodCreateCard } from '@/components/settings/SettingCard';
 import { fetchBankings } from '@/utils/actions';
 import { useServiceDetails } from '@/utils/store';
 
