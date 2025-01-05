@@ -1,5 +1,3 @@
-'use server';
-
 import FormInput from '@/components/form/FormInput';
 import FormContainer from '@/components/form/FormContainer';
 import { SubmitButton } from '@/components/form/Buttons';
