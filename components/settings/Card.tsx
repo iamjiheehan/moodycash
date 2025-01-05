@@ -4,31 +4,30 @@ import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 
 type BankingInfoCardProps = {
-    mood: {
-        name: string;
-        description: string;
-    };
-    banking: {
-        name: string;
-        account: string;
-    };
-    children?: React.ReactNode;
+    mood: string;
+    bankName: string;
+    bankAccountNumber: string;
+    selected?: boolean;
+    onChange?: () => void;
+    isRadio?: boolean;
 };
 
 export function MoodSettingCard({
-    banking,
     mood,
-    children,
+    bankName,
+    bankAccountNumber,
+    selected = false,
+    onChange,
+    isRadio = false,
 }: BankingInfoCardProps) {
     return (
-        <Card className="relative h-[10rem]">
+        <Card className={`relative h-[10rem] ${selected ? 'border-blue-500' : ''}`}>
             <CardHeader>
-                <h1> Account for {mood.name} mood</h1>
-                <h2>{mood.description}</h2>
+                <h1> Account for {mood} mood</h1>
             </CardHeader>
             <CardContent>
-                {banking.name}
-                {banking.account}
+                {bankName}
+                {bankAccountNumber}
             </CardContent>
             <div className="absolute top-0 right-3 h-full py-2">
                 <div className="flex flex-col justify-between h-full">
@@ -36,7 +35,15 @@ export function MoodSettingCard({
                     <DeleteButton />
                 </div>
             </div>
-            <div>{children}</div>
+            {isRadio && (
+                <input
+                    type="radio"
+                    name="moodSetting"
+                    checked={selected}
+                    onChange={onChange}
+                    className="absolute top-2 right-2"
+                />
+            )}
         </Card>
     );
 }

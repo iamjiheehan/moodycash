@@ -106,6 +106,68 @@ export const fetchMoods = async () => {
     }
 };
 
+export const fetchBankings = async () => {
+    const user = await getAuthUser();
+
+    if (!user) {
+        console.log('No user found');
+        return null;
+    }
+
+    try {
+        const bankings = await db.profile.findUnique({
+            where: { clerkId: user.id },
+            select: {
+                Banking: {
+                    select: {
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
+                        description: true,
+                        mood: true,
+                    },
+                },
+            },
+        });
+
+        // console.log('Bankings fetched:', bankings);
+        return bankings;
+    } catch (error) {
+        console.error('Error fetching bankings:', error);
+        return null;
+    }
+};
+
+export const fetchMoodWithBankings = async () => {
+    const user = await currentUser();
+    if (!user) return null;
+
+    try {
+        const moodWithBankings = await db.profile.findUnique({
+            where: { clerkId: user.id },
+            select: {
+                Service: {
+                    select: {
+                        mood: true,
+                    },
+                },
+                Banking: {
+                    select: {
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
+                    },
+                },
+            },
+        });
+
+        return moodWithBankings;
+    } catch (error) {
+        console.error('Error fetching moods:', error);
+        return null;
+    }
+};
+
 export const updateProfileAction = async (
     prevState: any,
     formData: FormData
@@ -182,68 +244,6 @@ export const updateServiceAction = async (
         return { message: 'service schema is updated successfully' };
     } catch (error) {
         return renderError(error);
-    }
-};
-
-export const fetchBankings = async () => {
-    const user = await getAuthUser();
-
-    if (!user) {
-        console.log('No user found');
-        return null;
-    }
-
-    try {
-        const bankings = await db.profile.findUnique({
-            where: { clerkId: user.id },
-            select: {
-                Banking: {
-                    select: {
-                        bankName: true,
-                        bankAccountHolder: true,
-                        bankAccountNumber: true,
-                        description: true,
-                        mood: true,
-                    },
-                },
-            },
-        });
-
-        console.log('Bankings fetched:', bankings);
-        return bankings?.Banking ?? null;
-    } catch (error) {
-        console.error('Error fetching bankings:', error);
-        return null;
-    }
-};
-
-export const fetchMoodWithBankings = async () => {
-    const user = await currentUser();
-    if (!user) return null;
-
-    try {
-        const moodWithBankings = await db.profile.findUnique({
-            where: { id: 'profileId' },
-            select: {
-                Service: {
-                    select: {
-                        mood: true,
-                    },
-                },
-                Banking: {
-                    select: {
-                        bankName: true,
-                        bankAccountHolder: true,
-                        bankAccountNumber: true,
-                    },
-                },
-            },
-        });
-
-        return moodWithBankings;
-    } catch (error) {
-        console.error('Error fetching moods:', error);
-        return null;
     }
 };
 

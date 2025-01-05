@@ -6,17 +6,18 @@ import React from 'react';
 
 export default function MoodPage() {
     return (
-        <section>
-            <h1>This is How you are feeling!</h1>
-            <section>
-                <h2>금액으로 보는 기분 변화 그래프</h2>
+        <section className="container flex flex-col gap-24 py-10">
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    This is How you are feeling!
+                </h1>
                 <MoodChart />
             </section>
-            <section>
-                <h2>달력으로 보는 기록</h2>
-                <section>
-                    <MoodCalendar />
-                </section>
+            <section className="flex flex-col gap-8">
+                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
+                    달력으로 보는 기록
+                </h1>
+                <MoodCalendar />
             </section>
         </section>
     );

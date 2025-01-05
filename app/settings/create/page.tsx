@@ -6,7 +6,7 @@ import React from 'react';
 
 export default async function CreatePage() {
     return (
-        <section>
+        <section className="container">
             <h1 className="text-2xl font-semibold mb-8 capitalize">
                 Setting banking schema
             </h1>
@@ -29,11 +29,6 @@ export default async function CreatePage() {
                             label="Account Holder"
                         />
                         <FormInput type="text" name="mood" label="Mood" />
-                        <FormInput
-                            type="text"
-                            name="description"
-                            label="Description"
-                        />
                     </div>
                     <SubmitButton
                         text="Create Mood & Banking"

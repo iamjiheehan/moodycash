@@ -1,5 +1,8 @@
+'use client';
+
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useServiceDetails } from '@/utils/store';
 
 type TextAreaInputProps = {
     name: string;
@@ -26,6 +29,9 @@ export default function TextAreaInput({
                 required
                 className="leading-loose"
                 placeholder={placeholder}
+                onChange={(e) => {
+                    useServiceDetails.setState({ description: e.target.value });
+                }}
             />
         </div>
     );
