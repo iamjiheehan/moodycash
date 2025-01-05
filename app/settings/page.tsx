@@ -1,6 +1,8 @@
-import { MoodSettingCard, MoodCreateCard } from '@/components/settings/SettingCard';
+import {
+    MoodSettingCard,
+    MoodCreateCard,
+} from '@/components/settings/SettingCard';
 import { fetchBankings } from '@/utils/actions';
-import { useServiceDetails } from '@/utils/store';
 
 type fetchedDetailsProps = {
     Banking: {
@@ -8,12 +10,12 @@ type fetchedDetailsProps = {
         bankAccountNumber: string;
         bankAccountHolder: string;
         mood: string;
+        id: string;
     }[];
 } | null;
 
 export default async function SettingsPage() {
     const fetchedDetails: fetchedDetailsProps = await fetchBankings();
-
     return (
         <div className="container grid md:grid-cols-2 gap-8 mt-4">
             {fetchedDetails?.Banking.map((banking, index) => (
@@ -23,9 +25,7 @@ export default async function SettingsPage() {
                         mood={banking.mood}
                         bankName={banking.bankName}
                         bankAccountNumber={banking.bankAccountNumber}
-                        onChange={() =>
-                            useServiceDetails.setState({ mood: banking.mood })
-                        }
+                        bankingId={banking.id}
                     />
                 </div>
             ))}

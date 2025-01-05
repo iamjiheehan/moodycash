@@ -120,6 +120,7 @@ export const fetchBankings = async () => {
             select: {
                 Banking: {
                     select: {
+                        id: true,
                         bankName: true,
                         bankAccountHolder: true,
                         bankAccountNumber: true,
@@ -136,6 +137,17 @@ export const fetchBankings = async () => {
         return null;
     }
 };
+export const fetchBankinglDetails = async (bankingId: string) => {
+    const user = await getAuthUser();
+
+    return db.banking.findUnique({
+        where: {
+            id: bankingId,
+            profileId: user.id,
+        },
+    });
+};
+
 
 export const updateProfileAction = async (
     prevState: any,
@@ -242,7 +254,6 @@ export const createBankingAction = async (
     const user = await getAuthUser();
     try {
         const rawData = Object.fromEntries(formData);
-        console.log('rawData:', rawData);
         const validatedFields = validateWithZodSchema(bankingSchema, rawData);
 
         await db.banking.create({

@@ -3,23 +3,23 @@ import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 import BanksData from '@/data/BanksData';
+import { deleteBankingAction, fetchBankings } from '@/utils/actions';
+import FormContainer from '../form/FormContainer';
 
 type BankingInfoCardProps = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
+    bankingId: string;
     selected?: boolean;
-    onChange?: () => void;
-    isRadio?: boolean;
 };
 
-export function MoodSettingCard({
+export async function MoodSettingCard({
     mood,
     bankName,
     bankAccountNumber,
+    bankingId,
     selected = false,
-    onChange,
-    isRadio = false,
 }: BankingInfoCardProps) {
     const bankLabel =
         BanksData.find((data) => data.value === bankName)?.label || bankName;
@@ -34,19 +34,12 @@ export function MoodSettingCard({
             </CardContent>
             <div className="absolute top-0 right-3 h-full py-2">
                 <div className="flex flex-col justify-between h-full">
-                    <EditButton />
-                    <DeleteButton />
+                    <Link href={`/settings/${bankingId}/edit`}>
+                        <EditButton />
+                    </Link>
+                    <DeleteBanking bankingId={bankingId} />
                 </div>
             </div>
-            {isRadio && (
-                <input
-                    type="radio"
-                    name="moodSetting"
-                    checked={selected}
-                    onChange={onChange}
-                    className="absolute top-2 right-2"
-                />
-            )}
         </Card>
     );
 }
@@ -60,5 +53,14 @@ export function MoodCreateCard() {
                 </CardContent>
             </Card>
         </Link>
+    );
+}
+
+function DeleteBanking({ bankingId }: { bankingId: string }) {
+    const deleteBanking = deleteBankingAction.bind(null, { bankingId });
+    return (
+        <FormContainer action={deleteBanking}>
+            <DeleteButton />
+        </FormContainer>
     );
 }
