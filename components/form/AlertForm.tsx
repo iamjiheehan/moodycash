@@ -6,6 +6,7 @@ import {
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogFooter,
+    AlertDialogDescription,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
@@ -16,17 +17,23 @@ type actionType = 'submit' | 'edit' | 'delete';
 type AlertFormProps = {
     title: string;
     actionType: actionType;
-    callback?: (actionType: actionType) => void;
+    description?: string;
+    callback?: (prevState: any, formData: FormData) => void;
 };
 
 function AlertForm({
     title,
+    description,
     actionType,
     callback,
 }: AlertFormProps) {
-    const handleConfirm = () => {
+    const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault(); // 기본 동작을 막음
         if (callback) {
-            callback(actionType);
+            const formData = new FormData(
+                document.querySelector('form') as HTMLFormElement
+            );
+            callback({}, formData);
         }
     };
 
@@ -49,6 +56,9 @@ function AlertForm({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>{title}</AlertDialogTitle>
+                    <AlertDialogDescription className="AlertDialogDescription">
+                        {description ? description : ''}
+                    </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogAction onClick={handleConfirm}>

@@ -86,13 +86,17 @@ const banks = [
     },
 ];
 
-export function SettingBank() {
+interface SettingBankProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+export function SettingBank({ value, onChange }: SettingBankProps) {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState('');
+
     return (
         <>
-            <input type="hidden" name="bankCode" value={value} />
-
+            <input type="hidden" name="bankName" value={value} required />
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
@@ -102,8 +106,7 @@ export function SettingBank() {
                         className="w-full justify-between"
                     >
                         {value
-                            ? banks.find((banks) => banks.value === value)
-                                  ?.label
+                            ? banks.find((bank) => bank.value === value)?.label
                             : '은행을 선택해주세요'}
                         <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -114,24 +117,24 @@ export function SettingBank() {
                         <CommandList>
                             <CommandEmpty>No framework found.</CommandEmpty>
                             <CommandGroup>
-                                {banks.map((banks) => (
+                                {banks.map((bank) => (
                                     <CommandItem
-                                        key={banks.value}
-                                        value={banks.value}
-                                        onSelect={(currentValue) => {
-                                            setValue(
-                                                currentValue === value
+                                        key={bank.value}
+                                        value={bank.value}
+                                        onSelect={() => {
+                                            onChange(
+                                                bank.value === value
                                                     ? ''
-                                                    : currentValue
+                                                    : bank.value
                                             );
                                             setOpen(false);
                                         }}
                                     >
-                                        {banks.label}
+                                        {bank.label}
                                         <Check
                                             className={cn(
                                                 'ml-auto',
-                                                value === banks.value
+                                                value === bank.value
                                                     ? 'opacity-100'
                                                     : 'opacity-0'
                                             )}

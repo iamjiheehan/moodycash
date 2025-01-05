@@ -7,6 +7,8 @@ type FormInputProps = {
     label?: string;
     defaultValue?: string;
     placeholder?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function FormInput({
@@ -15,6 +17,8 @@ function FormInput({
     type,
     defaultValue,
     placeholder,
+    value,
+    onChange,
 }: FormInputProps) {
     return (
         <div>
@@ -27,6 +31,8 @@ function FormInput({
                 type={type}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
+                value={value}
+                onChange={onChange}
                 required
             />
         </div>

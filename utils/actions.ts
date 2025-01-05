@@ -10,7 +10,6 @@ import {
     bankingSchema,
     validateWithZodSchema,
 } from './schemas';
-import { PostAccountHolder } from './PostAccountHolder';
 
 const getAuthUser = async () => {
     const user = await currentUser();
