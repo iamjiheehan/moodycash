@@ -8,7 +8,6 @@ type fetchedDetailsProps = {
         bankAccountNumber: string;
         bankAccountHolder: string;
         mood: string;
-        description: string;
     }[];
 } | null;
 

@@ -123,7 +123,6 @@ export const fetchBankings = async () => {
                         bankName: true,
                         bankAccountHolder: true,
                         bankAccountNumber: true,
-                        description: true,
                         mood: true,
                     },
                 },
@@ -138,35 +137,6 @@ export const fetchBankings = async () => {
     }
 };
 
-export const fetchMoodWithBankings = async () => {
-    const user = await currentUser();
-    if (!user) return null;
-
-    try {
-        const moodWithBankings = await db.profile.findUnique({
-            where: { clerkId: user.id },
-            select: {
-                Service: {
-                    select: {
-                        mood: true,
-                    },
-                },
-                Banking: {
-                    select: {
-                        bankName: true,
-                        bankAccountHolder: true,
-                        bankAccountNumber: true,
-                    },
-                },
-            },
-        });
-
-        return moodWithBankings;
-    } catch (error) {
-        console.error('Error fetching moods:', error);
-        return null;
-    }
-};
 
 export const updateProfileAction = async (
     prevState: any,
