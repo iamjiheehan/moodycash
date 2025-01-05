@@ -1,10 +1,19 @@
-// `SettingsPage`는 서버 컴포넌트
 import { MoodSettingCard, MoodCreateCard } from '@/components/settings/Card';
 import { fetchBankings } from '@/utils/actions';
 import { useServiceDetails } from '@/utils/store';
 
+type fetchedDetailsProps = {
+    Banking: {
+        bankName: string;
+        bankAccountNumber: string;
+        bankAccountHolder: string;
+        mood: string;
+        description: string;
+    }[];
+} | null;
+
 export default async function SettingsPage() {
-    const fetchedDetails = await fetchBankings();
+    const fetchedDetails: fetchedDetailsProps = await fetchBankings();
 
     return (
         <div className="container grid md:grid-cols-2 gap-8 mt-4">
