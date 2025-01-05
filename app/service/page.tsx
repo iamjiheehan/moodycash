@@ -1,6 +1,3 @@
-import TextAreaInput from '@/components/form/TextAreaInput';
-import { formatCurrency } from '@/utils/format';
-import AlertForm from '@/components/form/AlertForm';
 import { fetchProfile } from '@/utils/actions';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -35,21 +32,15 @@ async function ServicePage() {
 
     return (
         <section className="container lg:flex lg:grid-cols-2 lg:gap-8">
-            <section className="basis-1/4  mt-2">
-                <ul className="flex flex-col gap-4">
-                    <li>Choose mood</li>
-                    <li>Choose date</li>
-                    <li>Write description</li>
-                    <li>write how much</li>
-                </ul>
-            </section>
             <section className="basis-3/4">
                 <div className="flex flex-col gap-8">
                     <DynamicMoodWrapper />
-                    <DynamicCalendarWrapper />
                     <DynamicPriceWrapper />
                     <ServiceDescription />
                 </div>
+            </section>
+            <section className="basis-1/4 flex flex-col gap-8">
+                <DynamicCalendarWrapper />
                 <ServiceContainer />
                 <ConfirmService />
             </section>

@@ -26,7 +26,7 @@ function ConfirmService() {
     return (
         <section>
             <FormContainer action={createService}>
-                <SubmitButton text="Reserve" className="w-full" />
+                <SubmitButton text="Confirm" className="w-full" />
             </FormContainer>
         </section>
     );

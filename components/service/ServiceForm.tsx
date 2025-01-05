@@ -12,14 +12,16 @@ function ServiceForm() {
         <Card className="p-8 mb-4">
             <CardTitle className="mb-8">Summary </CardTitle>
             <Separator />
-            <CardTitle className="mt-8">
+            <CardTitle className="mt-8 flex flex-col gap-4">
                 <span className="font-semibold">
-                    {date ? formatDate(new Date(date)) : ''}
+                    {date ? formatDate(new Date(date)) : 'Date'}
                 </span>
-                <span>{mood}</span>
-                <span>{price}</span>
-                <span>{bankName}</span>
-                <span>{bankAccountNumber}</span>
+                <span> {mood ? mood : 'Mood'}</span>
+                <span>{bankName ? bankName : 'Bank Name'}</span>
+                <span>
+                    {bankAccountNumber ? bankAccountNumber : 'Account Number'}
+                </span>
+                <span>{price ? price : 'How much ?'}</span>
             </CardTitle>
         </Card>
     );
