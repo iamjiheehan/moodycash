@@ -21,7 +21,7 @@ export function MoodSettingCard({
     isRadio = false,
 }: BankingInfoCardProps) {
     return (
-        <Card className={`relative h-[10rem] ${selected ? 'border-blue-500' : ''}`}>
+        <Card className={`relative ${selected ? 'border-blue-500' : ''}`}>
             <CardHeader>
                 <h1> Account for {mood} mood</h1>
             </CardHeader>
@@ -51,7 +51,7 @@ export function MoodSettingCard({
 export function MoodCreateCard() {
     return (
         <Link href="/settings/create">
-            <Card className="relative h-[10rem]">
+            <Card className="relative h-[7rem]">
                 <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
                     <FaPlus className="text-2xl text-primary" />
                 </CardContent>
