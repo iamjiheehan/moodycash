@@ -4,7 +4,7 @@ import FormInput from '@/components/form/FormInput';
 import { createBankingAction } from '@/utils/actions';
 import React from 'react';
 
-export default async function CreatePage() {
+export default function CreatePage() {
     return (
         <section className="container">
             <h1 className="text-2xl font-semibold mb-8 capitalize">
