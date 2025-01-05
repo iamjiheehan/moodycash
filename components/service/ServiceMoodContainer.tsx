@@ -9,7 +9,6 @@ type BankingInfo = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
-    description: string;
 };
 
 type ServiceMoodProps = {
