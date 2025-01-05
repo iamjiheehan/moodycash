@@ -1,3 +1,4 @@
+import { useTokenStore } from '@/utils/store';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type TokenResponse = {
@@ -10,11 +11,17 @@ type TokenResponse = {
     };
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<TokenResponse>) {
-    const { NEXT_PUBLIC_REST_API_KEY, NEXT_PUBLIC_REST_API_SECRET } = process.env;
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse<TokenResponse>
+) {
+    const { NEXT_PUBLIC_REST_API_KEY, NEXT_PUBLIC_REST_API_SECRET } =
+        process.env;
 
     if (!NEXT_PUBLIC_REST_API_KEY || !NEXT_PUBLIC_REST_API_SECRET) {
-        return res.status(500).json({ code: 500, message: 'API key or secret is missing' });
+        return res
+            .status(500)
+            .json({ code: 500, message: 'API key or secret is missing' });
     }
 
     const response = await fetch('https://api.iamport.kr/users/getToken', {
@@ -29,5 +36,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
 
     const data: TokenResponse = await response.json();
+
+    if (data.response?.access_token) {
+        const { setAccessToken } = useTokenStore.getState();
+        setAccessToken(data.response.access_token);
+    }
+
     res.status(response.status).json(data);
 }

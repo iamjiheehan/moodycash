@@ -1,11 +1,10 @@
 'use client';
-
 import { SubmitButton } from '@/components/form/Buttons';
-import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import SettingBankWrapper from '@/components/settings/SettingBankWrapper';
-import { createBankingAction } from '@/utils/actions';
-import React, { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import React, { useEffect } from 'react';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
@@ -24,7 +23,11 @@ async function fetchToken() {
     }
 }
 
-async function verification(accessToken: string) {
+async function verification(
+    accessToken: string,
+    bankCode: string,
+    bankNum: string
+) {
     const response = await fetch('/api/verification', {
         method: 'POST',
         headers: {
@@ -32,60 +35,71 @@ async function verification(accessToken: string) {
         },
         body: JSON.stringify({
             accessToken,
-            bankCode: '003',
-            bankNum: '01086088219',
+            bankCode: bankCode,
+            bankNum: bankNum,
         }),
     });
 
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        console.log(data.response.bank_holder);
+        return data.response.bank_holder;
     } else {
         console.error('Error fetching bank holder:', response.statusText);
     }
 }
 
 export default function CreatePage() {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [holder, setHolder] = React.useState('');
+    const getTokenAndVerify = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-    useEffect(() => {
-        const getTokenAndVerify = async () => {
-            const token = await fetchToken();
-            if (token) {
-                setAccessToken(token);
-                await verification(token);
-            }
-        };
+        const formData = new FormData(e.target as HTMLFormElement);
+        const bankAccountNumber = formData.get('bankAccountNumber') as string;
+        const bankCode = formData.get('bankCode') as string;
 
-        getTokenAndVerify();
-    }, []);
-
+        const token = await fetchToken();
+        if (token) {
+            const holder = await verification(
+                token,
+                bankCode,
+                bankAccountNumber
+            );
+            setHolder(holder);
+        }
+    };
     return (
         <section className="container">
             <h1 className="text-2xl font-semibold mb-8 capitalize">
-                Setting banking schema
+                계좌 추가하기
             </h1>
             <div className="border p-8 rounded-md">
-                <FormContainer action={createBankingAction}>
-                    <div className="grid gap-4 md:grid-cols-2 mt-4 ">
-                        <SettingBankWrapper />
-                        <FormInput
-                            type="text"
-                            name="bankAccountNumber"
-                            label="Bank Account"
-                        />
-                        <FormInput
-                            type="text"
-                            name="bankAccountHolder"
-                            label="Account Holder"
-                        />
-                        <FormInput type="text" name="mood" label="Mood" />
-                    </div>
-                    <SubmitButton
-                        text="Create Mood & Banking"
-                        className="mt-8"
-                    />
-                </FormContainer>
+                <form onSubmit={getTokenAndVerify}>
+                    <section className="flex flex-row items-end gap-4">
+                        <div className="flex-grow-[1]">
+                            <SettingBankWrapper />
+                        </div>
+                        <div className="flex-grow-[2]">
+                            <FormInput
+                                type="text"
+                                name="bankAccountNumber"
+                                label="Bank Account"
+                            />
+                        </div>
+                        <SubmitButton text="계좌좌 확인" />
+                    </section>
+                    <section className="flex flex-row items-end gap-4">
+                        <div className="flex-grow-[1]">
+                            <Label htmlFor="accountHolder">예금주</Label>
+                            <Input type="text" value={holder} readOnly />
+                        </div>
+                        <div className="flex-grow-[2]">
+                            <Label htmlFor="accountHolder">예금주</Label>
+                            <Input type="text" value={holder} readOnly />
+                        </div>
+                    </section>
+                </form>
+                {/* <input type="text" value={holder} /> */}
             </div>
         </section>
     );

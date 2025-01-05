@@ -1,7 +1,7 @@
 'use server';
 
 import db from './db';
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {
@@ -10,6 +10,7 @@ import {
     bankingSchema,
     validateWithZodSchema,
 } from './schemas';
+import { PostAccountHolder } from './PostAccountHolder';
 
 const getAuthUser = async () => {
     const user = await currentUser();
@@ -136,7 +137,6 @@ export const fetchBankings = async () => {
         return null;
     }
 };
-
 
 export const updateProfileAction = async (
     prevState: any,

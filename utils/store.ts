@@ -21,3 +21,13 @@ export const useServiceDetails = create<ServiceState>(() => {
         description: '',
     };
 });
+
+type TokenState = {
+    accessToken: string;
+    setAccessToken: (token: string) => void;
+};
+
+export const useTokenStore = create<TokenState>((set) => ({
+    accessToken: '',
+    setAccessToken: (token: string) => set({ accessToken: token }),
+}));
