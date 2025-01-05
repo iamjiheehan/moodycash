@@ -2,6 +2,7 @@ import FormContainer from '@/components/form/FormContainer';
 import { updateProfileAction, fetchProfile } from '@/utils/actions';
 import FormInput from '@/components/form/FormInput';
 import { SubmitButton } from '@/components/form/Buttons';
+import { currentUser } from '@clerk/nextjs/server';
 
 async function ProfilePage() {
     const profile = await fetchProfile();

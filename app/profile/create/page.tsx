@@ -8,9 +8,9 @@ import { redirect } from 'next/navigation';
 async function CreateProfile() {
     const user = await currentUser();
     if (user?.privateMetadata?.hasProfile) {
-        redirect('/');
+        redirect('/profile');
     }
-
+    
     return (
         <section>
             <h1 className="text-2xl font-semibold mb-8 capitalize">new user</h1>
