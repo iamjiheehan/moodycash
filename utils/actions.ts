@@ -245,7 +245,6 @@ export const updateBankingAction = async (
             throw new Error(errors.join(','));
         }
 
-        // Check if a banking record with the same bankName and bankAccountNumber already exists
         const existingBanking = await db.banking.findFirst({
             where: {
                 profileId: user.id,
@@ -260,6 +259,22 @@ export const updateBankingAction = async (
         if (existingBanking) {
             throw new Error(
                 '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
+            );
+        }
+
+        const existingMoodBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                mood: validatedFields.data.mood,
+                NOT: {
+                    id: bankingId,
+                },
+            },
+        });
+
+        if (existingMoodBanking) {
+            throw new Error(
+                '이미 존재하는 기분입니다. 다른 기분을 입력해주세요'
             );
         }
 
@@ -305,6 +320,17 @@ export const createBankingAction = async (
         const rawData = Object.fromEntries(formData);
         const validatedFields = validateWithZodSchema(bankingSchema, rawData);
 
+        // Check if the user already has 5 banking records
+        const bankingCount = await db.banking.count({
+            where: {
+                profileId: user.id,
+            },
+        });
+
+        if (bankingCount >= 6) {
+            throw new Error('계좌는 최대 6개까지만 등록 가능합니다');
+        }
+
         const existingBanking = await db.banking.findFirst({
             where: {
                 profileId: user.id,
@@ -318,6 +344,25 @@ export const createBankingAction = async (
                 '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
             );
         }
+        const existingMoodBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                mood: validatedFields.mood,
+            },
+        });
+
+        if (existingMoodBanking) {
+            throw new Error(
+                '이미 존재하는 기분입니다. 다른 기분을 입력해주세요'
+            );
+        }
+
+        await db.banking.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        });
 
         await db.banking.create({
             data: {

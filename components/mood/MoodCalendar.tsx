@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import { Calendar } from '../ui/calendar';
 import { chartData } from './MoodMockData';
@@ -11,12 +9,29 @@ export default function MoodCalendar() {
     const [selectedData, setSelectedData] = useState<any | undefined>(
         undefined
     );
+    const [firstDate, setFirstDate] = useState<string | undefined>(undefined);
+    const [lastDate, setLastDate] = useState<string | undefined>(undefined);
+    const [count, setCount] = useState(0);
+    const [amount, setAmount] = useState(0);
 
     useEffect(() => {
         const initialSelectedDates: Date[] = chartData.map(
             (item) => new Date(item.date)
         );
         setSelectedDate(initialSelectedDates);
+
+        const sortedData = [...chartData].sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+        setFirstDate(sortedData[0]?.date);
+        setLastDate(sortedData[sortedData.length - 1]?.date);
+
+        const totalAmount = chartData.reduce(
+            (sum, item) => sum + item.amount,
+            0
+        );
+        setAmount(totalAmount);
+        setCount(chartData.length);
     }, []);
 
     const handleDayClick: DayMouseEventHandler = (day, _) => {
@@ -27,30 +42,54 @@ export default function MoodCalendar() {
             }
         });
     };
+
     return (
         <section className="flex flex-row justify-between gap-8">
-            <Calendar
-                mode="multiple"
-                onDayClick={handleDayClick}
-                selected={selectedDate}
-                className="rounded-md border shadow"
-            />
-            <section className="border p-8 rounded-md w-full shadow">
-                {!selectedData && <div>날짜를 선택해주세요</div>}
-                {selectedDate.length > 0 && selectedData && (
-                    <section className="flex flex-col gap-4">
-                        <p className="text-xl">
-                            {formatDateFromISOString(selectedData.date)}에
+            {selectedDate.length === 0 ? (
+                <p className="text-xl">아직 기록을 하신 적이 없어요</p>
+            ) : (
+                <>
+                    <Calendar
+                        mode="multiple"
+                        onDayClick={handleDayClick}
+                        selected={selectedDate}
+                        className="rounded-md border shadow"
+                    />
+                    <section className="border p-8 rounded-md w-full shadow flex flex-col gap-4">
+                        <p>
+                            가장 처음에 기록한 날짜는{' '}
+                            {firstDate
+                                ? formatDateFromISOString(firstDate)
+                                : ''}
+                            .
                         </p>
-                        <p className="text-xl">
-                            {`${selectedData.amount}원을 ${selectedData.mood} 계좌에 담아두셨군요!`}
+                        <p>
+                            가장 최근에 기록한 날짜는{' '}
+                            {lastDate ? formatDateFromISOString(lastDate) : ''}.
                         </p>
-                        <p className="text-xl">
-                            그 날 남긴 메모는 {selectedData.memo} 이에요.
-                        </p>
+                        <p>지금까지 총 {count}번 기록했어요.</p>
+                        <p>총 송금 금액은 {amount}원 입니다.</p>
                     </section>
-                )}
-            </section>
+                    <section className="border p-8 rounded-md w-full shadow">
+                        {!selectedData && <div>날짜를 선택해주세요</div>}
+                        {selectedDate.length > 0 && selectedData && (
+                            <section className="flex flex-col gap-4">
+                                <p>
+                                    {formatDateFromISOString(selectedData.date)}
+                                    에
+                                </p>
+                                <p>
+                                    {`${selectedData.amount}원 만큼 ${selectedData.mood}한 날이었어요.`}
+                                </p>
+                                <p className="">
+                                    그 날 남긴 메모는 {selectedData.memo}{' '}
+                                    이에요.
+                                </p>
+                            </section>
+                        )}
+                    </section>
+                </>
+            )}
         </section>
     );
 }

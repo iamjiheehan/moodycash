@@ -47,7 +47,7 @@ export async function MoodSettingCard({
 export function MoodCreateCard() {
     return (
         <Link href="/settings/create">
-            <Card className="relative h-[7rem]">
+            <Card className="relative h-full min-h-[7rem]">
                 <CardContent className="flex absolute items-center justify-center h-full w-full pb-0">
                     <FaPlus className="text-2xl text-primary" />
                 </CardContent>

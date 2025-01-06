@@ -18,12 +18,12 @@ function ServiceForm() {
                 <span className="font-semibold">
                     {date ? formatDate(new Date(date)) : 'Date'}
                 </span>
-                <span>{mood ? `${mood} 기분의 계좌` : 'Mood'}</span>
-                <span>{bankLabel ? bankLabel : 'Bank Name'}</span>
+                <span>{mood ? `${mood} 기분의 계좌` : '기분'}</span>
+                <span>{bankLabel ? bankLabel : '은행 이름'}</span>
                 <span>
-                    {bankAccountNumber ? bankAccountNumber : 'Account Number'}
+                    {bankAccountNumber ? bankAccountNumber : '계좌번호'}
                 </span>
-                <span>{price ? price : '금액을 입력해주세요'}</span>
+                <span>{price ? `${price} 원` : '금액을 입력해주세요'}</span>
             </CardTitle>
         </Card>
     );
