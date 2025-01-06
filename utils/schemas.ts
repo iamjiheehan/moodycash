@@ -10,33 +10,29 @@ export const serviceSchema = z.object({
     date: z.string(),
     description: z
         .string()
-        .max(50, { message: 'Mood must be 50 characters or less.' }),
-    mood: z
-        .string()
-        .max(20, { message: 'Mood must be 20 characters or less.' }),
+        .max(50, { message: '메모는 50자 이하이어야 합니다.' }),
+    mood: z.string().max(20, { message: '기분은 20자 이하이어야 합니다.' }),
     price: z.coerce
         .number()
         .int()
-        .min(0, {
-            message: 'price must be a positive number.',
-        })
-        .max(9999, {
-            message: 'price must be 9999 or less.',
-        }),
+        .min(0, { message: '금액은 양수여야 합니다.' })
+        .max(9999, { message: '금액은 9999 이하이어야 합니다.' }),
 });
 
 export const bankingSchema = z.object({
     mood: z
         .string()
-        .max(20, { message: 'Mood must be 20 characters or less.' })
-        .nonempty({ message: 'Mood is required.' }),
-    bankName: z.string().nonempty({ message: 'Bank Name is required.' }),
+        .max(20, { message: '기분은 20자 이하이어야 합니다.' })
+        .nonempty({ message: '기분은 필수 입력 사항입니다.' }),
+    bankName: z
+        .string()
+        .nonempty({ message: '은행 이름은 필수 입력 사항입니다.' }),
     bankAccountHolder: z
         .string()
-        .nonempty({ message: 'Account Holder is required.' }),
+        .nonempty({ message: '예금주명은 필수 입력 사항입니다.' }),
     bankAccountNumber: z
         .string()
-        .nonempty({ message: 'Bank Account Number is required.' }),
+        .nonempty({ message: '계좌 번호는 필수 입력 사항입니다.' }),
 });
 
 export function validateWithZodSchema<T>(

@@ -27,9 +27,19 @@ function ConfirmService() {
         if (date) {
             data.append('date', date.toISOString());
         }
-        data.append('mood', mood);
-        data.append('price', price.toString());
-        data.append('description', description);
+        if (mood) {
+            data.append('mood', mood);
+        }
+        if (price) {
+            data.append('price', price.toString());
+        }
+        if (description) {
+            data.append('description', description);
+        }
+
+        if (!date || !mood || !price || !description) {
+            return { message: '모든 빈 칸을 입력해주세요' };
+        }
 
         return await createServiceAction(null, data);
     };

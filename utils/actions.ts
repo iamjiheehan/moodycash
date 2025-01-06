@@ -13,7 +13,7 @@ import {
 
 const getAuthUser = async () => {
     const user = await currentUser();
-    if (!user) throw new Error('You must be logged in to access this route');
+    if (!user) throw new Error('로그인이 필요합니다');
 
     if (!user.privateMetadata.hasProfile) redirect('/profile/create');
     return user;
@@ -32,7 +32,7 @@ export const createProfileAction = async (
 ) => {
     try {
         const user = await currentUser();
-        if (!user) throw new Error('Please login to create a profile');
+        if (!user) throw new Error('프로필 생성을 위해 로그인을 해주세요');
 
         const rawData = Object.fromEntries(formData);
         const validatedFields = profileSchema.parse(rawData);
@@ -171,7 +171,7 @@ export const updateProfileAction = async (
             data: validatedFields.data,
         });
         revalidatePath('/profile');
-        return { message: 'Profile updated successfully' };
+        return { message: '프로필이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -220,7 +220,7 @@ export const updateServiceAction = async (
             },
             data: validatedFields,
         });
-        return { message: 'service schema is created successfully' };
+        return { message: '해당 기록이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -285,7 +285,7 @@ export const updateBankingAction = async (
             data: validatedFields.data,
         });
         revalidatePath('/settings');
-        return { message: 'Banking schema is updated successfully' };
+        return { message: '해당 계좌가 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -304,7 +304,7 @@ export const deleteServiceAction = async (prevState: { serviceId: string }) => {
         });
 
         revalidatePath('/service');
-        return { message: 'Service schema is deleted successfully' };
+        return { message: '해당 기록이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -327,7 +327,7 @@ export const createBankingAction = async (
         });
 
         if (bankingCount >= 6) {
-            throw new Error('계좌는 최대 개까지만 등록 가능합니다');
+            throw new Error('계좌는 최대 6개까지만 등록 가능합니다');
         }
 
         const existingBanking = await db.banking.findFirst({
@@ -381,7 +381,7 @@ export const deleteBankingAction = async (prevState: { bankingId: string }) => {
         });
 
         revalidatePath('/settings');
-        return { message: 'Banking schema is deleted successfully' };
+        return { message: '해당 계좌가 성공적으로 삭제되었습니다' };
     } catch (error) {
         return renderError(error);
     }
