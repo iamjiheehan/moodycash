@@ -1,67 +1,23 @@
 'use client';
-import FormInput from '@/components/form/FormInput';
 import { useState, useEffect } from 'react';
+import FormInput from '@/components/form/FormInput';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
-import { useToast } from '@/hooks/use-toast';
 import { createBankingAction, fetchProfile } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 import { SettingBank } from './SettingBank';
 import { FallbackButton, SubmitButton } from '../form/Buttons';
-import { ReloadIcon } from '@radix-ui/react-icons';
-import { Button } from '../ui/button';
 import { FaCheck } from 'react-icons/fa';
 import { ErrorAlertForm } from '../form/AlertForm';
-
-async function fetchToken() {
-    const response = await fetch('/api/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        return data.response.access_token;
-    } else {
-        console.error('Error fetching token:', response.statusText);
-        return null;
-    }
-}
-
-async function verification(
-    accessToken: string,
-    bankCode: string,
-    bankNum: string
-) {
-    const response = await fetch('/api/verification', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            accessToken,
-            bankCode: bankCode,
-            bankNum: bankNum,
-        }),
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        return data.response.bank_holder;
-    }
-    throw new Error('Error fetching bank holder');
-}
+import getTokenAndVerify from '@/utils/getTokenAndVerify';
 
 export default function SettingVerifyAccountHolder() {
     const [bankCodeData, setBankCodeData] = useState('');
     const [bankLabelData, setBankLabelData] = useState('');
     const [bankAccountNumberData, setBankAccountNumberData] = useState('');
-    const [holder, setHolder] = useState('');
+    const [holder, setHolder] = useState('한지희');
     const [profile, setProfile] = useState({ firstName: '', lastName: '' });
     const [pending, setPending] = useState(false);
-    const { toast } = useToast();
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -79,33 +35,6 @@ export default function SettingVerifyAccountHolder() {
 
         fetchProfileData();
     }, []);
-
-    const getTokenAndVerify = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setPending(true);
-
-        const bankAccountNumber = bankAccountNumberData;
-        const bankCode = bankCodeData;
-
-        const token = await fetchToken();
-        if (token) {
-            try {
-                const holder = await verification(
-                    token,
-                    bankCode,
-                    bankAccountNumber
-                );
-                setHolder(holder);
-            } catch (error) {
-                toast({ description: '존재하는 계좌가 없습니다' });
-                console.error('Error:', error);
-            }
-        }
-        setPending(false);
-    };
-
-    const isHolderMatching =
-        holder === `${profile.lastName}${profile.firstName}`;
 
     return (
         <section>
@@ -138,7 +67,15 @@ export default function SettingVerifyAccountHolder() {
                         />
                     </div>
                     <FallbackButton
-                        fallback={getTokenAndVerify}
+                        fallback={(e) =>
+                            getTokenAndVerify(
+                                e,
+                                bankAccountNumberData,
+                                bankCodeData,
+                                setPending,
+                                setHolder
+                            )
+                        }
                         isPending={pending}
                         text="계좌 확인"
                     />
@@ -149,15 +86,20 @@ export default function SettingVerifyAccountHolder() {
                                 name="bankAccountHolder"
                                 type="text"
                                 value={holder}
-                                readOnly={isHolderMatching}
+                                readOnly={
+                                    holder ===
+                                    `${profile.lastName}${profile.firstName}`
+                                }
                                 placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
                                 className={`${
-                                    isHolderMatching
+                                    holder ===
+                                    `${profile.lastName}${profile.firstName}`
                                         ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'
                                         : ''
                                 }`}
                             />
-                            {isHolderMatching && (
+                            {holder ===
+                                `${profile.lastName}${profile.firstName}` && (
                                 <span className="absolute top-1/2 transform -translate-y-1/2 right-4">
                                     <FaCheck className="text-[hsl(var(--primary))]" />
                                 </span>
