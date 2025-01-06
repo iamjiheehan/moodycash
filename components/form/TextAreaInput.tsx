@@ -20,7 +20,7 @@ export default function TextAreaInput({
     isLabelHidden = false,
 }: TextAreaInputProps) {
     return (
-        <div className="mb-2">
+        <div className="">
             {!isLabelHidden && (
                 <Label htmlFor={name} className="capitalize">
                     {labelText || name}

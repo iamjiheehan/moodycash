@@ -32,14 +32,16 @@ async function ServicePage() {
             <section className="basis-3/4">
                 <div className="flex flex-col gap-8">
                     <DynamicMoodWrapper />
-                    <DynamicPriceWrapper />
                     <ServiceDescription />
+                    <DynamicPriceWrapper />
                 </div>
             </section>
-            <section className="basis-1/4 flex flex-col gap-8">
+            <section className="basis-1/4 flex flex-col justify-end gap-8">
                 <DynamicCalendarWrapper />
-                <ServiceContainer />
-                <ConfirmService />
+                <div>
+                    <ServiceContainer />
+                    <ConfirmService />
+                </div>
             </section>
         </section>
     );
