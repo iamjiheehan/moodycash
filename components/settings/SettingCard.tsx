@@ -26,7 +26,7 @@ export async function MoodSettingCard({
     return (
         <Card className={`relative ${selected ? 'border-blue-500' : ''}`}>
             <CardHeader>
-                <h1> Account for {mood} mood</h1>
+                <h1> {mood} 기분 계좌</h1>
             </CardHeader>
             <CardContent className="flex gap-2">
                 <p>{bankLabel}</p>

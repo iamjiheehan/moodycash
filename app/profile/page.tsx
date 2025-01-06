@@ -9,9 +9,7 @@ async function ProfilePage() {
 
     return (
         <section className="container">
-            <h1 className="text-2xl font-semibold mb-8 capitalize">
-                user profile
-            </h1>
+            <h1 className="text-2xl font-semibold mb-8 capitalize">프로필</h1>
             <div className="border p-8 rounded-md">
                 {/* image input container */}
                 <FormContainer action={updateProfileAction}>
@@ -19,23 +17,23 @@ async function ProfilePage() {
                         <FormInput
                             type="text"
                             name="firstName"
-                            label="First Name"
+                            label="이름"
                             defaultValue={profile.firstName}
                         />
                         <FormInput
                             type="text"
                             name="lastName"
-                            label="Last Name"
+                            label="성"
                             defaultValue={profile.lastName}
                         />
                         <FormInput
                             type="text"
                             name="username"
-                            label="Username"
+                            label="닉네임"
                             defaultValue={profile.username}
                         />
                     </div>
-                    <SubmitButton text="Update Profile" className="mt-8" />
+                    <SubmitButton text="프로필 변경" className="mt-8" />
                 </FormContainer>
             </div>
         </section>
