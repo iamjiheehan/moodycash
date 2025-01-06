@@ -1,5 +1,14 @@
 import { create } from 'zustand';
 
+type ProfileState = {
+    id: string;
+    clerkId: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+};
+
 type ServiceState = {
     serviceId: string;
     mood: string;
@@ -9,6 +18,31 @@ type ServiceState = {
     bankAccountNumber: string;
     description: string;
 };
+
+type BankingState = {
+    bankingId: string;
+    mood: string;
+    bankName: string;
+    bankCode: string;
+    bankAccountNumber: string;
+    description: string;
+};
+
+type TokenState = {
+    accessToken: string;
+    setAccessToken: (token: string) => void;
+};
+
+export const useProfile = create<ProfileState>(() => {
+    return {
+        id: '',
+        clerkId: '',
+        firstName: '',
+        lastName: '',
+        userName: '',
+        email: '',
+    };
+});
 
 export const useServiceDetails = create<ServiceState>(() => {
     return {
@@ -22,10 +56,16 @@ export const useServiceDetails = create<ServiceState>(() => {
     };
 });
 
-type TokenState = {
-    accessToken: string;
-    setAccessToken: (token: string) => void;
-};
+export const useBankingDetails = create<BankingState>(() => {
+    return {
+        bankingId: '',
+        mood: '',
+        bankName: '',
+        bankCode: '',
+        bankAccountNumber: '',
+        description: '',
+    };
+});
 
 export const useTokenStore = create<TokenState>((set) => ({
     accessToken: '',

@@ -70,7 +70,7 @@ export default function SettingVerifyAccountHolder() {
                 setProfile(profileData);
             } catch (error) {
                 console.error('Error fetching profile:', error);
-                <ErrorAlertForm title="에러 발생생" description="프로필 정보를 찾을 수 없습니다. 다시 로그인해주세요"/>
+                <ErrorAlertForm title="에러 발생" description="프로필 정보를 찾을 수 없습니다. 다시 로그인해주세요"/>
             }
         };
 

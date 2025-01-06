@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import dynamic from 'next/dynamic';
 
 const DynamicVerifyAccountHolderWrapper = dynamic(
-    () => import('@/components/settings/SettingVerifyAccountHolder'),
+    () => import('@/components/settings/CreateVerifyAccountHolder'),
     {
         ssr: false,
         loading: () => <Skeleton className="h-[200px] w-full" />,

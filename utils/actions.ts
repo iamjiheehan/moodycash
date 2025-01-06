@@ -137,7 +137,7 @@ export const fetchBankings = async () => {
         return null;
     }
 };
-export const fetchBankinglDetails = async (bankingId: string) => {
+export const fetchBankingDetails = async (bankingId: string) => {
     const user = await getAuthUser();
 
     return db.banking.findUnique({

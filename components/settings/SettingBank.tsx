@@ -21,17 +21,37 @@ import {
 import banks from '@/data/BanksData';
 
 interface SettingBankProps {
-    value: string;
+    value?: string;
     label: string;
-    onChange: (value: string, label: string) => void;
+    onChange?: (value: string, label: string) => void;
+    defaultValue?: string;
 }
 
-export function SettingBank({ value, label, onChange }: SettingBankProps) {
+export function SettingBank({
+    value,
+    label,
+    onChange,
+    defaultValue,
+}: SettingBankProps) {
     const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState(
+        defaultValue || value
+    );
+
+    React.useEffect(() => {
+        if (defaultValue) {
+            setSelectedValue(defaultValue);
+        }
+    }, [defaultValue]);
 
     return (
         <>
-            <input type="hidden" name="bankName" value={value} required />
+            <input
+                type="hidden"
+                name="bankName"
+                value={selectedValue}
+                required
+            />
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
@@ -40,8 +60,9 @@ export function SettingBank({ value, label, onChange }: SettingBankProps) {
                         aria-expanded={open}
                         className="w-full justify-between"
                     >
-                        {value
-                            ? banks.find((bank) => bank.value === value)?.label
+                        {selectedValue
+                            ? banks.find((bank) => bank.value === selectedValue)
+                                  ?.label
                             : '은행을 선택해주세요'}
                         <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -57,7 +78,8 @@ export function SettingBank({ value, label, onChange }: SettingBankProps) {
                                         key={bank.value}
                                         value={bank.value}
                                         onSelect={() => {
-                                            onChange(bank.value, bank.label);
+                                            setSelectedValue(bank.value);
+                                            onChange?.(bank.value, bank.label);
                                             setOpen(false);
                                         }}
                                     >
@@ -65,7 +87,7 @@ export function SettingBank({ value, label, onChange }: SettingBankProps) {
                                         <Check
                                             className={cn(
                                                 'ml-auto',
-                                                value === bank.value
+                                                selectedValue === bank.value
                                                     ? 'opacity-100'
                                                     : 'opacity-0'
                                             )}
