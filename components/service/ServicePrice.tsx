@@ -17,9 +17,9 @@ export default function ServicePrice() {
     }, [price]);
 
     return (
-        <section>
+        <section className='flex items-center justify-between'>
             <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                How much would you like to transfer?
+                얼마를 담아 보낼지 적어주세요
             </h1>
             <div className="space-y-2 flex items-center gap-8">
                 <InputOTP
@@ -32,7 +32,7 @@ export default function ServicePrice() {
                         ))}
                     </InputOTPGroup>
                 </InputOTP>
-                <h2>WON</h2>
+                <h2>원</h2>
             </div>
         </section>
     );

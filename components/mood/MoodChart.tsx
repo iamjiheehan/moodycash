@@ -71,9 +71,9 @@ export function MoodChart() {
         <Card>
             <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
                 <div className="grid flex-1 gap-1 text-center sm:text-left">
-                    <CardTitle>Mood Chart - Interactive</CardTitle>
+                    <CardTitle>감정 기록 그래프</CardTitle>
                     <CardDescription>
-                        Showing your moodswing for the last 3 months
+                        지난 3달간의 기록을 확인하세요.
                     </CardDescription>
                 </div>
                 <Select
@@ -90,13 +90,13 @@ export function MoodChart() {
                     </SelectTrigger>
                     <SelectContent className="rounded-xl">
                         <SelectItem value="90d" className="rounded-lg">
-                            Last 3 months
+                            3개월
                         </SelectItem>
                         <SelectItem value="30d" className="rounded-lg">
-                            Last 30 days
+                            한달
                         </SelectItem>
                         <SelectItem value="7d" className="rounded-lg">
-                            Last 7 days
+                            일주일
                         </SelectItem>
                     </SelectContent>
                 </Select>
@@ -142,7 +142,7 @@ export function MoodChart() {
                             minTickGap={32}
                             tickFormatter={(value) => {
                                 const date = new Date(value);
-                                return date.toLocaleDateString('en-US', {
+                                return date.toLocaleDateString('ko-KR', {
                                     month: 'short',
                                     day: 'numeric',
                                 });
@@ -155,7 +155,7 @@ export function MoodChart() {
                                     labelFormatter={(value) => {
                                         return new Date(
                                             value
-                                        ).toLocaleDateString('en-US', {
+                                        ).toLocaleDateString('ko-KR', {
                                             month: 'short',
                                             day: 'numeric',
                                         });

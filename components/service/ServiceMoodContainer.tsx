@@ -5,6 +5,7 @@ import { MoodCreateCard } from '@/components/settings/SettingCard';
 import { ServiceMoodCard } from './ServiceMoodCard';
 
 type BankingInfo = {
+    id: string;
     mood: string;
     bankName: string;
     bankAccountNumber: string;
@@ -32,8 +33,8 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
                         mood={banking.mood}
                         bankName={banking.bankName}
                         bankAccountNumber={banking.bankAccountNumber}
-                        selected={selectedMood === banking.mood}
-                        onChange={() => handleRadioChange(banking.mood)}
+                        selected={selectedMood === banking.id}
+                        onChange={() => handleRadioChange(banking.id)}
                     />
                 </div>
             ))}

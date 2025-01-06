@@ -28,10 +28,8 @@ export async function MoodSettingCard({
             <CardHeader>
                 <h1> Account for {mood} mood</h1>
             </CardHeader>
-            <CardContent className='flex gap-2'>
-                <p>
-                    <strong>{bankLabel}</strong>
-                </p>
+            <CardContent className="flex gap-2">
+                <p>{bankLabel}</p>
                 <p>{bankAccountNumber}</p>
             </CardContent>
             <div className="absolute top-0 right-3 h-full py-2">

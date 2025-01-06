@@ -61,7 +61,7 @@ function HomePage() {
                     </section>
                 </section>
             </div>
-            <Link href="/about">
+            <Link href="/service">
                 <section
                     className="relative h-[250px] overflow-hidden flex justify-center items-center bg-center bg-cover"
                     style={{
@@ -70,7 +70,7 @@ function HomePage() {
                 >
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <h1 className="relative text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
-                        사용법 보러가기
+                        서비스 이용하기기
                     </h1>
                 </section>
             </Link>
