@@ -16,3 +16,12 @@ export function formatDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}년 ${month}월 ${day}일`;
 }
+
+export function formatDateFromISOString(date: string): string {
+    const formattedDate = new Date(date).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    return formattedDate;
+}
