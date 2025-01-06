@@ -1,20 +1,14 @@
-import { Noto_Sans_KR, Single_Day } from "next/font/google";
+import { Noto_Sans_KR } from 'next/font/google';
 
 const sumClass = (...classnames: string[]) => {
-  return classnames.join(" ");
+    return classnames.join(' ');
 };
 
 const noto_sans_kr = Noto_Sans_KR({
-  subsets: ["latin"],
-  weight: ["100", "400", "700", "900"],
-  variable: "--noto_sans_kr",
-  display: "swap",
+    subsets: ['latin'],
+    weight: ['100', '400', '700', '900'],
+    variable: '--noto_sans_kr',
+    display: 'swap',
 });
 
-const single_day = Single_Day({
-  weight: ["400"],
-  variable: "--single_day",
-  display: "swap",
-});
-
-export const FontClassNames = sumClass(noto_sans_kr.className, single_day.variable);
+export const FontClassNames = sumClass(noto_sans_kr.className);

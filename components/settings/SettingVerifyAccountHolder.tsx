@@ -10,6 +10,7 @@ import { SettingBank } from './SettingBank';
 import { SubmitButton } from '../form/Buttons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Button } from '../ui/button';
+import { FaCheck } from 'react-icons/fa';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
@@ -109,7 +110,7 @@ export default function SettingVerifyAccountHolder() {
                     <div className="flex-grow-[1]">
                         <div className="flex flex-col gap-1">
                             <Label htmlFor="bankName" className="capitalize">
-                                bankName
+                                은행이름
                             </Label>
                             <SettingBank
                                 value={bankCodeData}
@@ -125,7 +126,7 @@ export default function SettingVerifyAccountHolder() {
                         <FormInput
                             type="text"
                             name="bankAccountNumber"
-                            label="Bank Account"
+                            label="계좌번호"
                             value={bankAccountNumberData}
                             onChange={(e) =>
                                 setBankAccountNumberData(e.target.value)
@@ -149,16 +150,25 @@ export default function SettingVerifyAccountHolder() {
                     </Button>
                     <div>
                         <Label htmlFor="accountHolder">예금주</Label>
-                        <Input
-                            name="bankAccountHolder"
-                            type="text"
-                            value={holder}
-                            readOnly
-                            placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
-                            className={
-                                isHolderMatching ? 'border-green-500' : ''
-                            }
-                        />
+                        <div className="relative">
+                            <Input
+                                name="bankAccountHolder"
+                                type="text"
+                                value={holder}
+                                readOnly={isHolderMatching}
+                                placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
+                                className={`${
+                                    isHolderMatching
+                                        ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'
+                                        : ''
+                                }`}
+                            />
+                            {isHolderMatching && (
+                                <span className="absolute top-1/2 transform -translate-y-1/2 right-4">
+                                    <FaCheck className="text-[hsl(var(--primary))]" />
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <div>
                         <Label htmlFor="mood">
@@ -170,7 +180,7 @@ export default function SettingVerifyAccountHolder() {
                             placeholder="예시 : 기쁜 날, 슬픈 날"
                         />
                     </div>
-                    <SubmitButton />
+                    <SubmitButton text="등록하기"/>
                 </section>
             </FormContainer>
         </section>
