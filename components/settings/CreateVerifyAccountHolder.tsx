@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { createBankingAction, fetchProfile } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 import { SettingBank } from './SettingBank';
-import { SubmitButton } from '../form/Buttons';
+import { FallbackButton, SubmitButton } from '../form/Buttons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Button } from '../ui/button';
 import { FaCheck } from 'react-icons/fa';
@@ -70,7 +70,10 @@ export default function SettingVerifyAccountHolder() {
                 setProfile(profileData);
             } catch (error) {
                 console.error('Error fetching profile:', error);
-                <ErrorAlertForm title="에러 발생" description="프로필 정보를 찾을 수 없습니다. 다시 로그인해주세요"/>
+                <ErrorAlertForm
+                    title="에러 발생"
+                    description="프로필 정보를 찾을 수 없습니다. 다시 로그인해주세요"
+                />;
             }
         };
 
@@ -134,21 +137,11 @@ export default function SettingVerifyAccountHolder() {
                             }
                         />
                     </div>
-                    <Button
-                        type="button"
-                        onClick={getTokenAndVerify}
-                        disabled={pending}
-                        className="capitalize"
-                    >
-                        {pending ? (
-                            <>
-                                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                                Please wait...
-                            </>
-                        ) : (
-                            '계좌 확인'
-                        )}
-                    </Button>
+                    <FallbackButton
+                        fallback={getTokenAndVerify}
+                        isPending={pending}
+                        text="계좌 확인"
+                    />
                     <div>
                         <Label htmlFor="accountHolder">예금주</Label>
                         <div className="relative">

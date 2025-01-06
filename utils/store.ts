@@ -33,6 +33,13 @@ type TokenState = {
     setAccessToken: (token: string) => void;
 };
 
+type BankChangeState = {
+    bankName: string;
+    bankAccountNumber: string;
+    setBankName: (name: string) => void;
+    setBankAccountNumber: (number: string) => void;
+};
+
 export const useProfile = create<ProfileState>(() => {
     return {
         id: '',
@@ -70,4 +77,12 @@ export const useBankingDetails = create<BankingState>(() => {
 export const useTokenStore = create<TokenState>((set) => ({
     accessToken: '',
     setAccessToken: (token: string) => set({ accessToken: token }),
+}));
+
+export const useBankChangeStore = create<BankChangeState>((set) => ({
+    bankName: '',
+    bankAccountNumber: '',
+    setBankName: (name: string) => set({ bankName: name }),
+    setBankAccountNumber: (number: string) =>
+        set({ bankAccountNumber: number }),
 }));

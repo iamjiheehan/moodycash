@@ -4,13 +4,21 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { SignInButton } from '@clerk/nextjs';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { LuTrash2, LuSquare, LuPencil } from 'react-icons/lu';
+import { LuTrash2, LuPencil } from 'react-icons/lu';
 
 type btnSize = 'default' | 'sm' | 'lg';
 
 type SubmitButtonProps = {
     className?: string;
     text?: string;
+    size?: btnSize;
+};
+
+type FallbackButtonProps = {
+    fallback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    isPending: boolean;
+    text: string;
+    className?: string;
     size?: btnSize;
 };
 
@@ -25,7 +33,7 @@ export function SubmitButton({
             type="submit"
             disabled={pending}
             className={`capitalize ${className}`}
-            size="lg"
+            size={size}
         >
             {pending ? (
                 <>
@@ -98,6 +106,33 @@ export const EditButton = () => {
             className="p-2 cursor-pointer"
         >
             <LuPencil />
+        </Button>
+    );
+};
+
+export const FallbackButton: React.FC<FallbackButtonProps> = ({
+    fallback,
+    isPending,
+    text,
+    className = '',
+    size = 'lg',
+}) => {
+    return (
+        <Button
+            onClick={fallback}
+            type="button"
+            disabled={isPending}
+            className={`capitalize ${className}`}
+            size={size}
+        >
+            {isPending ? (
+                <>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait...
+                </>
+            ) : (
+                text
+            )}
         </Button>
     );
 };
