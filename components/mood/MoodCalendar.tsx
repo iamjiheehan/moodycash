@@ -39,14 +39,13 @@ export default function MoodCalendar() {
                 {!selectedData && <div>날짜를 선택해주세요</div>}
                 {selectedDate.length > 0 && selectedData && (
                     <section className="flex flex-col gap-4">
-                        <p className="text-2xl">
-                            {formatDateFromISOString(selectedData.date)}의
-                            기분은은
+                        <p className="text-xl">
+                            {formatDateFromISOString(selectedData.date)}에
                         </p>
-                        <p className="text-2xl">
-                            {`${selectedData.amount}원 만큼 ${selectedData.mood} 계좌에 담아두셨군요!`}
+                        <p className="text-xl">
+                            {`${selectedData.amount}원을 ${selectedData.mood} 계좌에 담아두셨군요!`}
                         </p>
-                        <p className="text-2xl">
+                        <p className="text-xl">
                             그 날 남긴 메모는 {selectedData.memo} 이에요.
                         </p>
                     </section>
