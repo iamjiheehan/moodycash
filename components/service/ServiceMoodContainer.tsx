@@ -38,7 +38,9 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
                     />
                 </div>
             ))}
-            <MoodCreateCard />
+            {fetchedDetails && fetchedDetails?.Banking.length < 6 && (
+                <MoodCreateCard />
+            )}
         </div>
     );
 }

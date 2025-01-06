@@ -1,4 +1,3 @@
-import { fetchProfile } from '@/utils/actions';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
 import ServiceDescription from '@/components/service/ServiceDescription';

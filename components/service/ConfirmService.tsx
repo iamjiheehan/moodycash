@@ -30,13 +30,14 @@ function ConfirmService() {
         data.append('mood', mood);
         data.append('price', price.toString());
         data.append('description', description);
+
         return await createServiceAction(null, data);
     };
 
     return (
         <section>
             <FormContainer action={createService}>
-                <SubmitButton text="Confirm" className="w-full" />
+                <SubmitButton text="등록하기" className="w-full" />
             </FormContainer>
         </section>
     );
