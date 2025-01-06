@@ -6,6 +6,7 @@ import Providers from './provides';
 import { ClerkProvider } from '@clerk/nextjs';
 import { koKR } from '@clerk/localizations';
 import Footer from './footer/page';
+import { FontClassNames } from '@/styles/fonts/fonts';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
     return (
         <ClerkProvider localization={koKR}>
             <html lang="en" suppressHydrationWarning>
-                <body className={inter.className}>
+                <body className={(inter.className, FontClassNames)}>
                     <Providers>
                         <Navbar />
                         <main className="py-10">{children}</main>
