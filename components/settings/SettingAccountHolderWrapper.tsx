@@ -19,6 +19,7 @@ export default function SettingAccountHolderWrapper({
         <>
             <ValidationFormInput
                 name="bankAccountHolder"
+                label="예금주"
                 value={holder}
                 readOnly={isHolderMatching}
                 placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}

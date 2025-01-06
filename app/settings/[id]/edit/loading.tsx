@@ -1,7 +1,8 @@
 'use client';
-import LoadingCards from '@/components/card/LoadingCards';
+
+import SettingLoadingCards from '@/components/settings/SettingLoadingCards';
 
 function loading() {
-    return <LoadingCards />;
+    return <SettingLoadingCards />;
 }
 export default loading;

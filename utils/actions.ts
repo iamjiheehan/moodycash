@@ -148,7 +148,6 @@ export const fetchBankingDetails = async (bankingId: string) => {
     });
 };
 
-
 export const updateProfileAction = async (
     prevState: any,
     formData: FormData
@@ -223,6 +222,38 @@ export const updateServiceAction = async (
         });
         revalidatePath('/service');
         return { message: 'service schema is updated successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const updateBankingAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    const bankingId = formData.get('id') as string;
+
+    try {
+        const rawData = Object.fromEntries(formData);
+
+        const validatedFields = bankingSchema.safeParse(rawData);
+        if (!validatedFields.success) {
+            const errors = validatedFields.error.errors.map(
+                (error) => error.message
+            );
+            throw new Error(errors.join(','));
+        }
+
+        await db.banking.update({
+            where: {
+                id: bankingId,
+                profileId: user.id,
+            },
+            data: validatedFields.data,
+        });
+        revalidatePath('/settings');
+        return { message: 'Banking schema is updated successfully' };
     } catch (error) {
         return renderError(error);
     }

@@ -40,32 +40,28 @@ export default function SettingVerifyAccountHolder() {
         <section>
             <FormContainer action={createBankingAction}>
                 <section className="flex flex-col gap-10">
-                    <div className="flex-grow-[1]">
-                        <div className="flex flex-col gap-1">
-                            <Label htmlFor="bankName" className="capitalize">
-                                은행이름
-                            </Label>
-                            <SettingBank
-                                value={bankCodeData}
-                                label={bankLabelData}
-                                onChange={(value: string, label: string) => {
-                                    setBankCodeData(value);
-                                    setBankLabelData(label);
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex-grow-[2]">
-                        <FormInput
-                            type="text"
-                            name="bankAccountNumber"
-                            label="계좌번호"
-                            value={bankAccountNumberData}
-                            onChange={(e) =>
-                                setBankAccountNumberData(e.target.value)
-                            }
+                    <div className="flex flex-col gap-1">
+                        <Label htmlFor="bankName" className="capitalize">
+                            은행이름
+                        </Label>
+                        <SettingBank
+                            value={bankCodeData}
+                            label={bankLabelData}
+                            onChange={(value: string, label: string) => {
+                                setBankCodeData(value);
+                                setBankLabelData(label);
+                            }}
                         />
                     </div>
+                    <FormInput
+                        type="text"
+                        name="bankAccountNumber"
+                        label="계좌번호"
+                        value={bankAccountNumberData}
+                        onChange={(e) =>
+                            setBankAccountNumberData(e.target.value)
+                        }
+                    />
                     <FallbackButton
                         fallback={(e) =>
                             getTokenAndVerify(

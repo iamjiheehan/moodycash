@@ -1,4 +1,4 @@
-import { toast } from "@/hooks/use-toast";
+import { toast } from '@/hooks/use-toast';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
