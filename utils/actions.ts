@@ -245,6 +245,24 @@ export const updateBankingAction = async (
             throw new Error(errors.join(','));
         }
 
+        // Check if a banking record with the same bankName and bankAccountNumber already exists
+        const existingBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                bankName: validatedFields.data.bankName,
+                bankAccountNumber: validatedFields.data.bankAccountNumber,
+                NOT: {
+                    id: bankingId,
+                },
+            },
+        });
+
+        if (existingBanking) {
+            throw new Error(
+                '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
+            );
+        }
+
         await db.banking.update({
             where: {
                 id: bankingId,
@@ -286,6 +304,20 @@ export const createBankingAction = async (
     try {
         const rawData = Object.fromEntries(formData);
         const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+
+        const existingBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                bankName: validatedFields.bankName,
+                bankAccountNumber: validatedFields.bankAccountNumber,
+            },
+        });
+
+        if (existingBanking) {
+            throw new Error(
+                '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
+            );
+        }
 
         await db.banking.create({
             data: {
