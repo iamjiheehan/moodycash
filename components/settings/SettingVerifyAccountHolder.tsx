@@ -9,6 +9,7 @@ import AlertForm from '../form/AlertForm';
 import FormContainer from '../form/FormContainer';
 import { revalidatePath } from 'next/cache';
 import { SettingBank } from './SettingBank';
+import { SubmitButton } from '../form/Buttons';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
@@ -140,37 +141,36 @@ export default function SettingVerifyAccountHolder() {
                                 계좌 확인
                             </button>
                         </section>
-                        <section>
-                            <Label htmlFor="accountHolder">예금주</Label>
-                            <Input
-                                name="bankAccountHolder"
-                                type="text"
-                                value={holder}
-                                readOnly
-                                placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
-                                className={
-                                    isHolderMatching ? 'border-green-500' : ''
-                                }
-                            />
+                        <section className="flex items-end gap-4">
+                            <div className="w-full">
+                                <Label htmlFor="accountHolder">예금주</Label>
+                                <Input
+                                    name="bankAccountHolder"
+                                    type="text"
+                                    value={holder}
+                                    readOnly
+                                    placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
+                                    className={
+                                        isHolderMatching
+                                            ? 'border-green-500'
+                                            : ''
+                                    }
+                                />
+                            </div>
+                            <div className="w-full">
+                                <Label htmlFor="mood">
+                                    어떤 기분을 담아 이 계좌에 돈을 넣으실
+                                    건가요?
+                                </Label>
+                                <Input
+                                    name="mood"
+                                    type="text"
+                                    placeholder="예시 : 기쁜 날, 슬픈 날"
+                                />
+                            </div>
+                            <SubmitButton />
                         </section>
-                        <div>
-                            <Label htmlFor="mood">
-                                어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?
-                            </Label>
-                            <Input
-                                name="mood"
-                                type="text"
-                                placeholder="예시 : 기쁜 날, 슬픈 날"
-                            />
-                        </div>
                     </div>
-                    <AlertForm
-                        title="계좌 등록"
-                        actionType="submit"
-                        callback={() => {
-                            revalidatePath('/settings');
-                        }}
-                    />
                 </FormContainer>
             </div>
         </section>
