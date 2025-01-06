@@ -328,7 +328,7 @@ export const createBankingAction = async (
         });
 
         if (bankingCount >= 6) {
-            throw new Error('계좌는 최대 6개까지만 등록 가능합니다');
+            throw new Error('계좌는 최대 개까지만 등록 가능합니다');
         }
 
         const existingBanking = await db.banking.findFirst({
@@ -356,13 +356,6 @@ export const createBankingAction = async (
                 '이미 존재하는 기분입니다. 다른 기분을 입력해주세요'
             );
         }
-
-        await db.banking.create({
-            data: {
-                ...validatedFields,
-                profileId: user.id,
-            },
-        });
 
         await db.banking.create({
             data: {
