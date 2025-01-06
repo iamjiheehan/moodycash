@@ -192,10 +192,10 @@ export const createServiceAction = async (
                 profileId: user.id,
             },
         });
+        return { message: '성공적으로 등록되었습니다' };
     } catch (error) {
         return renderError(error);
     }
-    redirect('/');
 };
 
 export const updateServiceAction = async (
@@ -220,8 +220,7 @@ export const updateServiceAction = async (
             },
             data: validatedFields,
         });
-        revalidatePath('/service');
-        return { message: 'service schema is updated successfully' };
+        return { message: 'service schema is created successfully' };
     } catch (error) {
         return renderError(error);
     }

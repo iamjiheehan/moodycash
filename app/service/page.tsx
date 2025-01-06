@@ -28,8 +28,6 @@ const DynamicMoodWrapper = dynamic(
 );
 
 async function ServicePage() {
-    const { clerkId } = await fetchProfile();
-
     return (
         <section className="container lg:flex lg:grid-cols-2 lg:gap-8">
             <section className="basis-3/4">

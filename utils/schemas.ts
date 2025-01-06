@@ -20,8 +20,8 @@ export const serviceSchema = z.object({
         .min(0, {
             message: 'price must be a positive number.',
         })
-        .max(1000, {
-            message: 'price must be 1000 or less.',
+        .max(9999, {
+            message: 'price must be 9999 or less.',
         }),
 });
 

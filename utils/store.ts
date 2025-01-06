@@ -7,6 +7,7 @@ type ProfileState = {
     lastName: string;
     userName: string;
     email: string;
+    resetProfile: () => void;
 };
 
 type ServiceState = {
@@ -17,6 +18,7 @@ type ServiceState = {
     bankName: string;
     bankAccountNumber: string;
     description: string;
+    resetServiceDetails: () => void;
 };
 
 type BankingState = {
@@ -26,6 +28,7 @@ type BankingState = {
     bankCode: string;
     bankAccountNumber: string;
     description: string;
+    resetBankingDetails: () => void;
 };
 
 type TokenState = {
@@ -40,19 +43,32 @@ type BankChangeState = {
     setBankAccountNumber: (number: string) => void;
 };
 
-export const useProfile = create<ProfileState>(() => {
-    return {
+export const useProfile = create<ProfileState>((set) => ({
+    id: '',
+    clerkId: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    resetProfile: () => set({
         id: '',
         clerkId: '',
         firstName: '',
         lastName: '',
         userName: '',
         email: '',
-    };
-});
+    }),
+}));
 
-export const useServiceDetails = create<ServiceState>(() => {
-    return {
+export const useServiceDetails = create<ServiceState>((set) => ({
+    serviceId: '',
+    price: 0,
+    date: undefined,
+    bankName: '',
+    bankAccountNumber: '',
+    mood: '',
+    description: '',
+    resetServiceDetails: () => set({
         serviceId: '',
         price: 0,
         date: undefined,
@@ -60,19 +76,25 @@ export const useServiceDetails = create<ServiceState>(() => {
         bankAccountNumber: '',
         mood: '',
         description: '',
-    };
-});
+    }),
+}));
 
-export const useBankingDetails = create<BankingState>(() => {
-    return {
+export const useBankingDetails = create<BankingState>((set) => ({
+    bankingId: '',
+    mood: '',
+    bankName: '',
+    bankCode: '',
+    bankAccountNumber: '',
+    description: '',
+    resetBankingDetails: () => set({
         bankingId: '',
         mood: '',
         bankName: '',
         bankCode: '',
         bankAccountNumber: '',
         description: '',
-    };
-});
+    }),
+}));
 
 export const useTokenStore = create<TokenState>((set) => ({
     accessToken: '',
