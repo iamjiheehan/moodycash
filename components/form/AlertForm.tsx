@@ -1,74 +1,29 @@
-'use client';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle, Terminal } from 'lucide-react';
 
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogDescription,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { DeleteButton, EditButton, SubmitButton } from './Buttons';
+import React from 'react';
 
-type actionType = 'submit' | 'edit' | 'delete';
 type AlertFormProps = {
     title: string;
-    actionType: actionType;
-    description?: string;
-    callback?: (prevState: any, formData: FormData) => void;
+    description: string;
 };
 
-function AlertForm({
-    title,
-    description,
-    actionType,
-    callback,
-}: AlertFormProps) {
-    const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault(); // 기본 동작을 막음
-        if (callback) {
-            const formData = new FormData(
-                document.querySelector('form') as HTMLFormElement
-            );
-            callback({}, formData);
-        }
-    };
-
-    const renderTriggerButton = () => {
-        switch (actionType) {
-            case 'submit':
-                return <SubmitButton />;
-            case 'delete':
-                return <DeleteButton />;
-            default:
-                return null;
-        }
-    };
-
+export function NoticeAlertForm({ title, description }: AlertFormProps) {
     return (
-        <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <div>{renderTriggerButton()}</div>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>{title}</AlertDialogTitle>
-                    <AlertDialogDescription className="AlertDialogDescription">
-                        {description ? description : ''}
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogAction onClick={handleConfirm}>
-                        Confirm
-                    </AlertDialogAction>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <Alert>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>{title}</AlertTitle>
+            <AlertDescription>{description}</AlertDescription>
+        </Alert>
     );
 }
 
-export default AlertForm;
+export function ErrorAlertForm({ title, description }: AlertFormProps) {
+    return (
+        <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{title}</AlertTitle>
+            <AlertDescription>{description}</AlertDescription>
+        </Alert>
+    );
+}

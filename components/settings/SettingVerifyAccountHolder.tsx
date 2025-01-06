@@ -11,6 +11,7 @@ import { SubmitButton } from '../form/Buttons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Button } from '../ui/button';
 import { FaCheck } from 'react-icons/fa';
+import { ErrorAlertForm } from '../form/AlertForm';
 
 async function fetchToken() {
     const response = await fetch('/api/token', {
@@ -48,7 +49,6 @@ async function verification(
 
     if (response.ok) {
         const data = await response.json();
-        console.log(data.response.bank_holder);
         return data.response.bank_holder;
     }
     throw new Error('Error fetching bank holder');
@@ -58,7 +58,7 @@ export default function SettingVerifyAccountHolder() {
     const [bankCodeData, setBankCodeData] = useState('');
     const [bankLabelData, setBankLabelData] = useState('');
     const [bankAccountNumberData, setBankAccountNumberData] = useState('');
-    const [holder, setHolder] = useState('한지희');
+    const [holder, setHolder] = useState('');
     const [profile, setProfile] = useState({ firstName: '', lastName: '' });
     const [pending, setPending] = useState(false);
     const { toast } = useToast();
@@ -70,6 +70,7 @@ export default function SettingVerifyAccountHolder() {
                 setProfile(profileData);
             } catch (error) {
                 console.error('Error fetching profile:', error);
+                <ErrorAlertForm title="에러 발생생" description="프로필 정보를 찾을 수 없습니다. 다시 로그인해주세요"/>
             }
         };
 
@@ -81,7 +82,7 @@ export default function SettingVerifyAccountHolder() {
         setPending(true);
 
         const bankAccountNumber = bankAccountNumberData;
-        const bankCode = bankLabelData;
+        const bankCode = bankCodeData;
 
         const token = await fetchToken();
         if (token) {
@@ -170,17 +171,13 @@ export default function SettingVerifyAccountHolder() {
                             )}
                         </div>
                     </div>
-                    <div>
-                        <Label htmlFor="mood">
-                            어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?
-                        </Label>
-                        <Input
-                            name="mood"
-                            type="text"
-                            placeholder="예시 : 기쁜 날, 슬픈 날"
-                        />
-                    </div>
-                    <SubmitButton text="등록하기"/>
+                    <FormInput
+                        name="mood"
+                        type="text"
+                        placeholder="예시 :  기쁜 날, 슬픈 날"
+                        label="어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?"
+                    />
+                    <SubmitButton text="등록하기" />
                 </section>
             </FormContainer>
         </section>
