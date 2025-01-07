@@ -13,17 +13,19 @@ type ValidationFormInputProps = {
     value?: string;
     isValid?: boolean;
     isRequired?: boolean;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function ValidationFormInput({
     label,
     name,
-    readOnly,
+    readOnly = false,
     type = 'text',
     defaultValue,
     placeholder,
-    isValid,
-    value,
+    isValid = false,
+    value = '',
+    onChange,
 }: ValidationFormInputProps) {
     return (
         <div>
@@ -39,6 +41,7 @@ export default function ValidationFormInput({
                     type={type}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
+                    onChange={onChange}
                     className={`${
                         isValid
                             ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'

@@ -2,14 +2,22 @@
 import { useState, useEffect } from 'react';
 import FormInput from '@/components/form/FormInput';
 import { Label } from '../ui/label';
-import { Input } from '../ui/input';
 import { createBankingAction, fetchProfile } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 import { SettingBank } from './SettingBank';
 import { CallbackButton, SubmitButton } from '../form/Buttons';
-import { FaCheck } from 'react-icons/fa';
 import { ErrorAlertForm } from '../form/AlertForm';
 import getTokenAndVerify from '@/utils/getTokenAndVerify';
+import { Skeleton } from '../ui/skeleton';
+import dynamic from 'next/dynamic';
+
+const SettingAccountHolderWrapper = dynamic(
+    () => import('@/components/settings/SettingAccountHolderWrapper'),
+    {
+        ssr: false,
+        loading: () => <Skeleton className="w-full rounded-md" />,
+    }
+);
 
 export default function SettingVerifyAccountHolder() {
     const [bankCodeData, setBankCodeData] = useState('');
@@ -83,7 +91,12 @@ export default function SettingVerifyAccountHolder() {
                         isPending={pending}
                         text="계좌 확인"
                     />
-                    <div>
+                    <SettingAccountHolderWrapper
+                        profile={profile}
+                        holder={holder}
+                        setHolder={setHolder}
+                    />
+                    {/* <div>
                         <Label htmlFor="accountHolder">
                             예금주(계좌 확인 API의 잦은 오류로 임의로 입력 허용)
                         </Label>
@@ -91,7 +104,8 @@ export default function SettingVerifyAccountHolder() {
                             <Input
                                 name="bankAccountHolder"
                                 type="text"
-                                // value={holder}
+                                value={holder}
+                                readOnly={holder !== ''}
                                 placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
                                 className={`${
                                     holder ===
@@ -107,7 +121,7 @@ export default function SettingVerifyAccountHolder() {
                                 </span>
                             )}
                         </div>
-                    </div>
+                    </div> */}
                     <FormInput
                         name="mood"
                         type="text"

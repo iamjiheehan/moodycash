@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     BackButton,
     CallbackButton,
@@ -13,8 +13,6 @@ import getTokenAndVerify from '@/utils/getTokenAndVerify';
 import { Skeleton } from '../ui/skeleton';
 import FormContainer from '../form/FormContainer';
 import { updateBankingAction } from '@/utils/actions';
-import { routeModule } from 'next/dist/build/templates/app-page';
-import { Router } from 'next/router';
 import Link from 'next/link';
 
 const SettingAccountHolderWrapper = dynamic(
@@ -39,7 +37,6 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
     const [bankAccountNumberData, setBankAccountNumberData] = useState(
         fetchedDetails.bankAccountNumber
     );
-    // const [holder, setHolder] = useState(fetchedDetails.bankAccountHolder);
     const [holder, setHolder] = useState('');
     const [pending, setPending] = useState(false);
 
@@ -92,6 +89,7 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
                         <SettingAccountHolderWrapper
                             profile={profile}
                             holder={holder}
+                            setHolder={setHolder}
                         />
                         <FormInput
                             name="mood"
