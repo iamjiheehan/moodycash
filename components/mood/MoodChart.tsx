@@ -28,6 +28,7 @@ import {
 import { chartData } from './MoodMockData';
 
 const moodlist = Array.from(new Set(chartData.map((item) => item.mood)));
+
 const chartConfig = moodlist.reduce((config, mood, index) => {
     config[mood] = {
         label: mood.charAt(0).toUpperCase() + mood.slice(1),

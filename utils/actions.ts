@@ -137,6 +137,7 @@ export const fetchBankings = async () => {
         return null;
     }
 };
+
 export const fetchBankingDetails = async (bankingId: string) => {
     const user = await getAuthUser();
 
@@ -146,6 +147,28 @@ export const fetchBankingDetails = async (bankingId: string) => {
             profileId: user.id,
         },
     });
+};
+
+export const fetchServiceAction = async (serviceId: string) => {
+    const user = await getAuthUser();
+
+    try {
+        const service = await db.service.findUnique({
+            where: {
+                id: serviceId,
+                profileId: user.id,
+            },
+        });
+
+        if (!service) {
+            throw new Error('기록 데이터가 존재하지 않습니다');
+        }
+
+        return service;
+    } catch (error) {
+        console.error('Error fetching service:', error);
+        return renderError(error);
+    }
 };
 
 export const updateProfileAction = async (

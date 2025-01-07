@@ -2,7 +2,6 @@
 
 import MoodCalendar from '@/components/mood/MoodCalendar';
 import { MoodChart } from '@/components/mood/MoodChart';
-import React from 'react';
 
 export default function MoodPage() {
     return (
