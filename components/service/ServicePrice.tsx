@@ -17,7 +17,7 @@ export default function ServicePrice() {
     }, [price]);
 
     return (
-        <section className='flex items-center justify-between'>
+        <section className="flex flex-col sm:flex-row items-center justify-between">
             <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
                 얼마를 담아 보낼지 적어주세요
             </h1>

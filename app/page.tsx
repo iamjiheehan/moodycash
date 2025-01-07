@@ -1,8 +1,5 @@
-import HomeSectionForm from '@/components/form/HomeSection';
 import InfoCard from '@/components/home/InfoCard';
 import WelcomeSection from '@/components/home/WelcomeSection';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -21,8 +18,9 @@ function HomePage() {
                 ]}
                 url="welcome"
                 alt="Intro Image"
+                darkModeFormat="png"
             />
-            <div className="bg-customLightGray">
+            <div className="bg-customLightGray dark:bg-[hsl(var(--background))]">
                 <section className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-12 py-20 sm:py-16">
                     <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-black-600">
                         감정을 담은 송금 웹 서비스
@@ -53,7 +51,7 @@ function HomePage() {
                         <InfoCard
                             title="안전한 송금 시뮬레이션"
                             description={[
-                                '송금은 0원에서 9,999원까지 가능합니다. ',
+                                '송금은 0원에서 9,999원까지',
                                 '그날의 감정을 안전하게 기록해 보세요.',
                             ]}
                             imageSrc="/assets/Image/welcome-safe.webp"
@@ -86,6 +84,8 @@ function HomePage() {
                 ]}
                 url="moodycash-black"
                 alt="Welcome Image"
+                format="png"
+                isThereAdarkModeImage={false}
             />
         </section>
     );

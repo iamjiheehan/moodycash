@@ -52,7 +52,6 @@ export default {
                     '5': 'hsl(var(--chart-5))',
                 },
                 customLightGray: '#f7f8f9',
-                customSuccessColor: '#f7f8f9',
             },
             borderRadius: {
                 lg: 'var(--radius)',

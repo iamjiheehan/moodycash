@@ -25,7 +25,7 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
     };
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 mt-4">
+        <div className="grid md:grid-cols-2 gap-8 mt-4">
             {fetchedDetails?.Banking.map((banking, index) => (
                 <div key={index}>
                     <ServiceMoodCard

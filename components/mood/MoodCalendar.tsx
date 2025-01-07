@@ -44,7 +44,7 @@ export default function MoodCalendar() {
     };
 
     return (
-        <section className="flex flex-row justify-between gap-8">
+        <section className="flex flex-col sm:flex-row justify-between gap-8">
             {selectedDate.length === 0 ? (
                 <p className="text-xl">아직 기록을 하신 적이 없어요</p>
             ) : (
@@ -55,23 +55,8 @@ export default function MoodCalendar() {
                         selected={selectedDate}
                         className="rounded-md border shadow"
                     />
-                    <section className="border p-8 rounded-md w-full shadow flex flex-col gap-4">
-                        <p>
-                            가장 처음에 기록한 날짜는{' '}
-                            {firstDate
-                                ? formatDateFromISOString(firstDate)
-                                : ''}
-                            .
-                        </p>
-                        <p>
-                            가장 최근에 기록한 날짜는{' '}
-                            {lastDate ? formatDateFromISOString(lastDate) : ''}.
-                        </p>
-                        <p>지금까지 총 {count}번 기록했어요.</p>
-                        <p>총 송금 금액은 {amount}원 입니다.</p>
-                    </section>
                     <section className="border p-8 rounded-md w-full shadow">
-                        {!selectedData && <div>날짜를 선택해주세요</div>}
+                        {!selectedData && <div>기록한 날짜를 선택해주세요</div>}
                         {selectedDate.length > 0 && selectedData && (
                             <section className="flex flex-col gap-4">
                                 <p>
@@ -87,6 +72,21 @@ export default function MoodCalendar() {
                                 </p>
                             </section>
                         )}
+                    </section>
+                    <section className="border p-8 rounded-md w-full shadow flex flex-col gap-4">
+                        <p>
+                            가장 처음에 기록한 날짜는{' '}
+                            {firstDate
+                                ? formatDateFromISOString(firstDate)
+                                : ''}
+                            .
+                        </p>
+                        <p>
+                            가장 최근에 기록한 날짜는{' '}
+                            {lastDate ? formatDateFromISOString(lastDate) : ''}.
+                        </p>
+                        <p>지금까지 총 {count}번 기록했어요.</p>
+                        <p>총 송금 금액은 {amount}원 입니다.</p>
                     </section>
                 </>
             )}
