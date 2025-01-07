@@ -28,7 +28,7 @@ const DynamicMoodWrapper = dynamic(
 
 async function ServicePage() {
     return (
-        <section className="container lg:flex lg:grid-cols-2 lg:gap-8">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 lg:flex lg:grid-cols-2 lg:gap-8">
             <section className="basis-3/4">
                 <div className="flex flex-col gap-8">
                     <DynamicMoodWrapper />

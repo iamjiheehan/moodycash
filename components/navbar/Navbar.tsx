@@ -13,7 +13,7 @@ function Navbar() {
 
     return (
         <nav className="border-b">
-            <div className="container flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-4 py-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-4 py-8">
                 <Logo />
                 {/* <NavSearch /> */}
                 <ul className="flex gap-8">

@@ -13,7 +13,7 @@ const WelcomeSection = ({
     alt: string;
 }) => {
     return (
-        <section className="container">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8">
             <section className="flex items-center justify-between">
                 <section className="flex flex-col items-start gap-6">
                     <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">

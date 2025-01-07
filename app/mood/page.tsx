@@ -6,7 +6,7 @@ import React from 'react';
 
 export default function MoodPage() {
     return (
-        <section className="container flex flex-col gap-24 py-10">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-24 py-10">
             <section className="flex flex-col gap-8">
                 <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
                     그래프로 확인하는 기록

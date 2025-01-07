@@ -17,7 +17,7 @@ type fetchedDetailsProps = {
 export default async function SettingsPage() {
     const fetchedDetails: fetchedDetailsProps = await fetchBankings();
     return (
-        <div className="container mt-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
             <section className="flex flex-row gap-2 mt-6 mb-6">
                 <h1 className="text-2xl font-semibold capitalize">
                     등록된 계좌 모아보기

@@ -11,7 +11,7 @@ function SettingLoadingCards() {
 
 export function SkeletonCard() {
     return (
-        <Card className="w-[30%] p-8 shadow-2xl flex flex-col gap-10">
+        <Card className="sm:w-[50%] md:w-[40%] lg:w-[30%] p-8 shadow-2xl flex flex-col gap-10">
             <div className="flex flex-col gap-1">
                 <Skeleton className="h-6 w-1/2" />
                 <Skeleton className="h-4 mt-2 w-3/4" />

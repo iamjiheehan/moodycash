@@ -8,7 +8,7 @@ async function ProfilePage() {
     const profile = await fetchProfile();
 
     return (
-        <section className="container">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl font-semibold mb-8 capitalize">프로필</h1>
             <div className="border p-8 rounded-md">
                 {/* image input container */}

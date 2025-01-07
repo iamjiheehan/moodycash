@@ -23,7 +23,7 @@ function HomePage() {
                 alt="Intro Image"
             />
             <div className="bg-customLightGray">
-                <section className="container flex flex-col items-center gap-12 py-20 sm:py-16">
+                <section className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-12 py-20 sm:py-16">
                     <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-black-600">
                         감정을 담은 송금 웹 서비스
                     </h1>
