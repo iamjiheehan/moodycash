@@ -25,7 +25,6 @@ export default async function Page({ params }: PageProps) {
                 fetchedDetails={fetchedDetails}
                 profile={profile}
             />
-            {/* <SettingLoadingCards /> */}
         </>
     );
 }

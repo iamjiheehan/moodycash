@@ -6,7 +6,7 @@ import { Input } from '../ui/input';
 import { createBankingAction, fetchProfile } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 import { SettingBank } from './SettingBank';
-import { FallbackButton, SubmitButton } from '../form/Buttons';
+import { CallbackButton, SubmitButton } from '../form/Buttons';
 import { FaCheck } from 'react-icons/fa';
 import { ErrorAlertForm } from '../form/AlertForm';
 import getTokenAndVerify from '@/utils/getTokenAndVerify';
@@ -62,8 +62,8 @@ export default function SettingVerifyAccountHolder() {
                             setBankAccountNumberData(e.target.value)
                         }
                     />
-                    <FallbackButton
-                        fallback={(e) =>
+                    <CallbackButton
+                        callback={(e) =>
                             getTokenAndVerify(
                                 e,
                                 bankAccountNumberData,
@@ -76,7 +76,9 @@ export default function SettingVerifyAccountHolder() {
                         text="계좌 확인"
                     />
                     <div>
-                        <Label htmlFor="accountHolder">예금주(계좌 확인 API의 잦은 오류로 임시로 입력 허용)</Label>
+                        <Label htmlFor="accountHolder">
+                            예금주(계좌 확인 API의 잦은 오류로 임시로 입력 허용)
+                        </Label>
                         <div className="relative">
                             <Input
                                 name="bankAccountHolder"

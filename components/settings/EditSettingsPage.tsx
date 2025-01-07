@@ -1,6 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { FallbackButton, SubmitButton } from '@/components/form/Buttons';
+import {
+    BackButton,
+    CallbackButton,
+    SubmitButton,
+} from '@/components/form/Buttons';
 import FormInput from '@/components/form/FormInput';
 import { SettingBank } from '@/components/settings/SettingBank';
 import { Label } from '@/components/ui/label';
@@ -9,6 +13,9 @@ import getTokenAndVerify from '@/utils/getTokenAndVerify';
 import { Skeleton } from '../ui/skeleton';
 import FormContainer from '../form/FormContainer';
 import { updateBankingAction } from '@/utils/actions';
+import { routeModule } from 'next/dist/build/templates/app-page';
+import { Router } from 'next/router';
+import Link from 'next/link';
 
 const SettingAccountHolderWrapper = dynamic(
     () => import('@/components/settings/SettingAccountHolderWrapper'),
@@ -68,8 +75,8 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
                                 setBankAccountNumberData(e.target.value)
                             }
                         />
-                        <FallbackButton
-                            fallback={(e) =>
+                        <CallbackButton
+                            callback={(e) =>
                                 getTokenAndVerify(
                                     e,
                                     bankAccountNumberData,
@@ -92,7 +99,12 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
                             label="어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?"
                             defaultValue={fetchedDetails.mood}
                         />
-                        <SubmitButton text="변경하기" />
+                        <div className="flex flex-col sm:flex-row gap-2">
+                            <Link href="/settings">
+                                <BackButton />
+                            </Link>
+                            <SubmitButton text="변경하기" className="flex-1" />
+                        </div>
                     </section>
                 </section>
             </FormContainer>

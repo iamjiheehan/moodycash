@@ -14,8 +14,8 @@ type SubmitButtonProps = {
     size?: btnSize;
 };
 
-type FallbackButtonProps = {
-    fallback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+type CallbackButtonProps = {
+    callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
     isPending: boolean;
     text: string;
     className?: string;
@@ -32,7 +32,7 @@ export function SubmitButton({
         <Button
             type="submit"
             disabled={pending}
-            className={`capitalize ${className}`}
+            className={`py-2 capitalize ${className}`}
             size={size}
         >
             {pending ? (
@@ -110,8 +110,21 @@ export const EditButton = () => {
     );
 };
 
-export const FallbackButton: React.FC<FallbackButtonProps> = ({
-    fallback,
+export const BackButton=() => {
+    return (
+        <Button
+            type="button"
+            size="lg"
+            variant="outline"
+            className="py-2 cursor-pointer flex-1"
+        >
+            뒤로가기
+        </Button>
+    );
+};
+
+export const CallbackButton: React.FC<CallbackButtonProps> = ({
+    callback,
     isPending,
     text,
     className = '',
@@ -119,7 +132,7 @@ export const FallbackButton: React.FC<FallbackButtonProps> = ({
 }) => {
     return (
         <Button
-            onClick={fallback}
+            onClick={callback}
             type="button"
             disabled={isPending}
             className={`capitalize ${className}`}
