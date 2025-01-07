@@ -5,6 +5,7 @@ import { useServiceDetails } from '@/utils/store';
 import FormContainer from '@/components/form/FormContainer';
 import { SubmitButton } from '@/components/form/Buttons';
 import { createServiceAction } from '@/utils/actions';
+import { formatDateToDateTime } from '@/utils/format';
 
 function ConfirmService() {
     const { userId } = useAuth();
@@ -25,7 +26,10 @@ function ConfirmService() {
     ): Promise<{ message: string }> => {
         const data = new FormData();
         if (date) {
-            data.append('date', date.toISOString());
+            const formattedDate = formatDateToDateTime(new Date(date));
+            console.log(formattedDate);
+            // console.log(formattedDate);
+            data.append('date', formattedDate);
         }
         if (mood) {
             data.append('mood', mood);

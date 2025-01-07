@@ -7,7 +7,7 @@ export const profileSchema = z.object({
 });
 
 export const serviceSchema = z.object({
-    date: z.string(),
+    date: z.string().datetime(),
     description: z
         .string()
         .max(50, { message: '메모는 50자 이하이어야 합니다.' }),

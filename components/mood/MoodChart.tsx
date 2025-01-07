@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { fetchServiceData } from '@/utils/fetchServiceData';
 
 import {
     Card,
@@ -25,28 +26,47 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { chartData } from './MoodMockData';
 
-const moodlist = Array.from(new Set(chartData.map((item) => item.mood)));
-
-const chartConfig = moodlist.reduce((config, mood, index) => {
-    config[mood] = {
-        label: mood.charAt(0).toUpperCase() + mood.slice(1),
-        color: `hsl(var(--chart-${index + 1}))`,
-    };
-    return config;
-}, {} as ChartConfig);
-
-const transformedData = chartData.map((item) => {
-    const newItem: { [key: string]: any } = { ...item };
-    moodlist.forEach((mood) => {
-        newItem[mood] = item.mood === mood ? item.amount : null;
-    });
-    return newItem;
-});
+interface ServiceData {
+    id: string;
+    date: Date;
+    description: string;
+    mood: string;
+    price: number;
+}
 
 export function MoodChart() {
     const [timeRange, setTimeRange] = React.useState('90d');
+    const [chartData, setChartData] = React.useState<ServiceData[]>([]);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetchServiceData();
+            if (data) {
+                setChartData(data);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const moodlist = Array.from(new Set(chartData.map((item) => item.mood)));
+
+    const chartConfig = moodlist.reduce((config, mood, index) => {
+        config[mood] = {
+            label: mood.charAt(0).toUpperCase() + mood.slice(1),
+            color: `hsl(var(--chart-${index + 1}))`,
+        };
+        return config;
+    }, {} as ChartConfig);
+
+    const transformedData = chartData.map((item) => {
+        const newItem: { [key: string]: any } = { ...item };
+        moodlist.forEach((mood) => {
+            newItem[mood] = item.mood === mood ? item.price : null;
+        });
+        return newItem;
+    });
 
     const filteredData = React.useMemo(() => {
         const referenceDate = new Date(
@@ -66,7 +86,7 @@ export function MoodChart() {
             const date = new Date(item.date);
             return date >= startDate;
         });
-    }, [timeRange]);
+    }, [timeRange, transformedData]);
 
     return (
         <Card>

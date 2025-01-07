@@ -25,3 +25,7 @@ export function formatDateFromISOString(date: string): string {
     });
     return formattedDate;
 }
+
+export function formatDateToDateTime(date: Date): string {
+    return date.toISOString();
+}
