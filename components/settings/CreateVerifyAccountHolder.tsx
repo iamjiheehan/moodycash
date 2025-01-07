@@ -58,9 +58,17 @@ export default function SettingVerifyAccountHolder() {
                         name="bankAccountNumber"
                         label="계좌번호"
                         value={bankAccountNumberData}
+                        placeholder='"-"를 제외한 숫자만 입력해주세요. '
                         onChange={(e) =>
                             setBankAccountNumberData(e.target.value)
                         }
+                        onInput={(e) => {
+                            const inputEvent =
+                                e as React.FormEvent<HTMLInputElement>;
+                            const target =
+                                inputEvent.target as HTMLInputElement;
+                            target.value = target.value.replace(/[^0-9]/g, '');
+                        }}
                     />
                     <CallbackButton
                         callback={(e) =>
@@ -83,11 +91,7 @@ export default function SettingVerifyAccountHolder() {
                             <Input
                                 name="bankAccountHolder"
                                 type="text"
-                                value={holder}
-                                // readOnly={
-                                //     holder ===
-                                //     `${profile.lastName}${profile.firstName}`
-                                // }
+                                // value={holder}
                                 placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
                                 className={`${
                                     holder ===
@@ -107,7 +111,7 @@ export default function SettingVerifyAccountHolder() {
                     <FormInput
                         name="mood"
                         type="text"
-                        placeholder="예시 :  기쁜 날, 슬픈 날"
+                        placeholder="예시 : 기쁜 날, 슬픈 날"
                         label="어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?"
                     />
                     <SubmitButton text="등록하기" />

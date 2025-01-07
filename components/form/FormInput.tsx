@@ -8,7 +8,9 @@ type FormInputProps = {
     defaultValue?: string;
     placeholder?: string;
     value?: string;
+    readonly?: boolean;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onInput?: (e: React.FormEvent<HTMLInputElement>) => void;
 };
 
 function FormInput({
@@ -18,7 +20,9 @@ function FormInput({
     defaultValue,
     placeholder,
     value,
+    readonly = false,
     onChange,
+    onInput,
 }: FormInputProps) {
     return (
         <div>
@@ -32,7 +36,9 @@ function FormInput({
                 defaultValue={defaultValue}
                 placeholder={placeholder}
                 value={value}
+                readOnly={readonly}
                 onChange={onChange}
+                onInput={onInput}
                 required
             />
         </div>
