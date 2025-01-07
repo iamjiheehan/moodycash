@@ -54,6 +54,8 @@ export default function MoodCalendar() {
                         onDayClick={handleDayClick}
                         selected={selectedDate}
                         className="rounded-md border shadow"
+                        fromMonth={firstDate ? new Date(firstDate) : undefined}
+                        toMonth={lastDate ? new Date(lastDate) : undefined}
                     />
                     <section className="border p-8 rounded-md w-full shadow">
                         {!selectedData && <div>기록한 날짜를 선택해주세요</div>}
@@ -85,8 +87,8 @@ export default function MoodCalendar() {
                             가장 최근에 기록한 날짜는{' '}
                             {lastDate ? formatDateFromISOString(lastDate) : ''}.
                         </p>
-                        <p>지금까지 총 {count}번 기록했어요.</p>
-                        <p>총 송금 금액은 {amount}원 입니다.</p>
+                        <p>지금까지 {count}번 기록했어요.</p>
+                        <p>총 송금 금액은 {amount}원 이에요.</p>
                     </section>
                 </>
             )}

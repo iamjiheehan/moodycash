@@ -26,7 +26,7 @@ const WelcomeSection = ({
         >
             <section className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-0">
                 <section className="flex flex-col items-start gap-6">
-                    <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
+                    <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-[1.2]">
                         {title.map((text, index) => (
                             <React.Fragment key={index}>
                                 {text}
