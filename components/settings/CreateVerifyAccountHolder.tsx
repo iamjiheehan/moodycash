@@ -15,7 +15,7 @@ export default function SettingVerifyAccountHolder() {
     const [bankCodeData, setBankCodeData] = useState('');
     const [bankLabelData, setBankLabelData] = useState('');
     const [bankAccountNumberData, setBankAccountNumberData] = useState('');
-    const [holder, setHolder] = useState('한지희');
+    const [holder, setHolder] = useState('');
     const [profile, setProfile] = useState({ firstName: '', lastName: '' });
     const [pending, setPending] = useState(false);
 
@@ -76,16 +76,16 @@ export default function SettingVerifyAccountHolder() {
                         text="계좌 확인"
                     />
                     <div>
-                        <Label htmlFor="accountHolder">예금주</Label>
+                        <Label htmlFor="accountHolder">예금주(계좌 확인 API의 잦은 오류로 임시로 입력 허용)</Label>
                         <div className="relative">
                             <Input
                                 name="bankAccountHolder"
                                 type="text"
                                 value={holder}
-                                readOnly={
-                                    holder ===
-                                    `${profile.lastName}${profile.firstName}`
-                                }
+                                // readOnly={
+                                //     holder ===
+                                //     `${profile.lastName}${profile.firstName}`
+                                // }
                                 placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
                                 className={`${
                                     holder ===

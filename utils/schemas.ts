@@ -29,7 +29,7 @@ export const bankingSchema = z.object({
         .nonempty({ message: '은행 이름은 필수 입력 사항입니다.' }),
     bankAccountHolder: z
         .string()
-        .nonempty({ message: '예금주명은 필수 입력 사항입니다.' }),
+        .nonempty({ message: '예금주는 필수 입력 사항입니다.' }),
     bankAccountNumber: z
         .string()
         .nonempty({ message: '계좌 번호는 필수 입력 사항입니다.' }),

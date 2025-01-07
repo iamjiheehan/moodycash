@@ -16,15 +16,15 @@ async function ProfilePage() {
                     <div className="grid gap-4 md:grid-cols-2 mt-4 ">
                         <FormInput
                             type="text"
-                            name="firstName"
-                            label="이름"
-                            defaultValue={profile.firstName}
-                        />
-                        <FormInput
-                            type="text"
                             name="lastName"
                             label="성"
                             defaultValue={profile.lastName}
+                        />
+                        <FormInput
+                            type="text"
+                            name="firstName"
+                            label="이름"
+                            defaultValue={profile.firstName}
                         />
                         <FormInput
                             type="text"
