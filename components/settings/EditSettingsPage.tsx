@@ -99,12 +99,12 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
                             label="어떤 기분을 담아 이 계좌에 돈을 넣으실 건가요?"
                             defaultValue={fetchedDetails.mood}
                         />
-                        <div className="flex flex-col sm:flex-row gap-2">
-                            <Link href="/settings">
+                        <section className="flex flex-col sm:grid sm:grid-cols-2 gap-2">
+                            <Link href="/settings" className="block w-full">
                                 <BackButton />
                             </Link>
-                            <SubmitButton text="변경하기" className="flex-1" />
-                        </div>
+                            <SubmitButton text="변경하기" />
+                        </section>
                     </section>
                 </section>
             </FormContainer>

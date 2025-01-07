@@ -46,6 +46,20 @@ export function SubmitButton({
         </Button>
     );
 }
+
+export const BackButton = () => {
+    return (
+        <Button
+            type="button"
+            size="lg"
+            variant="outline"
+            className="py-2 cursor-pointer w-full"
+        >
+            뒤로가기
+        </Button>
+    );
+};
+
 export const CardSignInButton = () => {
     return (
         <SignInButton mode="modal">
@@ -106,19 +120,6 @@ export const EditButton = () => {
             className="p-2 cursor-pointer"
         >
             <LuPencil />
-        </Button>
-    );
-};
-
-export const BackButton=() => {
-    return (
-        <Button
-            type="button"
-            size="lg"
-            variant="outline"
-            className="py-2 cursor-pointer flex-1"
-        >
-            뒤로가기
         </Button>
     );
 };
