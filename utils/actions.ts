@@ -9,6 +9,7 @@ import {
     serviceSchema,
     bankingSchema,
     validateWithZodSchema,
+    validateBankingSchema,
 } from './schemas';
 
 const getAuthUser = async () => {
@@ -267,19 +268,13 @@ export const updateBankingAction = async (
     try {
         const rawData = Object.fromEntries(formData);
 
-        const validatedFields = bankingSchema.safeParse(rawData);
-        if (!validatedFields.success) {
-            const errors = validatedFields.error.errors.map(
-                (error) => error.message
-            );
-            throw new Error(errors.join(','));
-        }
+        const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
 
         const existingBanking = await db.banking.findFirst({
             where: {
                 profileId: user.id,
-                bankName: validatedFields.data.bankName,
-                bankAccountNumber: validatedFields.data.bankAccountNumber,
+                bankName: validatedFields.bankName,
+                bankAccountNumber: validatedFields.bankAccountNumber,
                 NOT: {
                     id: bankingId,
                 },
@@ -295,7 +290,7 @@ export const updateBankingAction = async (
         const existingMoodBanking = await db.banking.findFirst({
             where: {
                 profileId: user.id,
-                mood: validatedFields.data.mood,
+                mood: validatedFields.mood,
                 NOT: {
                     id: bankingId,
                 },
@@ -313,7 +308,7 @@ export const updateBankingAction = async (
                 id: bankingId,
                 profileId: user.id,
             },
-            data: validatedFields.data,
+            data: validatedFields,
         });
         revalidatePath('/settings');
         return { message: '해당 계좌가 성공적으로 업데이트 되었습니다' };
@@ -348,9 +343,8 @@ export const createBankingAction = async (
     const user = await getAuthUser();
     try {
         const rawData = Object.fromEntries(formData);
-        const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+        const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
 
-        // Check if the user already has 5 banking records
         const bankingCount = await db.banking.count({
             where: {
                 profileId: user.id,

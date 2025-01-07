@@ -1,4 +1,35 @@
 import { z } from 'zod';
+import { fetchProfile } from './actions';
+
+const fetchUserName = async (): Promise<string> => {
+    try {
+        const profile = await fetchProfile();
+        const validatedProfile = validateWithZodSchema(profileSchema, profile);
+        return `${validatedProfile.lastName}${validatedProfile.firstName}`;
+    } catch (error) {
+        console.error('Failed to fetch user name:', error);
+        throw new Error('사용자 이름을 가져오는데 실패했습니다.');
+    }
+};
+
+export const validateBankingSchema = async (data: unknown) => {
+    try {
+        const userName = await fetchUserName();
+
+        const validatedBankingData = validateWithZodSchema(bankingSchema, data);
+
+        if (validatedBankingData.bankAccountHolder !== userName) {
+            throw new Error(
+                `예금주(${validatedBankingData.bankAccountHolder})와 사용자 이름(${userName})이 일치하지 않습니다.`
+            );
+        }
+
+        return validatedBankingData; 
+    } catch (error) {
+        console.error('Validation failed:');
+        throw error; 
+    }
+};
 
 export const profileSchema = z.object({
     firstName: z.string(),
