@@ -19,7 +19,7 @@ const SettingAccountHolderWrapper = dynamic(
     }
 );
 
-export default function SettingVerifyAccountHolder() {
+export default function CreateSettingPage() {
     const [bankCodeData, setBankCodeData] = useState('');
     const [bankLabelData, setBankLabelData] = useState('');
     const [bankAccountNumberData, setBankAccountNumberData] = useState('');
@@ -96,32 +96,6 @@ export default function SettingVerifyAccountHolder() {
                         holder={holder}
                         setHolder={setHolder}
                     />
-                    {/* <div>
-                        <Label htmlFor="accountHolder">
-                            예금주(계좌 확인 API의 잦은 오류로 임의로 입력 허용)
-                        </Label>
-                        <div className="relative">
-                            <Input
-                                name="bankAccountHolder"
-                                type="text"
-                                value={holder}
-                                readOnly={holder !== ''}
-                                placeholder={`예금주는 본인명의인 ${profile.lastName}${profile.firstName}님과 일치해야 합니다`}
-                                className={`${
-                                    holder ===
-                                    `${profile.lastName}${profile.firstName}`
-                                        ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'
-                                        : ''
-                                }`}
-                            />
-                            {holder ===
-                                `${profile.lastName}${profile.firstName}` && (
-                                <span className="absolute top-1/2 transform -translate-y-1/2 right-4">
-                                    <FaCheck className="text-[hsl(var(--primary))]" />
-                                </span>
-                            )}
-                        </div>
-                    </div> */}
                     <FormInput
                         name="mood"
                         type="text"

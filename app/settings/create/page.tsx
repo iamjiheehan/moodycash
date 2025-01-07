@@ -1,8 +1,8 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import dynamic from 'next/dynamic';
 
-const DynamicVerifyAccountHolderWrapper = dynamic(
-    () => import('@/components/settings/CreateVerifyAccountHolder'),
+const DynamicCreateSettingPageWrapper = dynamic(
+    () => import('@/components/settings/CreateSettingPage'),
     {
         ssr: false,
         loading: () => <Skeleton className="h-[200px] w-full" />,
@@ -16,7 +16,7 @@ export default async function CreatePage() {
                     계좌 추가 (최대 6개)
                 </h1>
             </section>
-            <DynamicVerifyAccountHolderWrapper />
+            <DynamicCreateSettingPageWrapper />
         </section>
     );
 }
