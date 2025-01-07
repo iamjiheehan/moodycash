@@ -23,11 +23,13 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider localization={koKR}>
-            <html lang="en" suppressHydrationWarning>
-                <body className={(inter.className, FontClassNames)}>
+            <html lang="en" className="h-full" suppressHydrationWarning>
+                <body
+                    className={`${inter.className} ${FontClassNames} h-full flex flex-col`}
+                >
                     <Providers>
                         <Navbar />
-                        <main className="py-10">{children}</main>
+                        <main className="py-10 flex-1">{children}</main>
                         <Footer />
                     </Providers>
                 </body>
