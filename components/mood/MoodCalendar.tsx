@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar } from '../ui/calendar';
 import { DayMouseEventHandler } from 'react-day-picker';
-import { formatDateFromISOString } from '@/utils/format';
+import { formatCurrency, formatDateFromISOString } from '@/utils/format';
 import { fetchServiceData } from '@/utils/fetchServiceData';
 
 interface ServiceData {
@@ -108,18 +108,20 @@ export default function MoodCalendar() {
                     </section>
                     <section className="border p-8 rounded-md w-full shadow flex flex-col gap-4">
                         <p>
-                            가장 처음에 기록한 날짜는{' '}
+                            가장 처음에 기록한 날짜는
+                            <br />
                             {firstDate
                                 ? formatDateFromISOString(firstDate)
                                 : ''}
                             .
                         </p>
                         <p>
-                            가장 최근에 기록한 날짜는{' '}
+                            가장 최근에 기록한 날짜는
+                            <br />
                             {lastDate ? formatDateFromISOString(lastDate) : ''}.
                         </p>
                         <p>지금까지 {count}번 기록했어요.</p>
-                        <p>총 송금 금액은 {amount}원 이에요.</p>
+                        <p>총 송금 금액은 {formatCurrency(amount)} 이에요.</p>
                     </section>
                 </>
             )}
