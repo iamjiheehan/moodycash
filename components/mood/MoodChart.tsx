@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { fetchServiceData } from '@/utils/fetchServiceData';
-
 import {
     Card,
     CardContent,
@@ -26,6 +25,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 interface ServiceData {
     id: string;
@@ -38,16 +38,24 @@ interface ServiceData {
 export function MoodChart() {
     const [timeRange, setTimeRange] = React.useState('90d');
     const [chartData, setChartData] = React.useState<ServiceData[]>([]);
+    const { toast } = useToast();
+
+    const loadData = async () => {
+        try {
+            const data = await fetchServiceData();
+            if (!data) {
+                throw new Error('Invalid data format');
+            }
+            setChartData(data);
+        } catch (error) {
+            toast({
+                description: '데이터를 불러오는 중 오류가 발생했습니다.',
+            });
+        }
+    };
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetchServiceData();
-            if (data) {
-                setChartData(data);
-            }
-        };
-
-        fetchData();
+        loadData();
     }, []);
 
     const moodlist = Array.from(new Set(chartData.map((item) => item.mood)));

@@ -17,7 +17,7 @@ export function formatDate(date: Date): string {
     return `${year}년 ${month}월 ${day}일`;
 }
 
-export function formatDateFromISOString(date: string): string {
+export function formatDateFromISOString(date: Date): string {
     const formattedDate = new Date(date).toLocaleDateString('ko-KR', {
         year: 'numeric',
         month: 'long',

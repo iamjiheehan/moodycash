@@ -1,44 +1,75 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar } from '../ui/calendar';
-import { chartData } from './MoodMockData';
 import { DayMouseEventHandler } from 'react-day-picker';
 import { formatDateFromISOString } from '@/utils/format';
+import { fetchServiceData } from '@/utils/fetchServiceData';
+
+interface ServiceData {
+    id: string;
+    date: Date;
+    description: string;
+    mood: string;
+    price: number;
+}
 
 export default function MoodCalendar() {
     const [selectedDate, setSelectedDate] = useState<Date[]>([]);
-    const [selectedData, setSelectedData] = useState<any | undefined>(
+    const [selectedData, setSelectedData] = useState<ServiceData | undefined>(
         undefined
     );
-    const [firstDate, setFirstDate] = useState<string | undefined>(undefined);
-    const [lastDate, setLastDate] = useState<string | undefined>(undefined);
+    const [firstDate, setFirstDate] = useState<Date | undefined>(undefined);
+    const [lastDate, setLastDate] = useState<Date | undefined>(undefined);
     const [count, setCount] = useState(0);
     const [amount, setAmount] = useState(0);
 
     useEffect(() => {
-        const initialSelectedDates: Date[] = chartData.map(
-            (item) => new Date(item.date)
-        );
-        setSelectedDate(initialSelectedDates);
+        const fetchData = async () => {
+            const data = await fetchServiceData();
+            if (data) {
+                const serviceData: ServiceData[] = data.map((item) => ({
+                    ...item,
+                    date: new Date(item.date),
+                }));
 
-        const sortedData = [...chartData].sort(
-            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        );
-        setFirstDate(sortedData[0]?.date);
-        setLastDate(sortedData[sortedData.length - 1]?.date);
+                const initialSelectedDates: Date[] = serviceData.map(
+                    (item) => item.date
+                );
+                setSelectedDate(initialSelectedDates);
 
-        const totalAmount = chartData.reduce(
-            (sum, item) => sum + item.amount,
-            0
-        );
-        setAmount(totalAmount);
-        setCount(chartData.length);
+                const sortedData = [...serviceData].sort(
+                    (a, b) => a.date.getTime() - b.date.getTime()
+                );
+                setFirstDate(sortedData[0]?.date);
+                setLastDate(sortedData[sortedData.length - 1]?.date);
+
+                const totalAmount = serviceData.reduce(
+                    (sum, item) => sum + item.price,
+                    0
+                );
+                setAmount(totalAmount);
+                setCount(serviceData.length);
+            }
+        };
+
+        fetchData();
     }, []);
 
     const handleDayClick: DayMouseEventHandler = (day, _) => {
         const selectedDateString = day.toISOString().split('T')[0];
-        chartData.forEach((item) => {
-            if (item.date === selectedDateString) {
-                setSelectedData(item);
+        fetchServiceData().then((data) => {
+            if (data) {
+                const serviceData: ServiceData[] = data.map((item) => ({
+                    ...item,
+                    date: new Date(item.date),
+                }));
+                serviceData.forEach((item) => {
+                    if (
+                        item.date.toISOString().split('T')[0] ===
+                        selectedDateString
+                    ) {
+                        setSelectedData(item);
+                    }
+                });
             }
         });
     };
@@ -66,10 +97,10 @@ export default function MoodCalendar() {
                                     에
                                 </p>
                                 <p>
-                                    {`${selectedData.amount}원 만큼 ${selectedData.mood}한 날이었어요.`}
+                                    {`${selectedData.price}원 만큼 ${selectedData.mood}한 날이었어요.`}
                                 </p>
                                 <p className="">
-                                    그 날 남긴 메모는 {selectedData.memo}{' '}
+                                    그 날 남긴 메모는 {selectedData.description}{' '}
                                     이에요.
                                 </p>
                             </section>

@@ -14,8 +14,7 @@ export const fetchServiceData = async (): Promise<ServiceData[] | null> => {
         if (data && 'Service' in data) {
             return data.Service;
         } else {
-            console.error('Error: Invalid data format', data);
-            return null;
+            throw new Error('Invalid data format');
         }
     } catch (error) {
         console.error('Error fetching service data:', error);

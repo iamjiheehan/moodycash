@@ -16,7 +16,7 @@ function ConfirmService() {
         return (
             <SignInButton mode="modal">
                 <Button type="button" className="w-full">
-                    Sign In to Complete Booking
+                    로그인이 필요한 서비스입니다
                 </Button>
             </SignInButton>
         );
@@ -28,7 +28,6 @@ function ConfirmService() {
         if (date) {
             const formattedDate = formatDateToDateTime(new Date(date));
             console.log(formattedDate);
-            // console.log(formattedDate);
             data.append('date', formattedDate);
         }
         if (mood) {
@@ -46,6 +45,7 @@ function ConfirmService() {
         }
 
         return await createServiceAction(null, data);
+        
     };
 
     return (
