@@ -77,7 +77,7 @@ export default function SettingVerifyAccountHolder() {
                     />
                     <div>
                         <Label htmlFor="accountHolder">
-                            예금주(계좌 확인 API의 잦은 오류로 임시로 입력 허용)
+                            예금주(계좌 확인 API의 잦은 오류로 임의로 입력 허용)
                         </Label>
                         <div className="relative">
                             <Input

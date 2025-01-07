@@ -39,7 +39,8 @@ const EditSettingsPage: React.FC<EditSettingsPageProps> = ({
     const [bankAccountNumberData, setBankAccountNumberData] = useState(
         fetchedDetails.bankAccountNumber
     );
-    const [holder, setHolder] = useState(fetchedDetails.bankAccountHolder);
+    // const [holder, setHolder] = useState(fetchedDetails.bankAccountHolder);
+    const [holder, setHolder] = useState('');
     const [pending, setPending] = useState(false);
 
     return (

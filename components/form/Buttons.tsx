@@ -52,7 +52,7 @@ export const BackButton = () => {
         <Button
             type="button"
             size="lg"
-            variant="outline"
+            variant="primaryOutline"
             className="py-2 cursor-pointer w-full"
         >
             뒤로가기
