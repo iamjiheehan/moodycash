@@ -41,11 +41,10 @@ function ConfirmService() {
         }
 
         if (!date || !mood || !price || !description) {
-            return { message: '모든 빈 칸을 입력해주세요' };
+            return { message: '모든 빈 칸을 올바르게 입력해주세요' };
         }
 
         return await createServiceAction(null, data);
-        
     };
 
     return (
