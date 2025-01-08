@@ -97,11 +97,11 @@ export default function MoodCalendar() {
                                     에
                                 </p>
                                 <p>
-                                    {`${selectedData.price}원 만큼 ${selectedData.mood}한 날이었어요.`}
+                                    {`${selectedData.price}원 만큼 '${selectedData.mood}'한 날이었어요.`}
                                 </p>
                                 <p className="">
-                                    그 날 남긴 메모는 {selectedData.description}{' '}
-                                    이에요.
+                                    {`그 날 남긴 메모는 '${selectedData.description}'
+                                    이에요.`}
                                 </p>
                             </section>
                         )}
