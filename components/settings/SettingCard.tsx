@@ -57,7 +57,7 @@ export function MoodSampleCard() {
     return (
         <Card className={MoodCardClass}>
             <CardHeader>
-                <h1>(예시) 행복 기분 계좌</h1>
+                <h1>(예시) 행복한 기분 계좌</h1>
             </CardHeader>
             <CardContent className="flex gap-2">
                 <p>은행이름</p>
