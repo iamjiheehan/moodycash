@@ -14,12 +14,10 @@ import {
 
 const getAuthUser = async () => {
     const user = await currentUser();
-        if (!user) {
-            console.log('No user found');
-            return null;
-        }
-
-    // if (!user) throw new Error('로그인이 필요합니다');
+    if (!user) {
+        console.log('No user found');
+        return null;
+    }
 
     if (!user.privateMetadata.hasProfile) redirect('/profile/create');
     return user;
@@ -77,6 +75,8 @@ export const fetchProfileImage = async (): Promise<string | null> => {
 
 export const fetchProfile = async () => {
     const user = await getAuthUser();
+    if (!user) return null;
+
     const profile = await db.profile.findUnique({
         where: { clerkId: user.id },
     });
@@ -114,11 +114,7 @@ export const fetchMoods = async () => {
 
 export const fetchBankings = async () => {
     const user = await getAuthUser();
-
-    if (!user) {
-        console.log('No user found');
-        return null;
-    }
+    if (!user) return null;
 
     try {
         const bankings = await db.profile.findUnique({
@@ -145,11 +141,7 @@ export const fetchBankings = async () => {
 
 export const fetchServiceAction = async () => {
     const user = await getAuthUser();
-
-    if (!user) {
-        console.log('No user found');
-        return null;
-    }
+    if (!user) return null;
 
     try {
         const services = await db.profile.findUnique({
@@ -167,7 +159,7 @@ export const fetchServiceAction = async () => {
             },
         });
 
-        return services;
+        return services?.Service ?? null;
     } catch (error) {
         console.error('Error fetching service:', error);
         return renderError(error);
@@ -176,6 +168,7 @@ export const fetchServiceAction = async () => {
 
 export const fetchBankingDetails = async (bankingId: string) => {
     const user = await getAuthUser();
+    if (!user) return null;
 
     return db.banking.findUnique({
         where: {
@@ -190,6 +183,8 @@ export const updateProfileAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
     try {
         const rawData = Object.fromEntries(formData);
 
@@ -219,6 +214,8 @@ export const createServiceAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
     try {
         const rawData = Object.fromEntries(formData);
         const validatedFields = validateWithZodSchema(serviceSchema, rawData);
@@ -240,6 +237,8 @@ export const updateServiceAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
     try {
         const rawData = Object.fromEntries(formData);
 
@@ -268,6 +267,8 @@ export const updateBankingAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
     const bankingId = formData.get('id') as string;
 
     try {
@@ -325,6 +326,7 @@ export const updateBankingAction = async (
 export const deleteServiceAction = async (prevState: { serviceId: string }) => {
     const { serviceId } = prevState;
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
 
     try {
         await db.service.delete({
@@ -346,6 +348,8 @@ export const createBankingAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
     try {
         const rawData = Object.fromEntries(formData);
         const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
@@ -401,6 +405,7 @@ export const createBankingAction = async (
 export const deleteBankingAction = async (prevState: { bankingId: string }) => {
     const { bankingId } = prevState;
     const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
 
     try {
         await db.banking.delete({
