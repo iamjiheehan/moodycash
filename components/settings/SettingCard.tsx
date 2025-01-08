@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
@@ -5,6 +7,7 @@ import Link from 'next/link';
 import BanksData from '@/data/BanksData';
 import { deleteBankingAction } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
+import { AlertDialogDemo } from '../form/AlertDialogForm';
 
 const MoodCardClass = 'relative min-h-[7rem] flex flex-col justify-between';
 
@@ -90,11 +93,28 @@ export function MoodCreateCard() {
     );
 }
 
+// function DeleteBanking({ bankingId }: { bankingId: string }) {
+//     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
+//     return (
+//         <FormContainer action={deleteBanking}>
+//             <DeleteButton />
+//         </FormContainer>
+//     );
+// }
+
 function DeleteBanking({ bankingId }: { bankingId: string }) {
     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
+
+    const handleConfirm = async () => {
+        await deleteBanking();
+    };
+
     return (
-        <FormContainer action={deleteBanking}>
-            <DeleteButton />
-        </FormContainer>
+        <AlertDialogDemo
+            title="정말로 이 계좌를 삭제하시겠습니까?"
+            description="해당 계좌로 기록한 내용은 모두 삭제됩니다."
+            child={<DeleteButton />}
+            onClick={handleConfirm}
+        />
     );
 }
