@@ -48,6 +48,9 @@ export const serviceSchema = z.object({
         .int()
         .min(0, { message: '금액은 양수여야 합니다.' })
         .max(9999, { message: '금액은 9999 이하이어야 합니다.' }),
+    bankingId: z
+        .string()
+        .nonempty({ message: '은행 정보가 누락되었습니다. 다시 시도해주세요.' }),
 });
 
 export const bankingSchema = z.object({

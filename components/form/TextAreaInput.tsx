@@ -31,6 +31,7 @@ export default function TextAreaInput({
                 name={name}
                 rows={5}
                 required
+                defaultValue={defaultValue}
                 className="leading-loose mt-2"
                 placeholder={placeholder}
                 onChange={(e) => {

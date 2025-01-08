@@ -75,7 +75,7 @@ export const fetchProfileImage = async (): Promise<string | null> => {
 
 export const fetchProfile = async () => {
     const user = await getAuthUser();
-    if (!user) return null;
+    if (!user) throw new Error('로그인이 필요합니다');
 
     const profile = await db.profile.findUnique({
         where: { clerkId: user.id },
@@ -166,6 +166,42 @@ export const fetchServiceAction = async () => {
     }
 };
 
+export const fetchServiceDetailsAction = async (serviceId: string) => {
+    const user = await getAuthUser();
+    if (!user) return null;
+
+    try {
+        const service = await db.service.findUnique({
+            where: {
+                id: serviceId,
+                profileId: user.id,
+            },
+            select: {
+                id: true,
+                date: true,
+                description: true,
+                price: true,
+                mood: true,
+                bankingId: true,
+                banking: {
+                    select: {
+                        id: true,
+                        bankName: true,
+                        bankAccountHolder: true,
+                        bankAccountNumber: true,
+                        mood: true,
+                    },
+                },
+            },
+        });
+
+        return service;
+    } catch (error) {
+        console.error('Error fetching service details:', error);
+        return null;
+    }
+};
+
 export const fetchBankingDetails = async (bankingId: string) => {
     const user = await getAuthUser();
     if (!user) return null;
@@ -176,6 +212,29 @@ export const fetchBankingDetails = async (bankingId: string) => {
             profileId: user.id,
         },
     });
+};
+
+export const createServiceAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    if (!user) return { message: '로그인이 필요합니다' };
+
+    try {
+        const rawData = Object.fromEntries(formData);
+        const validatedFields = validateWithZodSchema(serviceSchema, rawData);
+
+        await db.service.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        });
+        return { message: '성공적으로 등록되었습니다' };
+    } catch (error) {
+        return renderError(error);
+    }
 };
 
 export const updateProfileAction = async (
@@ -209,29 +268,6 @@ export const updateProfileAction = async (
     }
 };
 
-export const createServiceAction = async (
-    prevState: any,
-    formData: FormData
-): Promise<{ message: string }> => {
-    const user = await getAuthUser();
-    if (!user) return { message: '로그인이 필요합니다' };
-
-    try {
-        const rawData = Object.fromEntries(formData);
-        const validatedFields = validateWithZodSchema(serviceSchema, rawData);
-
-        await db.service.create({
-            data: {
-                ...validatedFields,
-                profileId: user.id,
-            },
-        });
-        return { message: '성공적으로 등록되었습니다' };
-    } catch (error) {
-        return renderError(error);
-    }
-};
-
 export const updateServiceAction = async (
     prevState: any,
     formData: FormData
@@ -239,23 +275,20 @@ export const updateServiceAction = async (
     const user = await getAuthUser();
     if (!user) return { message: '로그인이 필요합니다' };
 
+    const serviceId = formData.get('id') as string;
+
     try {
         const rawData = Object.fromEntries(formData);
+        const validatedFields = validateWithZodSchema(serviceSchema, rawData);
 
-        const validatedFields = profileSchema.safeParse(rawData);
-        if (!validatedFields.success) {
-            const errors = validatedFields.error.errors.map(
-                (error) => error.message
-            );
-            throw new Error(errors.join(','));
-        }
-
-        await db.profile.update({
+        await db.service.update({
             where: {
-                clerkId: user.id,
+                id: serviceId,
+                profileId: user.id,
             },
             data: validatedFields,
         });
+        revalidatePath('/settings');
         return { message: '해당 기록이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
@@ -274,7 +307,7 @@ export const updateBankingAction = async (
     try {
         const rawData = Object.fromEntries(formData);
 
-        const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
+        const validatedFields = await validateBankingSchema(rawData);
 
         const existingBanking = await db.banking.findFirst({
             where: {

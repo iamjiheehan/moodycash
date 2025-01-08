@@ -3,6 +3,8 @@ import { Calendar } from '../ui/calendar';
 import { DayMouseEventHandler } from 'react-day-picker';
 import { formatCurrency, formatDateFromISOString } from '@/utils/format';
 import { fetchServiceData } from '@/utils/fetchServiceData';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 interface ServiceData {
     id: string;
@@ -91,7 +93,7 @@ export default function MoodCalendar() {
                     <section className="border p-8 rounded-md w-full shadow">
                         {!selectedData && <div>기록한 날짜를 선택해주세요</div>}
                         {selectedDate.length > 0 && selectedData && (
-                            <section className="flex flex-col gap-4">
+                            <section className="flex flex-col gap-4 relative h-full">
                                 <p>
                                     {formatDateFromISOString(selectedData.date)}
                                     에
@@ -103,6 +105,13 @@ export default function MoodCalendar() {
                                     {`그 날 남긴 메모는 '${selectedData.description}'
                                     이에요.`}
                                 </p>
+                                <section className="absolute right-0 bottom-0">
+                                    <Link
+                                        href={`/service/${selectedData.id}/edit`}
+                                    >
+                                        <Button>해당 기록 수정하기</Button>
+                                    </Link>
+                                </section>
                             </section>
                         )}
                     </section>

@@ -4,12 +4,17 @@ import { Button } from '@/components/ui/button';
 import { useServiceDetails } from '@/utils/store';
 import FormContainer from '@/components/form/FormContainer';
 import { SubmitButton } from '@/components/form/Buttons';
-import { createServiceAction } from '@/utils/actions';
+import { createServiceAction, updateServiceAction } from '@/utils/actions';
 import { formatDateToDateTime } from '@/utils/format';
 
-function ConfirmService() {
+interface ConfirmServiceProps {
+    actionType: 'create' | 'update';
+    serviceId?: string; // Add serviceId prop for update action
+}
+
+function ConfirmService({ actionType, serviceId }: ConfirmServiceProps) {
     const { userId } = useAuth();
-    const { date, mood, price, description } = useServiceDetails(
+    const { date, mood, price, description, bankingId } = useServiceDetails(
         (state) => state
     );
     if (!userId)
@@ -21,7 +26,7 @@ function ConfirmService() {
             </SignInButton>
         );
 
-    const createService = async (
+    const handleSubmit = async (
         formData: Record<string, any>
     ): Promise<{ message: string }> => {
         const data = new FormData();
@@ -39,20 +44,39 @@ function ConfirmService() {
         if (description) {
             data.append('description', description);
         }
+        if (bankingId) {
+            data.append('bankingId', bankingId);
+        }
 
-        if (!date || !mood || !price || !description) {
+        if (!date || !mood || !price || !description || !bankingId) {
             return { message: '모든 빈 칸을 올바르게 입력해주세요' };
         }
 
-        return await createServiceAction(null, data);
+        if (actionType === 'create') {
+            return await createServiceAction(null, data);
+        } else if (actionType === 'update') {
+            if (serviceId) {
+                data.append('id', serviceId);
+            }
+            return await updateServiceAction(null, data);
+        } else {
+            return { message: '알 수 없는 작업 유형입니다' };
+        }
     };
 
     return (
         <section>
-            <FormContainer action={createService}>
-                <SubmitButton text="등록하기" className="w-full" />
+            <FormContainer action={handleSubmit}>
+                {actionType === 'update' && serviceId && (
+                    <input type="hidden" name="id" value={serviceId} />
+                )}
+                <SubmitButton
+                    text={actionType === 'create' ? '등록하기' : '업데이트하기'}
+                    className="w-full"
+                />
             </FormContainer>
         </section>
     );
 }
+
 export default ConfirmService;

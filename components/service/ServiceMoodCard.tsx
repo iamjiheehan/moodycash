@@ -7,6 +7,7 @@ type BankingInfoCardProps = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
+    bankingId?: string;
     selected?: boolean;
     onChange?: () => void;
 };
@@ -14,6 +15,7 @@ type BankingInfoCardProps = {
 export function ServiceMoodCard({
     mood,
     bankName,
+    bankingId,
     bankAccountNumber,
     selected = false,
     onChange,
@@ -24,7 +26,10 @@ export function ServiceMoodCard({
                 mood: mood,
                 bankName: bankName,
                 bankAccountNumber: bankAccountNumber,
+                bankingId: bankingId,
             });
+
+            console.log(bankingId);
         }
     }, [selected]);
     const bankLabel =
