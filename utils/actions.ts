@@ -15,7 +15,6 @@ import {
 const getAuthUser = async () => {
     const user = await currentUser();
     if (!user) {
-        console.log('No user found');
         return null;
     }
 
@@ -24,7 +23,6 @@ const getAuthUser = async () => {
 };
 
 const renderError = (error: unknown): { message: string } => {
-    console.log(error);
     return {
         message: error instanceof Error ? error.message : 'An error occurred',
     };
@@ -89,7 +87,6 @@ export const fetchProfile = async () => {
 export const fetchMoods = async () => {
     const user = await currentUser();
     if (!user) {
-        console.log('fetchMoods: No user found');
         return null;
     }
 
@@ -104,7 +101,6 @@ export const fetchMoods = async () => {
                 },
             },
         });
-        console.log('fetchMoods:', moods[0].Banking);
         return moods[0].Banking;
     } catch (error) {
         console.error('Error fetching moods:', error);

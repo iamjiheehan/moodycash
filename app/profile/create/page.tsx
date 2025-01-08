@@ -8,8 +8,7 @@ import { redirect } from 'next/navigation';
 async function CreateProfile() {
     const user = await currentUser();
     if (user?.privateMetadata?.hasProfile) {
-        // redirect('/');
-        console.log('유저 정보가 없습니다 뭐야 이게', user);
+        redirect('/');
     }
 
     return (

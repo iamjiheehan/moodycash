@@ -37,7 +37,6 @@ async function Page({ params }: PageProps) {
     if (!fetchedDetails) {
         redirect('/settings');
     }
-    console.log('fetchedDetails', fetchedDetails);
     return (
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 lg:flex lg:grid-cols-2 lg:gap-8">
             <section className="basis-3/4">

@@ -18,7 +18,6 @@ type fetchedDetailsProps = {
 
 export default async function SettingsPage() {
     const fetchedDetails: fetchedDetailsProps = await fetchBankings();
-    console.log(fetchedDetails);
     const bankingCount = fetchedDetails?.Banking.length || 0;
     const templateCount = Math.max(0, 6 - bankingCount - 1);
 

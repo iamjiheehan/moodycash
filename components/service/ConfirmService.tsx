@@ -32,7 +32,6 @@ function ConfirmService({ actionType, serviceId }: ConfirmServiceProps) {
         const data = new FormData();
         if (date) {
             const formattedDate = formatDateToDateTime(new Date(date));
-            console.log(formattedDate);
             data.append('date', formattedDate);
         }
         if (mood) {

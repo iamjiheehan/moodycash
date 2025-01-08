@@ -29,7 +29,6 @@ export function ServiceMoodCard({
                 bankingId: bankingId,
             });
 
-            console.log(bankingId);
         }
     }, [selected]);
     const bankLabel =

@@ -15,7 +15,6 @@ export default function SelectCalendar({ fetcehdDate }: ServiceDateProps) {
         if (fetcehdDate) {
             setDate(new Date(fetcehdDate));
         }
-        console.log(fetcehdDate);
     }, []);
 
     useEffect(() => {
