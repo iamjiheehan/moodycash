@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { MoodCreateCard } from '@/components/settings/SettingCard';
+import {
+    MoodCreateCard,
+    MoodTemplateCard,
+} from '@/components/settings/SettingCard';
 import { ServiceMoodCard } from './ServiceMoodCard';
 
 type BankingInfo = {
@@ -24,9 +27,12 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
         setSelectedMood(mood);
     };
 
+    const bankingCount = fetchedDetails.Banking.length || 0; 
+    const templateCount = Math.max(0, 6 - bankingCount - 1); 
+
     return (
         <div className="grid md:grid-cols-2 gap-8 mt-4">
-            {fetchedDetails?.Banking.map((banking, index) => (
+            {fetchedDetails.Banking.map((banking, index) => (
                 <div key={index}>
                     <ServiceMoodCard
                         key={index}
@@ -38,9 +44,10 @@ export default function ServiceMood({ fetchedDetails }: ServiceMoodProps) {
                     />
                 </div>
             ))}
-            {fetchedDetails && fetchedDetails?.Banking.length < 6 && (
-                <MoodCreateCard />
-            )}
+            {Array.from({ length: templateCount }).map((_, index) => (
+                <MoodTemplateCard key={`template-${index}`} />
+            ))}
+            {bankingCount < 6 && <MoodCreateCard />}
         </div>
     );
 }

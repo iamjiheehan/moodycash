@@ -1,6 +1,7 @@
 import {
     MoodSettingCard,
     MoodCreateCard,
+    MoodTemplateCard,
 } from '@/components/settings/SettingCard';
 import { fetchBankings } from '@/utils/actions';
 
@@ -16,6 +17,10 @@ type fetchedDetailsProps = {
 
 export default async function SettingsPage() {
     const fetchedDetails: fetchedDetailsProps = await fetchBankings();
+
+    const bankingCount = fetchedDetails?.Banking.length || 0;
+    const templateCount = Math.max(0, 6 - bankingCount - 1);
+
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
             <section className="flex flex-row gap-2 mt-6 mb-6">
@@ -35,9 +40,10 @@ export default async function SettingsPage() {
                         />
                     </div>
                 ))}
-                {fetchedDetails && fetchedDetails?.Banking.length < 6 && (
-                    <MoodCreateCard />
-                )}
+                {Array.from({ length: templateCount }).map((_, index) => (
+                    <MoodTemplateCard key={`template-${index}`} />
+                ))}
+                {bankingCount < 6 && <MoodCreateCard />}
             </section>
         </div>
     );
