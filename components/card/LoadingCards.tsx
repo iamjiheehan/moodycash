@@ -12,13 +12,11 @@ function LoadingCards() {
 
 export function SkeletonCard() {
     return (
-        <Card className="relative h-[10rem]">
+        <Card className="relative">
             <CardHeader>
                 <Skeleton className="h-6 w-1/2" />
-                <Skeleton className="h-4 mt-2 w-1/3" />
             </CardHeader>
             <CardContent>
-                <Skeleton className="h-4 mt-2 w-full" />
                 <Skeleton className="h-4 mt-2 w-3/4" />
             </CardContent>
         </Card>

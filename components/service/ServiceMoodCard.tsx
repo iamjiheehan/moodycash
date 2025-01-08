@@ -3,6 +3,7 @@ import { DeleteButton, EditButton } from '../form/Buttons';
 import { useEffect } from 'react';
 import { useServiceDetails } from '@/utils/store';
 import { Separator } from '@radix-ui/react-dropdown-menu';
+import BanksData from '@/data/BanksData';
 
 type BankingInfoCardProps = {
     mood: string;
@@ -28,26 +29,23 @@ export function ServiceMoodCard({
             });
         }
     }, [selected]);
+    const bankLabel =
+        BanksData.find((data) => data.value === bankName)?.label || bankName;
     return (
         <Card
-            className={`relative h-[10rem] ${
+            className={`relative ${
                 selected ? 'outline outline-offset-2 outline-blue-500 ' : ''
             }`}
-            onClick={onChange} // Add onClick event to the card
+            onClick={onChange}
         >
             <CardHeader>
                 <h1>{mood}</h1>
             </CardHeader>
-            <CardContent>
-                {bankName}
-                {bankAccountNumber}
+            <CardContent className="flex gap-2">
+                <p>{bankLabel}</p>
+                <p>{bankAccountNumber}</p>
             </CardContent>
-            <div className="absolute top-0 right-3 h-full py-2">
-                <div className="flex flex-col justify-between h-full">
-                    <EditButton />
-                    <DeleteButton />
-                </div>
-            </div>
+            
         </Card>
     );
 }

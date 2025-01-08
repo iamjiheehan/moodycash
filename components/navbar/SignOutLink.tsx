@@ -6,12 +6,12 @@ import { SignOutButton } from '@clerk/nextjs';
 function SignOutLink() {
     const { toast } = useToast();
     const handleLogout = () => {
-        toast({ description: 'You have been signed out.' });
+        toast({ description: '로그아웃 되었습니다' });
     };
     return (
         <SignOutButton redirectUrl="/">
             <button className="w-full text-left" onClick={handleLogout}>
-                Logout
+                로그아웃
             </button>
         </SignOutButton>
     );

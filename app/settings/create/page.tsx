@@ -1,41 +1,22 @@
-import { SubmitButton } from '@/components/form/Buttons';
-import FormContainer from '@/components/form/FormContainer';
-import FormInput from '@/components/form/FormInput';
-import { createBankingAction } from '@/utils/actions';
-import React from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import dynamic from 'next/dynamic';
 
-export default function CreatePage() {
+const DynamicCreateSettingPageWrapper = dynamic(
+    () => import('@/components/settings/CreateSettingPage'),
+    {
+        ssr: false,
+        loading: () => <Skeleton className="h-[200px] w-full" />,
+    }
+);
+export default async function CreatePage() {
     return (
-        <section className="container">
-            <h1 className="text-2xl font-semibold mb-8 capitalize">
-                Setting banking schema
-            </h1>
-            <div className="border p-8 rounded-md">
-                <FormContainer action={createBankingAction}>
-                    <div className="grid gap-4 md:grid-cols-2 mt-4 ">
-                        <FormInput
-                            type="text"
-                            name="bankName"
-                            label="Bank Name"
-                        />
-                        <FormInput
-                            type="text"
-                            name="bankAccountNumber"
-                            label="Bank Account"
-                        />
-                        <FormInput
-                            type="text"
-                            name="bankAccountHolder"
-                            label="Account Holder"
-                        />
-                        <FormInput type="text" name="mood" label="Mood" />
-                    </div>
-                    <SubmitButton
-                        text="Create Mood & Banking"
-                        className="mt-8"
-                    />
-                </FormContainer>
-            </div>
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 border p-8 rounded-md shadow-2xl sm:w-[50%] md:w-[40%] lg:w-[30%]">
+            <section className="flex flex-row gap-2 mt-6 mb-6">
+                <h1 className="text-2xl font-semibold capitalize">
+                    계좌 추가 (최대 6개)
+                </h1>
+            </section>
+            <DynamicCreateSettingPageWrapper />
         </section>
     );
 }

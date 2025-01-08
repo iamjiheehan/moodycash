@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React from 'react';
 
 interface InfoCardProps {
     title: string;
@@ -7,6 +8,7 @@ interface InfoCardProps {
     imageAlt: string;
     imageHeight: number;
     imageWidth: number;
+    className?: string; // Optional className prop
 }
 
 const InfoCard = ({
@@ -16,9 +18,12 @@ const InfoCard = ({
     imageAlt,
     imageHeight,
     imageWidth,
+    className = '', 
 }: InfoCardProps) => {
     return (
-        <div className="flex flex-col items-center gap-12 sm:gap-6">
+        <div
+            className={`flex flex-col items-center gap-12 sm:gap-6 ${className}`}
+        >
             <h3 className="font-semibold text-xl">{title}</h3>
             <div className="flex flex-col items-center">
                 {description.map((desc, index) => (
@@ -27,7 +32,7 @@ const InfoCard = ({
                     </p>
                 ))}
             </div>
-            <div className="rounded-full overflow-hidden h-full">
+            <div className="rounded-full overflow-hidden aspect-w-1 aspect-h-1 flex-1">
                 <Image
                     className="object-cover h-full"
                     src={imageSrc}

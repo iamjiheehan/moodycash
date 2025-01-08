@@ -9,7 +9,9 @@ export default function SelectCalendar() {
     const [date, setDate] = useState<Date | undefined>(currentDate);
 
     useEffect(() => {
-        useServiceDetails.setState({ date });
+        if (date) {
+            useServiceDetails.setState({ date });
+        }
     }, [date]);
     return (
         <Calendar

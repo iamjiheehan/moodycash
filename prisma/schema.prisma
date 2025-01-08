@@ -24,7 +24,7 @@ model Profile {
 
 model Service {
   id          String   @id @default(uuid())
-  date        DateTime
+  date        DateTime 
   description String
   mood        String
   price       Int

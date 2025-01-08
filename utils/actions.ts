@@ -1,7 +1,7 @@
 'use server';
 
 import db from './db';
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {
@@ -9,11 +9,12 @@ import {
     serviceSchema,
     bankingSchema,
     validateWithZodSchema,
+    validateBankingSchema,
 } from './schemas';
 
 const getAuthUser = async () => {
     const user = await currentUser();
-    if (!user) throw new Error('You must be logged in to access this route');
+    if (!user) throw new Error('로그인이 필요합니다');
 
     if (!user.privateMetadata.hasProfile) redirect('/profile/create');
     return user;
@@ -32,7 +33,7 @@ export const createProfileAction = async (
 ) => {
     try {
         const user = await currentUser();
-        if (!user) throw new Error('Please login to create a profile');
+        if (!user) throw new Error('프로필 생성을 위해 로그인을 해주세요');
 
         const rawData = Object.fromEntries(formData);
         const validatedFields = profileSchema.parse(rawData);
@@ -120,6 +121,7 @@ export const fetchBankings = async () => {
             select: {
                 Banking: {
                     select: {
+                        id: true,
                         bankName: true,
                         bankAccountHolder: true,
                         bankAccountNumber: true,
@@ -129,7 +131,6 @@ export const fetchBankings = async () => {
             },
         });
 
-        // console.log('Bankings fetched:', bankings);
         return bankings;
     } catch (error) {
         console.error('Error fetching bankings:', error);
@@ -137,6 +138,47 @@ export const fetchBankings = async () => {
     }
 };
 
+export const fetchServiceAction = async () => {
+    const user = await getAuthUser();
+
+    if (!user) {
+        console.log('No user found');
+        return null;
+    }
+
+    try {
+        const services = await db.profile.findUnique({
+            where: { clerkId: user.id },
+            select: {
+                Service: {
+                    select: {
+                        id: true,
+                        date: true,
+                        description: true,
+                        price: true,
+                        mood: true,
+                    },
+                },
+            },
+        });
+
+        return services;
+    } catch (error) {
+        console.error('Error fetching service:', error);
+        return renderError(error);
+    }
+};
+
+export const fetchBankingDetails = async (bankingId: string) => {
+    const user = await getAuthUser();
+
+    return db.banking.findUnique({
+        where: {
+            id: bankingId,
+            profileId: user.id,
+        },
+    });
+};
 
 export const updateProfileAction = async (
     prevState: any,
@@ -161,7 +203,7 @@ export const updateProfileAction = async (
             data: validatedFields.data,
         });
         revalidatePath('/profile');
-        return { message: 'Profile updated successfully' };
+        return { message: '프로필이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -182,10 +224,10 @@ export const createServiceAction = async (
                 profileId: user.id,
             },
         });
+        return { message: '성공적으로 등록되었습니다' };
     } catch (error) {
         return renderError(error);
     }
-    redirect('/');
 };
 
 export const updateServiceAction = async (
@@ -210,8 +252,66 @@ export const updateServiceAction = async (
             },
             data: validatedFields,
         });
-        revalidatePath('/service');
-        return { message: 'service schema is updated successfully' };
+        return { message: '해당 기록이 성공적으로 업데이트 되었습니다' };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const updateBankingAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser();
+    const bankingId = formData.get('id') as string;
+
+    try {
+        const rawData = Object.fromEntries(formData);
+
+        const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
+
+        const existingBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                bankName: validatedFields.bankName,
+                bankAccountNumber: validatedFields.bankAccountNumber,
+                NOT: {
+                    id: bankingId,
+                },
+            },
+        });
+
+        if (existingBanking) {
+            throw new Error(
+                '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
+            );
+        }
+
+        const existingMoodBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                mood: validatedFields.mood,
+                NOT: {
+                    id: bankingId,
+                },
+            },
+        });
+
+        if (existingMoodBanking) {
+            throw new Error(
+                '이미 존재하는 기분입니다. 다른 기분을 입력해주세요'
+            );
+        }
+
+        await db.banking.update({
+            where: {
+                id: bankingId,
+                profileId: user.id,
+            },
+            data: validatedFields,
+        });
+        revalidatePath('/settings');
+        return { message: '해당 계좌가 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -230,7 +330,7 @@ export const deleteServiceAction = async (prevState: { serviceId: string }) => {
         });
 
         revalidatePath('/service');
-        return { message: 'Service schema is deleted successfully' };
+        return { message: '해당 기록이 성공적으로 업데이트 되었습니다' };
     } catch (error) {
         return renderError(error);
     }
@@ -243,8 +343,43 @@ export const createBankingAction = async (
     const user = await getAuthUser();
     try {
         const rawData = Object.fromEntries(formData);
-        console.log('rawData:', rawData);
-        const validatedFields = validateWithZodSchema(bankingSchema, rawData);
+        const validatedFields = await validateBankingSchema(rawData); // Use validateBankingSchema
+
+        const bankingCount = await db.banking.count({
+            where: {
+                profileId: user.id,
+            },
+        });
+
+        if (bankingCount >= 6) {
+            throw new Error('계좌는 최대 6개까지만 등록 가능합니다');
+        }
+
+        const existingBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                bankName: validatedFields.bankName,
+                bankAccountNumber: validatedFields.bankAccountNumber,
+            },
+        });
+
+        if (existingBanking) {
+            throw new Error(
+                '이미 존재하는 계좌입니다. 다른 계좌를 입력해주세요'
+            );
+        }
+        const existingMoodBanking = await db.banking.findFirst({
+            where: {
+                profileId: user.id,
+                mood: validatedFields.mood,
+            },
+        });
+
+        if (existingMoodBanking) {
+            throw new Error(
+                '이미 존재하는 기분입니다. 다른 기분을 입력해주세요'
+            );
+        }
 
         await db.banking.create({
             data: {
@@ -271,7 +406,7 @@ export const deleteBankingAction = async (prevState: { bankingId: string }) => {
         });
 
         revalidatePath('/settings');
-        return { message: 'Banking schema is deleted successfully' };
+        return { message: '해당 계좌가 성공적으로 삭제되었습니다' };
     } catch (error) {
         return renderError(error);
     }

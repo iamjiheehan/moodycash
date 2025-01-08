@@ -5,12 +5,13 @@ export default function ServiceDescription() {
     return (
         <section>
             <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
-                What’s behind how you’re feeling?
+                이 기분을 느끼는 이유를 적어주세요
             </h1>
             <TextAreaInput
+                isLabelHidden={true}
                 name="description"
-                labelText="Description (10 - 50 Words)"
-                placeholder="Describe your feelings"
+                labelText="50 글자 이내로 간단히 적어주세요"
+                placeholder="50 글자 이내로 간단히 적어주세요"
             />
         </section>
     );

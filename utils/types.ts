@@ -4,5 +4,5 @@ export type actionFunction = (
 ) => Promise<{ message: string }>;
 
 export type Service = {
-    date: Date;
+    date: string;
 };

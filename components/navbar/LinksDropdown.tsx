@@ -26,14 +26,14 @@ function LinksDropdown() {
                 <SignedOut>
                     <DropdownMenuItem>
                         <SignInButton>
-                            <button className="w-full text-left">Login</button>
+                            <button className="w-full text-left">로그인</button>
                         </SignInButton>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         <SignInButton>
                             <button className="w-full text-left">
-                                Register
+                                회원가입
                             </button>
                         </SignInButton>
                     </DropdownMenuItem>
