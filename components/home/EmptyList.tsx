@@ -2,8 +2,8 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 
 function EmptyList({
-    heading = 'No items in the list.',
-    message = 'Keep exploring our properties.',
+    heading = '불러올 데이터가 없습니다',
+    message = '다시 시도해주세요.',
     btnText = 'back home',
 }: {
     heading?: string;

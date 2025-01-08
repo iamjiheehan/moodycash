@@ -6,6 +6,8 @@ import BanksData from '@/data/BanksData';
 import { deleteBankingAction, fetchBankings } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 
+const MoodCardClass = 'relative min-h-[7rem] flex flex-col justify-between';
+
 type BankingInfoCardProps = {
     mood: string;
     bankName: string;
@@ -24,7 +26,11 @@ export async function MoodSettingCard({
     const bankLabel =
         BanksData.find((data) => data.value === bankName)?.label || bankName;
     return (
-        <Card className={`relative ${selected ? 'border-blue-500' : ''}`}>
+        <Card
+            className={`min-h-[7rem] relative ${
+                selected ? 'border-blue-500' : ''
+            }`}
+        >
             <CardHeader>
                 <h1> {mood} 기분 계좌</h1>
             </CardHeader>
@@ -40,6 +46,34 @@ export async function MoodSettingCard({
                     <DeleteBanking bankingId={bankingId} />
                 </div>
             </div>
+        </Card>
+    );
+}
+
+export function MoodSampleCard() {
+    return (
+        <Card className={MoodCardClass}>
+            <CardHeader>
+                <h1>(예시) 행복 기분 계좌</h1>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+                <p>은행이름</p>
+                <p>123456789 (계좌번호)</p>
+            </CardContent>
+        </Card>
+    );
+}
+
+export function MoodTemplateCard() {
+    return (
+        <Card className={MoodCardClass}>
+            <CardHeader>
+                <h1></h1>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+                <p></p>
+                <p></p>
+            </CardContent>
         </Card>
     );
 }

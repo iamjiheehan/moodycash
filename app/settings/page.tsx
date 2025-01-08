@@ -23,7 +23,7 @@ export default async function SettingsPage() {
                     등록된 계좌 모아보기
                 </h1>
             </section>
-            <section className=" grid md:grid-cols-2 gap-8">
+            <section className="grid md:grid-cols-2 gap-8">
                 {fetchedDetails?.Banking.map((banking, index) => (
                     <div key={index}>
                         <MoodSettingCard

@@ -1,12 +1,32 @@
 import { fetchBankings } from '@/utils/actions';
 import ServiceMood from './ServiceMoodContainer';
-import EmptyList from '../home/EmptyList';
+import {
+    MoodCreateCard,
+    MoodSampleCard,
+    MoodTemplateCard,
+} from '../settings/SettingCard';
 
 export default async function ServiceMoodWrapper() {
     const fetchedDetails = await fetchBankings();
 
     if (!fetchedDetails) {
-        return <EmptyList />;
+        return (
+            <>
+                <section>
+                    <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-2 text-black-600">
+                        기분에 맞는 계좌를 선택해주세요
+                    </h1>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <MoodSampleCard />
+                        <MoodTemplateCard />
+                        <MoodTemplateCard />
+                        <MoodTemplateCard />
+                        <MoodTemplateCard />
+                        <MoodCreateCard />
+                    </div>
+                </section>
+            </>
+        );
     }
 
     return (

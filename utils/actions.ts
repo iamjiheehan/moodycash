@@ -14,7 +14,12 @@ import {
 
 const getAuthUser = async () => {
     const user = await currentUser();
-    if (!user) throw new Error('로그인이 필요합니다');
+        if (!user) {
+            console.log('No user found');
+            return null;
+        }
+
+    // if (!user) throw new Error('로그인이 필요합니다');
 
     if (!user.privateMetadata.hasProfile) redirect('/profile/create');
     return user;
