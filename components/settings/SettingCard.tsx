@@ -3,7 +3,7 @@ import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 import BanksData from '@/data/BanksData';
-import { deleteBankingAction, fetchBankings } from '@/utils/actions';
+import { deleteBankingAction } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
 
 const MoodCardClass = 'relative min-h-[7rem] flex flex-col justify-between';
