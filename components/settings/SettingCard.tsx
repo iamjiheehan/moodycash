@@ -1,10 +1,15 @@
+'use client';
+
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DeleteButton, EditButton } from '../form/Buttons';
 import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 import BanksData from '@/data/BanksData';
-import { deleteBankingAction, fetchBankings } from '@/utils/actions';
+import { deleteBankingAction } from '@/utils/actions';
 import FormContainer from '../form/FormContainer';
+import { AlertDialogDemo } from '../form/AlertDialogForm';
+
+const MoodCardClass = 'relative min-h-[7rem] flex flex-col justify-between';
 
 type BankingInfoCardProps = {
     mood: string;
@@ -24,7 +29,11 @@ export async function MoodSettingCard({
     const bankLabel =
         BanksData.find((data) => data.value === bankName)?.label || bankName;
     return (
-        <Card className={`relative ${selected ? 'border-blue-500' : ''}`}>
+        <Card
+            className={`min-h-[7rem] relative ${
+                selected ? 'border-blue-500' : ''
+            }`}
+        >
             <CardHeader>
                 <h1> {mood} 기분 계좌</h1>
             </CardHeader>
@@ -44,6 +53,34 @@ export async function MoodSettingCard({
     );
 }
 
+export function MoodSampleCard() {
+    return (
+        <Card className={MoodCardClass}>
+            <CardHeader>
+                <h1>(예시) 행복 기분 계좌</h1>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+                <p>은행이름</p>
+                <p>123456789 (계좌번호)</p>
+            </CardContent>
+        </Card>
+    );
+}
+
+export function MoodTemplateCard() {
+    return (
+        <Card className={MoodCardClass}>
+            <CardHeader>
+                <h1></h1>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+                <p></p>
+                <p></p>
+            </CardContent>
+        </Card>
+    );
+}
+
 export function MoodCreateCard() {
     return (
         <Link href="/settings/create">
@@ -56,11 +93,28 @@ export function MoodCreateCard() {
     );
 }
 
+// function DeleteBanking({ bankingId }: { bankingId: string }) {
+//     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
+//     return (
+//         <FormContainer action={deleteBanking}>
+//             <DeleteButton />
+//         </FormContainer>
+//     );
+// }
+
 function DeleteBanking({ bankingId }: { bankingId: string }) {
     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
+
+    const handleConfirm = async () => {
+        await deleteBanking();
+    };
+
     return (
-        <FormContainer action={deleteBanking}>
-            <DeleteButton />
-        </FormContainer>
+        <AlertDialogDemo
+            title="정말로 이 계좌를 삭제하시겠습니까?"
+            description="해당 계좌로 기록한 내용은 모두 삭제됩니다."
+            child={<DeleteButton />}
+            onClick={handleConfirm}
+        />
     );
 }

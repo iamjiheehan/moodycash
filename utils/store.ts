@@ -18,6 +18,7 @@ type ServiceState = {
     bankName: string;
     bankAccountNumber: string;
     description: string;
+    bankingId: string;
     resetServiceDetails: () => void;
 };
 
@@ -50,14 +51,15 @@ export const useProfile = create<ProfileState>((set) => ({
     lastName: '',
     userName: '',
     email: '',
-    resetProfile: () => set({
-        id: '',
-        clerkId: '',
-        firstName: '',
-        lastName: '',
-        userName: '',
-        email: '',
-    }),
+    resetProfile: () =>
+        set({
+            id: '',
+            clerkId: '',
+            firstName: '',
+            lastName: '',
+            userName: '',
+            email: '',
+        }),
 }));
 
 export const useServiceDetails = create<ServiceState>((set) => ({
@@ -68,15 +70,20 @@ export const useServiceDetails = create<ServiceState>((set) => ({
     bankAccountNumber: '',
     mood: '',
     description: '',
-    resetServiceDetails: () => set({
-        serviceId: '',
-        price: 0,
-        date: undefined,
-        bankName: '',
-        bankAccountNumber: '',
-        mood: '',
-        description: '',
-    }),
+    bankingId: '',
+
+    resetServiceDetails: () =>
+        set({
+            bankingId: '',
+
+            serviceId: '',
+            price: 0,
+            date: undefined,
+            bankName: '',
+            bankAccountNumber: '',
+            mood: '',
+            description: '',
+        }),
 }));
 
 export const useBankingDetails = create<BankingState>((set) => ({
@@ -86,14 +93,15 @@ export const useBankingDetails = create<BankingState>((set) => ({
     bankCode: '',
     bankAccountNumber: '',
     description: '',
-    resetBankingDetails: () => set({
-        bankingId: '',
-        mood: '',
-        bankName: '',
-        bankCode: '',
-        bankAccountNumber: '',
-        description: '',
-    }),
+    resetBankingDetails: () =>
+        set({
+            bankingId: '',
+            mood: '',
+            bankName: '',
+            bankCode: '',
+            bankAccountNumber: '',
+            description: '',
+        }),
 }));
 
 export const useTokenStore = create<TokenState>((set) => ({

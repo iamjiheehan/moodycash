@@ -31,6 +31,15 @@ export default function CreateSettingPage() {
         const fetchProfileData = async () => {
             try {
                 const profileData = await fetchProfile();
+
+                if (!profileData) {
+                    return (
+                        <ErrorAlertForm
+                            title="에러 발생"
+                            description="프로필 정보를 찾을 수 없습니다. 프로필을 생성해주세요"
+                        />
+                    );
+                }
                 setProfile(profileData);
             } catch (error) {
                 console.error('Error fetching profile:', error);

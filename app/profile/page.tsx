@@ -2,15 +2,16 @@ import FormContainer from '@/components/form/FormContainer';
 import { updateProfileAction, fetchProfile } from '@/utils/actions';
 import FormInput from '@/components/form/FormInput';
 import { SubmitButton } from '@/components/form/Buttons';
-import { currentUser } from '@clerk/nextjs/server';
 
 async function ProfilePage() {
     const profile = await fetchProfile();
 
     return (
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 border p-8 rounded-md shadow-2xl sm:w-[50%] md:w-[40%] lg:w-[30%]">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 border p-8 rounded-md shadow-2xl sm:w-[50%] md:w-[40%] lg:w-[35%]">
             <section className="flex flex-row gap-2 mt-6 mb-6">
-                <h1 className="text-2xl font-semibold capitalize">프로필</h1>
+                <h1 className="text-2xl font-semibold capitalize">
+                    나의 프로필
+                </h1>
             </section>
             {/* image input container */}
             <FormContainer action={updateProfileAction}>

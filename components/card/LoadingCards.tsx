@@ -3,7 +3,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function LoadingCards() {
     return (
-        <section className="container mt-4 gap-8 grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+        <section className="container mt-4 sm:px-6 lg:px-8 gap-8 grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />
         </section>

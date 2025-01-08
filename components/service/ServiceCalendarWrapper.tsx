@@ -1,5 +1,11 @@
 import SelectCalendar from './ServiceCalendar';
 
-export default function ServiceCalendarWrapper() {
-    return <SelectCalendar />;
+interface ServiceDateProps {
+    fetcehdDate?: Date;
+}
+
+export default function ServiceCalendarWrapper({
+    fetcehdDate,
+}: ServiceDateProps) {
+    return <SelectCalendar fetcehdDate={fetcehdDate} />;
 }

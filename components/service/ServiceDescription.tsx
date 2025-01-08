@@ -1,7 +1,13 @@
 import React from 'react';
 import TextAreaInput from '../form/TextAreaInput';
 
-export default function ServiceDescription() {
+interface ServiceDescriptionProps {
+    description?: string;
+}
+
+export default function ServiceDescription({
+    description,
+}: ServiceDescriptionProps) {
     return (
         <section>
             <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-black-600">
@@ -12,6 +18,7 @@ export default function ServiceDescription() {
                 name="description"
                 labelText="50 글자 이내로 간단히 적어주세요"
                 placeholder="50 글자 이내로 간단히 적어주세요"
+                defaultValue={description}
             />
         </section>
     );

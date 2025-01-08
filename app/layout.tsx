@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     title: 'MoodyCash',
     description: 'Log your emotions and reflect on them financially.',
     keywords: 'Next.js, Typescript, TailwindCSS',
+    icons: {
+        icon: '/favicon/favicon.ico',
+    },
 };
 
 export default function RootLayout({

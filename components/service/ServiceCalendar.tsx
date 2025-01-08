@@ -4,9 +4,19 @@ import React, { useEffect, useState } from 'react';
 import { Calendar } from '../ui/calendar';
 import { useServiceDetails } from '@/utils/store';
 
-export default function SelectCalendar() {
+interface ServiceDateProps {
+    fetcehdDate?: Date;
+}
+
+export default function SelectCalendar({ fetcehdDate }: ServiceDateProps) {
     const currentDate = new Date();
     const [date, setDate] = useState<Date | undefined>(currentDate);
+    useEffect(() => {
+        if (fetcehdDate) {
+            setDate(new Date(fetcehdDate));
+        }
+        console.log(fetcehdDate);
+    }, []);
 
     useEffect(() => {
         if (date) {

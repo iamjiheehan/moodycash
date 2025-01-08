@@ -1,14 +1,13 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { DeleteButton, EditButton } from '../form/Buttons';
 import { useEffect } from 'react';
 import { useServiceDetails } from '@/utils/store';
-import { Separator } from '@radix-ui/react-dropdown-menu';
 import BanksData from '@/data/BanksData';
 
 type BankingInfoCardProps = {
     mood: string;
     bankName: string;
     bankAccountNumber: string;
+    bankingId?: string;
     selected?: boolean;
     onChange?: () => void;
 };
@@ -16,6 +15,7 @@ type BankingInfoCardProps = {
 export function ServiceMoodCard({
     mood,
     bankName,
+    bankingId,
     bankAccountNumber,
     selected = false,
     onChange,
@@ -26,7 +26,10 @@ export function ServiceMoodCard({
                 mood: mood,
                 bankName: bankName,
                 bankAccountNumber: bankAccountNumber,
+                bankingId: bankingId,
             });
+
+            console.log(bankingId);
         }
     }, [selected]);
     const bankLabel =
@@ -39,13 +42,12 @@ export function ServiceMoodCard({
             onClick={onChange}
         >
             <CardHeader>
-                <h1>{mood}</h1>
+                <h1> {mood} 기분 계좌</h1>
             </CardHeader>
             <CardContent className="flex gap-2">
                 <p>{bankLabel}</p>
                 <p>{bankAccountNumber}</p>
             </CardContent>
-            
         </Card>
     );
 }
