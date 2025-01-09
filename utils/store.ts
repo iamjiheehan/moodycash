@@ -75,7 +75,6 @@ export const useServiceDetails = create<ServiceState>((set) => ({
     resetServiceDetails: () =>
         set({
             bankingId: '',
-
             serviceId: '',
             price: 0,
             date: undefined,

@@ -9,7 +9,7 @@ import { formatDateToDateTime } from '@/utils/format';
 
 interface ConfirmServiceProps {
     actionType: 'create' | 'update';
-    serviceId?: string; // Add serviceId prop for update action
+    serviceId?: string; 
 }
 
 function ConfirmService({ actionType, serviceId }: ConfirmServiceProps) {
