@@ -93,15 +93,6 @@ export function MoodCreateCard() {
     );
 }
 
-// function DeleteBanking({ bankingId }: { bankingId: string }) {
-//     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
-//     return (
-//         <FormContainer action={deleteBanking}>
-//             <DeleteButton />
-//         </FormContainer>
-//     );
-// }
-
 function DeleteBanking({ bankingId }: { bankingId: string }) {
     const deleteBanking = deleteBankingAction.bind(null, { bankingId });
 
